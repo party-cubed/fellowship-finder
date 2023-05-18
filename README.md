@@ -5,7 +5,7 @@ Fellowship Finder is a web app that allows users to find and meet people with si
 The app allows users to create profiles, filter through other users based on interests and meetup logistics, add friends, and plan events. Fellowship Finder is meant to provide a platform for people to make friends with shared interests and streamline the process of organizing tabletop sessions.
 
 ## Setup
-1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/). (We used Node.js version 18.x.x and have not tested on other versions)
+1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/). (We used Node v18.16.0 and have not tested on other versions)
 
 2. Clone this repository and navigate into the project directory
 
@@ -37,7 +37,7 @@ The app allows users to create profiles, filter through other users based on int
 
 ## Stack
 
-Node: v18
+Node: v18.16.0
 
 Database: mySQL
 
