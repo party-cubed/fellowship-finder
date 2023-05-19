@@ -1,6 +1,6 @@
 const app = require('./app');
 
-const PORT = 7000;
+const PORT = 7002;
 
 app.listen(PORT, (err) => {
   if (err) {
