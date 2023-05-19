@@ -1,8 +1,13 @@
 import React from 'react';
+// eslint-disable-next-line import/extensions
+import GoogleOAuth from './GoogleOAuth.jsx';
 
 function App() {
   return (
-    <div>Hello World!</div>
+    <div>
+      Hello World!
+      {GoogleOAuth()}
+    </div>
   );
 }
 
