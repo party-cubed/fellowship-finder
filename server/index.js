@@ -1,10 +1,11 @@
 const app = require('./app');
 
-const PORT = 7000;
+// const PORT = 7000;
+const PUBLIC_IP = '18.217.208.71';
 
-app.listen(PORT, (err) => {
+app.listen(PUBLIC_IP, (err) => {
   if (err) {
     console.log('server connection failed', err);
   }
-  console.log(`Page running at: 127.0.0.1:${PORT}`);
+  console.log(`Page running at: ${PUBLIC_IP}`);
 });
