@@ -19,6 +19,7 @@ function GoogleOAuth() {
     google.accounts.id.prompt();
   }
 
+  // the client id here will need to be moved to a gitignore
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
@@ -26,11 +27,12 @@ function GoogleOAuth() {
       callback: handleCallbackResponse
     });
 
-    google.accounts.id.renderButton(
-      document.getElementById('signInDiv'),
-      { theme: 'outline', size: 'large' }
-    );
+    // google.accounts.id.renderButton(
+    //   document.getElementById('signInDiv'),
+    //   { theme: 'outline', size: 'large' }
+    // );
 
+    // this shows the sign in pop up box prompt
     google.accounts.id.prompt();
   }, []);
   // if no user: show signin button
