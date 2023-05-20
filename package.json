@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --watch",
     "start": "nodemon server/index.js",
-    "dev": "concurrently \"npm run build\" \"npm start\" -n webpack,server",
-    "lint": "./node_modules/.bin/eslint"
+    "dev": "concurrently \"npm:build\" \"npm:start\""
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
