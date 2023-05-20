@@ -1,7 +1,8 @@
 /* global google */
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+
 
 function GoogleOAuth() {
   const [user, setUser] = useState({});
@@ -146,15 +147,18 @@ function GoogleOAuth() {
               />
             </label>
           </form>
+          <Link to="/home">
+            <button>Create Account</button>
+          </Link>
         </div>
       )}
 
-      {Object.keys(user).length !== 0 && (
+      {/* {Object.keys(user).length !== 0 && (
         <div>
           <img src={user.picture} alt="" />
           <h3>{user.name}</h3>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
