@@ -1,7 +1,11 @@
+
 function NoPage() {
   return (
     <main>
-      404
+      <br />
+      <br />
+      <br />
+      <h1>404 Page not Found</h1>
     </main>
   );
 }
