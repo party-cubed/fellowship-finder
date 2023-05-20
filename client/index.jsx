@@ -12,13 +12,13 @@ export default function App() {
     <StrictMode>
       <Router>
         <Routes>
-          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/" element={<Welcome />} />
           <Route
             path="*"
             element={
               <Layout>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
