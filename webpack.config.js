@@ -6,11 +6,12 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
     publicPath: '/',
   },
   mode: 'development',
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -28,8 +29,13 @@ module.exports = {
       }
     ]
   },
+  devtool: 'inline-source-map',
   devServer: {
-    historyApiFallback: true,
+    static: './dist',
+    hot: true,
+  },
+  watchOptions: {
+    aggregateTimeout: 1000, // Delay before rebuilding in milliseconds
   },
   plugins: [
     new HtmlWebpackPlugin({
