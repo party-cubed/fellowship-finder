@@ -1,108 +1,105 @@
-import React from 'react';
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-one-expression-per-line */
+
+//subject to change. also at the moment id 4 & 5 let you type anything but it should only allow you
+//to select yes or no
+const inputsArr = [
+  {
+    id: 1,
+    name: 'username',
+    type: 'text',
+    placeholder: 'username',
+    label: 'Username: '
+  },
+  {
+    id: 2,
+    name: 'email',
+    type: 'text',
+    placeholder: 'email',
+    label: 'Email: '
+  },
+  {
+    id: 3,
+    name: 'age',
+    type: 'number',
+    placeholder: 'age (minimum 18)',
+    label: 'Age: ',
+    min: 18
+  },
+  {
+    id: 4,
+    name: 'maxTravelDist',
+    type: 'number',
+    placeholder: 'maximum travel distance',
+    label: "Max distance you're willing to travel?"
+  },
+  {
+    id: 5,
+    name: 'canHost',
+    type: 'select',
+    options: ['Yes', 'No'],
+    placeholder: 'can host',
+    label: 'Can you host?'
+  },
+  {
+    id: 6,
+    name: 'DM',
+    type: 'select',
+    options: ['Yes', 'No'],
+    placeholder: 'DM',
+    label: 'Are you a Dungeon Master?'
+  },
+  {
+    id: 7,
+    name: 'combatHeaviness',
+    type: 'number',
+    placeholder: 'combat heaviness (1-5)',
+    label: 'Combat Heaviness? (1 being a little, 5 being a lot.)',
+    min: 1,
+    max: 5
+  },
+  {
+    id: 8,
+    name: 'strategyHeaviness',
+    type: 'number',
+    placeholder: 'strategy heaviness (1-5)',
+    label: 'Strategy Heaviness? (1 being a little, 5 being a lot.)',
+    min: 1,
+    max: 5
+  },
+  {
+    id: 9,
+    name: 'roleplayFocus',
+    type: 'number',
+    placeholder: 'roleplay focus (1-5)',
+    label: 'Roleplay Focus? (1 being a little, 5 being a lot.)',
+    min: 1,
+    max: 5
+  },
+  {
+    id: 10,
+    name: 'storyFocus',
+    type: 'number',
+    placeholder: 'story focus (1-5)',
+    label: 'Story Focus? (1 being a little, 5 being a lot.)',
+    min: 1,
+    max: 5
+  }
+];
 
 
-function SignupForm() {
+function FormInput(props) {
+  const { label, onChange, id, ...inputProps } = props;
+
   return (
-    <div>
-      <form>
-        <label className="username_label" htmlFor="username">
-          Username
-          <input
-            type="text"
-            id="username"
-            name="username"
-          />
-        </label>
-        <label className="email_label" htmlFor="email">
-          Email
-          <input
-            type="email"
-            id="email"
-            name="email"
-          />
-        </label>
-        <label className="user_age_label" htmlFor="age">
-          Age
-          <input
-            type="number"
-            id="age"
-            name="age"
-          />
-        </label>
-        <label className="max_trabel_dist_label" htmlFor="max_trabel_dist_label">
-          Maximum travel distance
-          <input
-            type="number"
-            id="max_travel_dist"
-            name="max_travel_dist"
-          />
-        </label>
-        <label className="user_sobriety_label" htmlFor="user_sobriety_label">
-          Sober?
-          <select id="user_sobriety" name="user_sobriety">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <label className="user_hostability" htmlFor="user_hostability">
-          Can you host?
-          <select id="hosting" name="hosting">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <label className="user_DM_label" htmlFor="user_DM_label">
-          Are you a dungeon master?
-          <select id="dm_ing" name="dm_ing">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </label>
-        <label className="combat_heaviness_label" htmlFor="combat_heaviness">
-          Combat Heaviness 1 - 5
-          <input
-            type="number"
-            id="combat_heaviness"
-            name="combat_heaviness"
-            min="1"
-            max="5"
-          />
-        </label>
-        <label className="rp_focus_label" htmlFor="rp_focus_label">
-          Roleplay Focus 1 - 5
-          <input
-            type="number"
-            id="rp_focus"
-            name="rp_focus"
-            min="1"
-            max="5"
-          />
-        </label>
-        <label className="strategy_heaviness_label" htmlFor="strategy_heaviness_label">
-          Strategy Heaviness 1 - 5
-          <input
-            type="number"
-            id="strategy_heaviness"
-            name="strategy_heaviness"
-            min="1"
-            max="5"
-          />
-        </label>
-        <label className="story_focus_label" htmlFor="story_focus_label">
-          Story Focus 1 - 5
-          <input
-            type="number"
-            id="story_focus"
-            name="story_focus"
-            min="1"
-            max="5"
-          />
-        </label>
-      </form>
+    <div className="formInput">
+      <label htmlFor="username"> {label} </label>
+      <input {...inputProps} onChange={onChange} />
+
     </div>
   );
 }
 
-
-export default SignupForm;
-
+export { FormInput, inputsArr };

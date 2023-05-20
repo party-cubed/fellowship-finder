@@ -2,26 +2,37 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import { FormInput, inputsArr } from './SignupForm';
 
 
 function GoogleOAuth() {
   const [user, setUser] = useState({});
   const [authenticated, setAuthenticated] = useState(false); // Track authentication state
   const location = useLocation();
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    email: '',
+    age: '',
+    maxTravelDist: '',
+    canHost: '',
+    DM: '',
+    combatHeaviness: '',
+    strategyHeaviness: '',
+    roleplayFocus: '',
+    storyFocus: '',
+  });
+
+  //grabs all the questions from SignupForm.jsx
+  const inputs = inputsArr;
 
   function handleCallbackResponse(response) {
-    console.log(`Encoded JWT ID token: ${response.credential}`);
     const userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    console.log(userObject.email);
     setUser(userObject);
     document.getElementById('signInDiv').hidden = true;
     setAuthenticated(true); // Set authentication state to true
   }
 
-  function handleSignOut(event) {
-    setUser({});
-    google.accounts.id.prompt();
-  }
 
   useEffect(() => {
     //had to add this to check to see if we were on signup.
@@ -40,7 +51,7 @@ function GoogleOAuth() {
         }
       });
     }
-
+    //basically if user has length that means it was authorized correctly
     if (Object.keys(user).length !== 0) {
       setAuthenticated(true); // Set authentication state to true
     }
@@ -48,117 +59,38 @@ function GoogleOAuth() {
   // if no user: show signin button
   // if user: show the log out button
 
+
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
+  const onChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
+  console.log(userInfo);
   return (
     <div className="App">
       {authenticated && (
         <div>
-          <form>
-            <label className="username_label" htmlFor="username">
-              Username
-              <input
-                type="text"
-                id="username"
-                name="username"
+          <form onSubmit={handleSubmit}>
+            {/* maps each input based on its id key */}
+            {inputs.map((input) => (
+              <FormInput
+                key={input.id}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...input}
+                value={userInfo[input.name]}
+                onChange={onChange}
               />
-            </label>
-            <label className="email_label" htmlFor="email">
-              Email
-              <input
-                type="email"
-                id="email"
-                name="email"
-              />
-            </label>
-            <label className="user_age_label" htmlFor="age">
-              Age
-              <input
-                type="number"
-                id="age"
-                name="age"
-              />
-            </label>
-            <label className="max_trabel_dist_label" htmlFor="max_trabel_dist_label">
-              Maximum travel distance
-              <input
-                type="number"
-                id="max_travel_dist"
-                name="max_travel_dist"
-              />
-            </label>
-            <label className="user_sobriety_label" htmlFor="user_sobriety_label">
-              Sober?
-              <select id="user_sobriety" name="user_sobriety">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </label>
-            <label className="user_hostability" htmlFor="user_hostability">
-              Can you host?
-              <select id="hosting" name="hosting">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </label>
-            <label className="user_DM_label" htmlFor="user_DM_label">
-              Are you a dungeon master?
-              <select id="dm_ing" name="dm_ing">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </label>
-            <label className="combat_heaviness_label" htmlFor="combat_heaviness">
-              Combat Heaviness 1 - 5
-              <input
-                type="number"
-                id="combat_heaviness"
-                name="combat_heaviness"
-                min="1"
-                max="5"
-              />
-            </label>
-            <label className="rp_focus_label" htmlFor="rp_focus_label">
-              Roleplay Focus 1 - 5
-              <input
-                type="number"
-                id="rp_focus"
-                name="rp_focus"
-                min="1"
-                max="5"
-              />
-            </label>
-            <label className="strategy_heaviness_label" htmlFor="strategy_heaviness_label">
-              Strategy Heaviness 1 - 5
-              <input
-                type="number"
-                id="strategy_heaviness"
-                name="strategy_heaviness"
-                min="1"
-                max="5"
-              />
-            </label>
-            <label className="story_focus_label" htmlFor="story_focus_label">
-              Story Focus 1 - 5
-              <input
-                type="number"
-                id="story_focus"
-                name="story_focus"
-                min="1"
-                max="5"
-              />
-            </label>
+            ))}
+            <button> TEST SUBMIT BTN</button>
           </form>
           <Link to="/home">
             <button>Create Account</button>
           </Link>
         </div>
       )}
-
-      {/* {Object.keys(user).length !== 0 && (
-        <div>
-          <img src={user.picture} alt="" />
-          <h3>{user.name}</h3>
-        </div>
-      )} */}
     </div>
   );
 }
