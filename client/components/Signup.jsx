@@ -3,7 +3,7 @@ import GoogleOAuth from './GoogleOAuth';
 function Signup() {
   return (
     <main>
-      {GoogleOAuth()}
+      {/* {GoogleOAuth()} */}
     </main>
   );
 }
