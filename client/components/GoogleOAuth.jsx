@@ -62,13 +62,13 @@ function GoogleOAuth() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(userInfo);
   }
 
   const onChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
-  console.log(userInfo);
   return (
     <div className="App">
       {authenticated && (
@@ -84,7 +84,7 @@ function GoogleOAuth() {
                 onChange={onChange}
               />
             ))}
-            <button> TEST SUBMIT BTN</button>
+            <button onClick={handleSubmit}> TEST SUBMIT BTN</button>
           </form>
           <Link to="/home">
             <button>Create Account</button>
