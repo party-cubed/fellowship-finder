@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Welcome() {
   return (
     <div>
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ fontWeight: "bold", fontSize: "24px" }}>𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻</div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ fontWeight: 'bold', fontSize: '24px' }}>𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻</div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <span>Already a party member?</span>
           <Link to="/signin">
             <button>Sign In</button>
@@ -28,8 +28,8 @@ function Welcome() {
       <Link to="/signup">
         <button>Join the Party</button>
       </Link>
-  </div>
-  )
-};
+    </div>
+  );
+}
 
 export default Welcome;
