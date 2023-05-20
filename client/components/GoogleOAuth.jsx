@@ -1,10 +1,12 @@
 /* global google */
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
 function GoogleOAuth() {
   const [user, setUser] = useState({});
   const [authenticated, setAuthenticated] = useState(false); // Track authentication state
+  const location = useLocation();
 
   function handleCallbackResponse(response) {
     console.log(`Encoded JWT ID token: ${response.credential}`);
@@ -20,25 +22,28 @@ function GoogleOAuth() {
     google.accounts.id.prompt();
   }
 
-  // the client id here will need to be moved to a gitignore
   useEffect(() => {
-    google.accounts.id.initialize({
-      client_id: '111434177614-ecnk3ilhihnp3rdhu36thb3atrn35ve7.apps.googleusercontent.com',
-      callback: handleCallbackResponse
-    });
+    //had to add this to check to see if we were on signup.
+    //otherwise the prompt box was displaying on all pages
+    if (location.pathname === '/signup') {
+      google.accounts.id.initialize({
+        client_id: '111434177614-ecnk3ilhihnp3rdhu36thb3atrn35ve7.apps.googleusercontent.com',
+        callback: handleCallbackResponse
+      });
 
-    // this shows the sign in pop up box prompt
-    google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        document.cookie = 'g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT';
-        google.accounts.id.prompt();
-      }
-    });
+      //  shows the signin prompt
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          document.cookie = 'g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+          google.accounts.id.prompt();
+        }
+      });
+    }
 
     if (Object.keys(user).length !== 0) {
       setAuthenticated(true); // Set authentication state to true
     }
-  }, [user]);
+  }, [location.pathname, user]);
   // if no user: show signin button
   // if user: show the log out button
 
