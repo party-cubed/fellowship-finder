@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies, camelcase
 import jwt_decode from 'jwt-decode';
 
 function GoogleOAuth() {
@@ -13,7 +12,6 @@ function GoogleOAuth() {
     document.getElementById('signInDiv').hidden = true;
   }
 
-  // eslint-disable-next-line no-unused-vars
   function handleSignOut(event) {
     setUser({});
     google.accounts.id.prompt();
