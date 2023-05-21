@@ -29,7 +29,12 @@ function GoogleOAuth() {
       { theme: 'outline', size: 'large' }
     );
 
-    google.accounts.id.prompt();
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        document.cookie = 'g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+        google.accounts.id.prompt();
+      }
+    });
   }, []);
   // if no user: show signin button
   // if user: show the log out button
