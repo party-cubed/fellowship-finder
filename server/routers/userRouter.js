@@ -3,7 +3,7 @@ const { Users } = require('../models/init-models.js');
 
 const User = Router();
 
-User.get('/', async (req, res) => {
+User.get('/all', async (req, res) => {
   const { id } = req.params;
   try {
     const users = await Users.findAll();
@@ -16,15 +16,12 @@ User.get('/', async (req, res) => {
 
 User.get('/:id', async (req, res) => {
   const { id } = req.params;
-  console.log('id', id);
   try {
-    console.log(Users.findByPk);
     const user = await Users.findByPk(id);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    console.log(user);
     return res.json(user);
   } catch (error) {
     console.error(error);
