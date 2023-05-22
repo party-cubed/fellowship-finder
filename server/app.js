@@ -12,7 +12,16 @@ app.use(express.static(clientPath));
 // configure App
 app.use(express.json());
 
-app.get('/*', (req, res) => {
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send(err);
+//     }
+//   });
+// });
+
+app.get('/search', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
     if (err) {
       console.log(err);
