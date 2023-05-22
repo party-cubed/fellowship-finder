@@ -1,52 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 const ProfilePage = () => {
-  const { user } = useParams();
-  const [profile, setProfile] = useState(null);
+  const { id } = useParams();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:7000/api/users/${user}`);
-        setProfile(data);
+        const { data } = await axios.get(`/user/${id}`);
+        setUser(data);
       } catch (err) {
         console.error("Error fetching user data: ", err);
       }
     };
-    fetchProfile();
-  }, [user]);
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const { data } = await axios.get(`http://localhost:7000/api/users/${user}`);
-  //       setProfile(data);
-  //     } catch (err) {
-  //       console.error("Error fetching user data: ", err);
-  //     }
-  //   };
-  //   fetchProfile();
-  // }, [user]);
+    fetchUser();
+  }, [id]);
 
-  if (!profile) return <p>Loading...</p>;
-
-  return (
+  return user ? (
     <div>
-      <h1>{profile.name}</h1>
-      <p>{profile.bio}</p>
-      <h2>Age: {profile.age}</h2>
-      <h2>City: {profile.city}</h2>
-      <h2>maxTravelDist: {profile.maxTravelDist}</h2>
-      <h2>Alcohol/drug friendly?: {profile.sober}</h2>
-      <h2>Ability to host: {profile.canHost}</h2>
-      <h2>DM: {profile.DM}</h2>
-      <h2>combatHeaviness: {profile.combatHeaviness}</h2>
-      <h2>strategyHeaviness: {profile.strategyHeaviness}</h2>
-      <h2>roleplayFocus: {profile.roleplayFocus}</h2>
-      <h2>storyFocus: {profile.storyFocus}</h2>
+      <h1>{user.name}</h1>
+      <p>{user.bio}</p>
+      <h2>Age: {user.age}</h2>
+      <h2>City: {user.city}</h2>
+      <h2>maxTravelDist: {user.maxTravelDist}</h2>
+      <h2>Alcohol/drug friendly?: {user.sober}</h2>
+      <h2>Ability to host: {user.canHost}</h2>
+      <h2>DM: {user.DM}</h2>
+      <h2>combatHeaviness: {user.combatHeaviness}</h2>
+      <h2>strategyHeaviness: {user.strategyHeaviness}</h2>
+      <h2>roleplayFocus: {user.roleplayFocus}</h2>
+      <h2>storyFocus: {user.storyFocus}</h2>
     </div>
+  ) : (
+    <h1>Loading Profile...</h1>
   );
 };
 
