@@ -31,6 +31,10 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
+    // proxy: {
+    //   '/api': 'http://localhost:7000',
+    // },
+    // port: 3000,
     static: './dist',
     hot: true,
   },
