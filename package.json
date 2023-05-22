@@ -3,7 +3,8 @@
     "build": "webpack --watch",
     "start": "nodemon server/index.js",
     "dev": "concurrently \"npm:build\" \"npm:start\"",
-    "seed": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
+    "seed": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
+    "generate-models": "sequelize-auto -o \"./server/models\" -d fellowship -h localhost -u root -p 3306 -x \"\" -e mysql"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
