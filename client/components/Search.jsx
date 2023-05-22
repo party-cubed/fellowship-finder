@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 // import sample_data from '../../server/db/sample_data';
 // import SearchDropdown from './SearchDropdown';
 
@@ -17,7 +18,7 @@ const Search = () => {
   });
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch('/api/user/all')
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -33,7 +34,7 @@ const Search = () => {
   }, []);
 
   const handleSubmit = () => {
-    fetch('/api/users')
+    fetch('/api/user/all')
       .then((response) => {
         if (response.ok) {
           return response.json();
