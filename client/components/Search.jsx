@@ -9,7 +9,8 @@ const Search = () => {
     maxAge: 0,
     maxTravelDist: 0,
     sober: 'any',
-    canHost: 'any'
+    canHost: 'any',
+    DM: 'any'
   });
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Search = () => {
       .then((users) => {
         const filteredUsers = users.filter((user) => {
           const {
-            minAge, maxAge, sober, canHost
+            minAge, maxAge, sober, canHost, DM
           } = filters;
           // apply filters using values from filter object
           if (
@@ -47,6 +48,7 @@ const Search = () => {
             || (maxAge && user.age > maxAge)
             || (sober !== 'any' && user.sober.toString() !== sober)
             || (canHost !== 'any' && user.canHost.toString() !== canHost)
+            || (DM !== 'any' && user.DM !== DM)
           ) {
             return false;
           }
@@ -111,11 +113,23 @@ const Search = () => {
             <option value="true">Yes</option>
           </select>
         </div>
-        <div className="DM" />
+        <div className="DM">
+          <h3>DM</h3>
+          <select
+            name="DM"
+            value={filters.DM}
+            onChange={handleFilterChange}
+          >
+            <option value="any">Any</option>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+            <option value="maybe">Maybe</option>
+          </select>
+        </div>
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
       {results.map((user) => (
-        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}`}</div>
+        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}`}</div>
       ))}
     </div>
   );
