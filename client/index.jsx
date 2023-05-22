@@ -8,6 +8,7 @@ import NoPage from './components/NoPage';
 import Welcome from './components/Welcome';
 import Signup from './components/Signup';
 import Signin from './components/Signin';
+import ProfilePage from './components/ProfilePage';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/signin" element={<Signin />} />
+                  <Route path="/profile:user" element={<ProfilePage />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
               </Layout>
