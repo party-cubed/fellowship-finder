@@ -7,10 +7,13 @@ const Search = () => {
   const [filters, setFilters] = useState({
     minAge: 0,
     maxAge: 0,
-    maxTravelDist: 0,
     sober: 'any',
     canHost: 'any',
-    DM: 'any'
+    DM: 'any',
+    combatHeaviness: 'any',
+    strategyHeaviness: 'any',
+    roleplayFocus: 'any',
+    storyFocus: 'any'
   });
 
   useEffect(() => {
@@ -49,6 +52,10 @@ const Search = () => {
             || (sober !== 'any' && user.sober.toString() !== sober)
             || (canHost !== 'any' && user.canHost.toString() !== canHost)
             || (DM !== 'any' && user.DM !== DM)
+            || (combatHeaviness !== 'any' && user.combatHeaviness !== combatHeaviness)
+            || (strategyHeaviness !== 'any' && user.strategyHeaviness !== strategyHeaviness)
+            || (roleplayFocus !== 'any' && user.roleplayFocus !== roleplayFocus)
+            || (storyFocus !== 'any' && user.storyFocus !== storyFocus)
           ) {
             return false;
           }
@@ -67,6 +74,26 @@ const Search = () => {
     } = e.target;
     const filterValue = type === 'checkbox' ? checked : value;
     setFilters({ ...filters, [name]: filterValue });
+  };
+
+  const renderDropdown = (fieldName) => {
+    return (
+      <div className={fieldName} key={fieldName}>
+        <h3>{fieldName}</h3>
+        <select
+          name={fieldName}
+          value={filters[fieldName]}
+          onChange={handleFilterChange}
+        >
+          <option value="any">Any</option>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
   };
 
   return (
@@ -126,11 +153,22 @@ const Search = () => {
             <option value="maybe">Maybe</option>
           </select>
         </div>
+          {renderDropdown('combatHeaviness')}
+        <div className="strategy-heaviness">
+          {renderDropdown('strategyHeaviness')}
+        </div>
+        <div className="roleplay-focus">
+          {renderDropdown('roleplayFocus')}
+        </div>
+        <div className="story-focus">
+          {renderDropdown('storyFocus')}
+        </div>
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
-      {results.map((user) => (
-        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}`}</div>
-      ))}
+      {results.length ? results.map((user) => (
+        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}</div>
+      ))
+        : <div>No results to display</div>}
     </div>
   );
 };
