@@ -44,7 +44,7 @@ const Search = () => {
       .then((users) => {
         const filteredUsers = users.filter((user) => {
           const {
-            minAge, maxAge, sober, canHost, DM
+            minAge, maxAge, sober, canHost, DM, combatHeaviness, strategyHeaviness, roleplayFocus, storyFocus
           } = filters;
           // apply filters using values from filter object
           if (
