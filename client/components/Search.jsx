@@ -1,33 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import sample_data from '../../server/db/sample_data';
+// import sample_data from '../../server/db/sample_data';
+// import SearchDropdown from './SearchDropdown';
 
 const Search = () => {
   const [results, setResults] = useState([]);
-  const [option, setOption] = useState('');
+  const [filters, setFilters] = useState({
+    minAge: 0,
+    maxAge: 0,
+    username: ''
+  });
 
-  useEffect(() => {
-    setResults(sample_data);
-  }, []);
+  // useEffect(() => {
+  //   fetch('/api/users')
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       }
+  //       throw response;
+  //     })
+  //     .then((users) => {
+  //       setResults(users);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to FETCH users from db:', err);
+  //     });
+  // }, []);
 
-  const handleOptionChange = (e) => {
-    setOption(e.target.value);
+  const handleSubmit = () => {
+    fetch('/api/users')
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((users) => {
+        const filteredUsers = users.filter((user) => {
+          // apply filters, using values from filter object
+          if (
+            (filters.minAge && user.age < filters.minAge)
+            || (filters.maxAge && user.age > filters.maxAge)
+          ) {
+            return false;
+          }
+          return true;
+        });
+
+        setResults(filteredUsers);
+      })
+      .catch((err) => {
+        console.error('Failed to FETCH users from db:', err);
+      });
   };
 
-  const filteredResults = results.filter((user) => {
-    if (option === 'age') {
-      return user.age > 60; // No filter applied for 'username'
-    }
-    return true;
-  });
+  const handleFilterChange = (e) => {
+    setFilters({ ...filters, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
-      <select className="age-menu" value={option} onChange={handleOptionChange}>
-        {/* <option value="age">Username</option> */}
-        <option value="age">Age</option>
-      </select>
-      {filteredResults.map((user) => (
-        <div key={user.id}>{user.username}</div> // Display the desired properties of each object
+      <div className="search-options">
+        <div className="age">
+          <h2>Age</h2>
+          <input
+            name="minAge"
+            type="text"
+            placeholder="min. age"
+            value={filters.minAge}
+            onChange={handleFilterChange}
+          />
+          <input
+            name="maxAge"
+            type="text"
+            placeholder="max. age"
+            value={filters.maxAge}
+            onChange={handleFilterChange}
+          />
+          <button type="submit" onClick={handleSubmit}>Submit</button>
+        </div>
+        <div className="maxTravelDist" />
+        <div className="sober" />
+        <div className="canHost" />
+        <div className="DM" />
+      </div>
+      {results.map((user) => (
+        <div key={user.id}>{`${user.username} ${user.age}`}</div>
       ))}
     </div>
   );
