@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { User } = require('./db/models');
 
 // initilize App
 const app = express();
@@ -21,5 +22,15 @@ app.get('/*', (req, res) => {
 });
 
 // ADD APP ROUTERS
+app.get('/api/users', (req, res) => {
+  User.findAll()
+    .then((users) => {
+      res.status(200).send(users);
+    })
+    .catch((err) => {
+      console.error('Failed to FIND ALL users:', err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = app;
