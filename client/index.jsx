@@ -10,6 +10,8 @@ import Welcome from './components/Welcome';
 import Signup from './components/Signup';
 import Signin from './components/Signin';
 import GoogleOAuth from './components/GoogleOAuth';
+import Chat from './components/Chat';
+
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -29,6 +31,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/signin" element={<Signin />} />
+                  <Route path="/chat" element={<Chat />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
               </Layout>
