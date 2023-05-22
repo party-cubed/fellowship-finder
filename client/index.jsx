@@ -30,7 +30,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/signin" element={<Signin />} />
-                  <Route path="/profile:user" element={<ProfilePage />} />
+                  <Route path="/user/:id" element={<ProfilePage />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
               </Layout>
