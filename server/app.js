@@ -13,9 +13,7 @@ app.use(express.static(clientPath));
 // configure App
 app.use(express.json());
 
-app.use('/user', User);
-
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
     if (err) {
       console.log(err);
@@ -24,6 +22,7 @@ app.get('/*', (req, res) => {
   });
 });
 
-// ADD APP ROUTERS
+//ROUTERS
+app.use('/api/user', User);
 
 module.exports = app;
