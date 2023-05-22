@@ -1,4 +1,4 @@
-import GoogleOAuth from './GoogleOAuth.jsx';
+import GoogleOAuth from '../components/GoogleOAuth';
 
 function Signin() {
   return (

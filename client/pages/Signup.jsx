@@ -1,4 +1,4 @@
-import GoogleOAuth from './GoogleOAuth';
+import GoogleOAuth from '../components/GoogleOAuth';
 
 function Signup() {
   return (
