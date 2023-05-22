@@ -2,7 +2,8 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('fellowship', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
+  logging: false,
 });
 
 async function initialize() {
