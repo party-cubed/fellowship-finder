@@ -10,7 +10,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`/user/${id}`);
+        const { data } = await axios.get(`api/user/${id}`);
         setUser(data);
       } catch (err) {
         console.error("Error fetching user data: ", err);
@@ -21,6 +21,7 @@ const ProfilePage = () => {
 
   return user ? (
     <div>
+      {console.log(id)}
       <h1>{user.name}</h1>
       <p>{user.bio}</p>
       <h2>Age: {user.age}</h2>
@@ -29,8 +30,8 @@ const ProfilePage = () => {
       <h2>Alcohol/drug friendly?: {user.sober}</h2>
       <h2>Ability to host: {user.canHost}</h2>
       <h2>DM: {user.DM}</h2>
-      <h2>combatHeaviness: {user.combatHeaviness}</h2>
-      <h2>strategyHeaviness: {user.strategyHeaviness}</h2>
+      <h2>combatFocus: {user.combatFocus}</h2>
+      <h2>strategyFocus: {user.strategyFocus}</h2>
       <h2>roleplayFocus: {user.roleplayFocus}</h2>
       <h2>storyFocus: {user.storyFocus}</h2>
     </div>
