@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/index.jsx'),
+  stats: 'minimal',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -31,6 +32,15 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
+    historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        router: () => 'http://localhost:7000',
+        logLevel: 'debug' /*optional*/
+      }
+    },
+    port: 3000,
     static: './dist',
     hot: true,
   },
