@@ -9,6 +9,7 @@ import NoPage from './components/NoPage';
 import Welcome from './components/Welcome';
 import Signup from './components/Signup';
 import Signin from './components/Signin';
+import ProfilePage from './components/ProfilePage';
 import GoogleOAuth from './components/GoogleOAuth';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/signin" element={<Signin />} />
+                  <Route path="/user/:id" element={<ProfilePage />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
               </Layout>
