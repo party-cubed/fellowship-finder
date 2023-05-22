@@ -24,6 +24,11 @@ function Header() {
                   About
                 </Link>
               </li>
+              <li>
+                <Link to="/chat" onClick={() => setIsOpen(false)}>
+                  Messages
+                </Link>
+              </li>
             </ul>
           </nav>
         )}
