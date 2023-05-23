@@ -9,11 +9,9 @@ import Badge from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
 
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -46,7 +44,7 @@ function Header() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="search"
               aria-haspopup="true"
               color="inherit"
               component={Link}
@@ -56,7 +54,7 @@ function Header() {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 4 new mails"
+              aria-label="show 4 new messages"
               color="inherit"
               component={Link}
               to="/home"
@@ -67,13 +65,13 @@ function Header() {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show 1 new events"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/events"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+              <Badge badgeContent={1} color="error">
+                <TodayTwoToneIcon />
               </Badge>
             </IconButton>
             <IconButton
