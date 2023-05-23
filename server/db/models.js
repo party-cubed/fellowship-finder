@@ -25,6 +25,14 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   age: {
     type: DataTypes.INTEGER
   },
@@ -32,13 +40,13 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER
   },
   sober: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   canHost: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   DM: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   combatHeaviness: {
     type: DataTypes.INTEGER,
