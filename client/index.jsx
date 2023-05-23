@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { StrictMode, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -29,8 +29,10 @@ export default function App() {
           <Router>
             <GoogleOAuth setUser={setUser} />
             <Routes>
-              <Route path="/" element={<Welcome />} />
+              <Route path="/" element={<Navigate to="/welcometraveler" />} />
               <Route path="/welcometraveler" element={<Welcome />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/signin" element={<Signin />} />
               <Route
                 path="*"
                 element={(
@@ -38,8 +40,6 @@ export default function App() {
                     <Routes>
                       <Route path="/home" element={<Home />} />
                       <Route path="/about" element={<About />} />
-                      <Route path="/signup" element={<Signup />} />
-                      <Route path="/signin" element={<Signin />} />
                       <Route path="/user/:id" element={<ProfilePage />} />
                       <Route path="*" element={<NoPage />} />
                     </Routes>
