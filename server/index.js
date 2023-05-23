@@ -5,7 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
+const bycrypt = require('bcrypt');
 const db = require('./db/index');
 
 const app = require('./app');
@@ -25,26 +25,90 @@ app.use(cookieParser('mySecretKey'));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
 app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password,
+    email,
+    age,
+    maxTravelDist,
+    canHost,
+    DM,
+    combatHeaviness,
+    strategyHeaviness,
+    roleplayFocus,
+    storyFocus
+  } = req.body;
 
   try {
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
       res.send({ message: 'Username already exists' });
     } else {
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      await User.create({ username, password: hashedPassword });
+      const hashedPassword = bycrypt.hashSync(password, 10);
+      await User.create({
+        username,
+        password: hashedPassword,
+        email,
+        age,
+        maxTravelDist,
+        canHost,
+        DM,
+        combatHeaviness,
+        strategyHeaviness,
+        roleplayFocus,
+        storyFocus
+      });
       res.send({ message: 'User created' });
     }
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).send({ message: 'An error occurred during signup' });
   }
+});
+
+app.post('/signin', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      throw err;
+    }
+    if (!user) {
+      res.send('No user exists');
+    }
+    if (user) {
+      // eslint-disable-next-line no-shadow
+      req.login(user, (err) => {
+        if (err) {
+          throw err;
+        }
+        res.send({
+          message: 'User signed in',
+          user
+        });
+      });
+    }
+  })(req, res, next);
+});
+
+// eslint-disable-next-line consistent-return
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/signin');
+}
+
+app.get('/getUser', ensureAuthenticated, (req, res) => {
+  res.send(req.user);
+});
+
+
+app.get('/getUser', (req, res) => {
+  res.send(req.user);
 });
 
 
@@ -66,4 +130,4 @@ app.listen(PORT, (err) => {
 //   console.log(`Page running at: 127.0.0.1:${PORT}`);
 // });
 
-//pasword doesnt have a default value
+

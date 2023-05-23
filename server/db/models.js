@@ -15,13 +15,21 @@ const numericRangeValidator = (min, max) => ({
   }
 });
 
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -32,13 +40,13 @@ const User = sequelize.define('user', {
     type: DataTypes.INTEGER
   },
   sober: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   canHost: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   DM: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   combatHeaviness: {
     type: DataTypes.INTEGER,

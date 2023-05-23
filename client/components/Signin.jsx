@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-
+import axios from 'axios';
 import GoogleOAuth from './GoogleOAuth.jsx';
 
 // function Signin() {
@@ -19,6 +19,20 @@ function Signin() {
   const [signinUsername, setSigninUsername] = useState('');
   const [signinPassword, setSigninPassword] = useState('');
 
+
+  const signin = () => {
+    axios({
+      method: 'post',
+      data: {
+        username: signinUsername,
+        password: signinPassword
+      },
+      withCredentials: true,
+      url: 'http://localhost:3001/signin'
+    }).then((res) => console.log(res)).catch((err) => console.error(err));
+  };
+
+
   return (
     <div>
       <h1>Signin</h1>
@@ -34,7 +48,7 @@ function Signin() {
         placeholder="password"
         onChange={(e) => setSigninPassword(e.target.value)}
       />
-      <button>Signin</button>
+      <button onClick={signin}>Signin</button>
     </div>
   );
 }
