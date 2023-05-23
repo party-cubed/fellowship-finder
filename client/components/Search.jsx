@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-// import sample_data from '../../server/db/sample_data';
-// import SearchDropdown from './SearchDropdown';
 
 const Search = () => {
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState({
-    minAge: 0,
-    maxAge: 0,
+    ageMin: '',
+    ageMax: '',
     sober: 'any',
     canHost: 'any',
     DM: 'any',
-    combatHeaviness: 'any',
-    strategyHeaviness: 'any',
-    roleplayFocus: 'any',
-    storyFocus: 'any'
+    combatHeavinessMin: '',
+    combatHeavinessMax: '',
+    strategyHeavinessMin: '',
+    strategyHeavinessMax: '',
+    roleplayFocusMin: '',
+    roleplayFocusMax: '',
+    storyFocusMin: '',
+    storyFocusMax: ''
   });
 
   useEffect(() => {
@@ -44,19 +45,35 @@ const Search = () => {
       .then((users) => {
         const filteredUsers = users.filter((user) => {
           const {
-            minAge, maxAge, sober, canHost, DM, combatHeaviness, strategyHeaviness, roleplayFocus, storyFocus
+            ageMin,
+            ageMax,
+            sober,
+            canHost,
+            DM,
+            combatHeavinessMin,
+            combatHeavinessMax,
+            strategyHeavinessMin,
+            strategyHeavinessMax,
+            roleplayFocusMin,
+            roleplayFocusMax,
+            storyFocusMin,
+            storyFocusMax
           } = filters;
-          // apply filters using values from filter object
+
           if (
-            (minAge && user.age < minAge)
-            || (maxAge && user.age > maxAge)
+            (ageMin && user.age < ageMin)
+            || (ageMax && user.age > ageMax)
             || (sober !== 'any' && user.sober.toString() !== sober)
             || (canHost !== 'any' && user.canHost.toString() !== canHost)
             || (DM !== 'any' && user.DM !== DM)
-            || (combatHeaviness !== 'any' && user.combatHeaviness !== combatHeaviness)
-            || (strategyHeaviness !== 'any' && user.strategyHeaviness !== strategyHeaviness)
-            || (roleplayFocus !== 'any' && user.roleplayFocus !== roleplayFocus)
-            || (storyFocus !== 'any' && user.storyFocus !== storyFocus)
+            || (combatHeavinessMin && user.combatHeaviness < combatHeavinessMin)
+            || (combatHeavinessMax && user.combatHeaviness > combatHeavinessMax)
+            || (strategyHeavinessMin && user.strategyHeaviness < strategyHeavinessMin)
+            || (strategyHeavinessMax && user.strategyHeaviness > strategyHeavinessMax)
+            || (roleplayFocusMin && user.roleplayFocus < roleplayFocusMin)
+            || (roleplayFocusMax && user.roleplayFocus > roleplayFocusMax)
+            || (storyFocusMin && user.storyFocus < storyFocusMin)
+            || (storyFocusMax && user.storyFocus > storyFocusMax)
           ) {
             return false;
           }
@@ -70,31 +87,8 @@ const Search = () => {
   };
 
   const handleFilterChange = (e) => {
-    const {
-      name, value, type, checked
-    } = e.target;
-    const filterValue = type === 'checkbox' ? checked : value;
-    setFilters({ ...filters, [name]: filterValue });
-  };
-
-  const renderDropdown = (fieldName) => {
-    return (
-      <div className={fieldName} key={fieldName}>
-        <h3>{fieldName}</h3>
-        <select
-          name={fieldName}
-          value={filters[fieldName]}
-          onChange={handleFilterChange}
-        >
-          <option value="any">Any</option>
-          {[1, 2, 3, 4, 5].map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
   };
 
   return (
@@ -103,17 +97,17 @@ const Search = () => {
         <div className="age">
           <h3>Age</h3>
           <input
-            name="minAge"
-            type="text"
+            name="ageMin"
+            type="number"
             placeholder="min age"
-            value={filters.minAge}
+            value={filters.ageMin}
             onChange={handleFilterChange}
           />
           <input
-            name="maxAge"
-            type="text"
+            name="ageMax"
+            type="number"
             placeholder="max age"
-            value={filters.maxAge}
+            value={filters.ageMax}
             onChange={handleFilterChange}
           />
         </div>
@@ -154,15 +148,67 @@ const Search = () => {
             <option value="maybe">Maybe</option>
           </select>
         </div>
-          {renderDropdown('combatHeaviness')}
-        <div className="strategy-heaviness">
-          {renderDropdown('strategyHeaviness')}
-        </div>
-        <div className="roleplay-focus">
-          {renderDropdown('roleplayFocus')}
-        </div>
-        <div className="story-focus">
-          {renderDropdown('storyFocus')}
+        <div className="game-preferences">
+          <h3>Combat Heaviness</h3>
+          <input
+            name="combatHeavinessMin"
+            type="number"
+            placeholder="min combat heaviness"
+            value={filters.combatHeavinessMin}
+            onChange={handleFilterChange}
+          />
+          <input
+            name="combatHeavinessMax"
+            type="number"
+            placeholder="max combat heaviness"
+            value={filters.combatHeavinessMax}
+            onChange={handleFilterChange}
+          />
+          <h3>Strategy Heaviness</h3>
+          <input
+            name="strategyHeavinessMin"
+            type="number"
+            placeholder="min strat heaviness"
+            value={filters.strategyHeavinessMin}
+            onChange={handleFilterChange}
+          />
+          <input
+            name="strategyHeavinessMax"
+            type="number"
+            placeholder="max strategy heaviness"
+            value={filters.strategyHeavinessMax}
+            onChange={handleFilterChange}
+          />
+          <h3>Roleplay Focus</h3>
+          <input
+            name="roleplayFocusMin"
+            type="number"
+            placeholder="min roleplay focus"
+            value={filters.roleplayFocusMin}
+            onChange={handleFilterChange}
+          />
+          <input
+            name="roleplayFocusMax"
+            type="number"
+            placeholder="max roleplay focus"
+            value={filters.roleplayFocusMax}
+            onChange={handleFilterChange}
+          />
+          <h3>Story Focus</h3>
+          <input
+            name="storyFocusMin"
+            type="number"
+            placeholder="min story focus"
+            value={filters.storyFocusMin}
+            onChange={handleFilterChange}
+          />
+          <input
+            name="storyFocusMax"
+            type="number"
+            placeholder="max story focus"
+            value={filters.storyFocusMax}
+            onChange={handleFilterChange}
+          />
         </div>
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
