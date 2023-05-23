@@ -31,18 +31,15 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-<<<<<<< HEAD
-=======
     historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
-        router: () => 'http://localhost:700',
+        router: () => 'http://localhost:7000',
         logLevel: 'debug' /*optional*/
       }
     },
     port: 3001,
->>>>>>> passport
     static: './dist',
     hot: true,
   },
