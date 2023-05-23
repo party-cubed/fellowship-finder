@@ -18,6 +18,13 @@ async function initialize() {
 
 initialize();
 
+const db = {
+  sequelize,
+  Sequelize,
+};
+
 module.exports = {
   sequelize
 };
+
+

@@ -16,6 +16,9 @@ app.use(express.json());
 //ROUTERS
 app.use('/api/user', User);
 
+//ROUTERS
+app.use('/api/user', User);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
     if (err) {
@@ -24,6 +27,18 @@ app.get('*', (req, res) => {
     }
   });
 });
+//nochange
+// ADD APP ROUTERS
+// app.get('/api/users', (req, res) => {
+//   User.findAll()
+//     .then((users) => {
+//       res.status(200).send(users);
+//     })
+//     .catch((err) => {
+//       console.error('Failed to FIND ALL users:', err);
+//       res.sendStatus(500);
+//     });
+// });
 
 // ADD APP ROUTERS
 // app.get('/api/users', (req, res) => {
