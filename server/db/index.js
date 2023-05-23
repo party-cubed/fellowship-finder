@@ -8,7 +8,7 @@ const sequelize = new Sequelize('fellowship', 'root', '', {
 
 async function initialize() {
   try {
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     await sequelize.authenticate();
     console.log('Connected to database!');
   } catch (err) {
