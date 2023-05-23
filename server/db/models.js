@@ -40,10 +40,10 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER
   },
   sober: {
-    type: DataTypes.INTEGER
+    type: DataTypes.BOOLEAN
   },
   canHost: {
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   },
   DM: {
     type: DataTypes.INTEGER
