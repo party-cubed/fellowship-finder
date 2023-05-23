@@ -11,6 +11,7 @@ import Signup from './components/Signup';
 import Signin from './components/Signin';
 import ProfilePage from './components/ProfilePage';
 import GoogleOAuth from './components/GoogleOAuth';
+import Search from './components/Search';
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -30,6 +31,7 @@ export default function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/signin" element={<Signin />} />
+                  <Route path="/search" element={<Search />} />
                   <Route path="/user/:id" element={<ProfilePage />} />
                   <Route path="*" element={<NoPage />} />
                 </Routes>
