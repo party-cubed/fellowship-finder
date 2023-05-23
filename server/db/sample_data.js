@@ -11,7 +11,7 @@ module.exports = [
     strategyHeaviness: 3,
     roleplayFocus: 1,
     storyFocus: 5,
-    friends: ['catcatmcgee', 'emmy-bishop']
+    friends: 'catcatmcgee;emmy-bishop'
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ module.exports = [
     strategyHeaviness: 5,
     roleplayFocus: 4,
     storyFocus: 1,
-    friends: ['MarvyWarvy', 'emmy-bishop']
+    friends: 'MarvyWarvy;emmy-bishop'
   },
   {
     id: 3,
@@ -39,6 +39,6 @@ module.exports = [
     strategyHeaviness: 1,
     roleplayFocus: 1,
     storyFocus: 1,
-    friends: ['MarvyWarvy', 'catcatmcgee']
+    friends: 'MarvyWarvy;catcatmcgee'
   },
 ];
