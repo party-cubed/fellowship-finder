@@ -24,11 +24,6 @@ function Header() {
                   About
                 </Link>
               </li>
-              <li>
-                <Link to="/user/1" onClick={() => setIsOpen(false)}>
-                  Marvas
-                </Link>
-              </li>
             </ul>
           </nav>
         )}
