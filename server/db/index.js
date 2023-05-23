@@ -18,6 +18,24 @@ async function initialize() {
 
 initialize();
 
+const db = {
+  sequelize,
+  Sequelize,
+};
+
 module.exports = {
   sequelize
 };
+
+
+// const mysql = require('mysql2');
+
+// const db = mysql.createPool({
+//   connectionLimit: 10,
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'fellowship'
+// });
+
+// module.exports = db;

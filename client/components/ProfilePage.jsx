@@ -13,7 +13,7 @@ const ProfilePage = () => {
         const { data } = await axios.get(`api/user/${id}`);
         setUser(data);
       } catch (err) {
-        console.error("Error fetching user data: ", err);
+        console.error('Error fetching user data: ', err);
       }
     };
     fetchUser();
