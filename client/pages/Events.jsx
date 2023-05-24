@@ -19,6 +19,7 @@ const localizer = dayjsLocalizer(dayjs);
 function Events() {
   const [events, setEvents] = useState([]);
   const [value, setValue] = React.useState(dayjs(new Date()));
+  const [address, setAddress] = useState('');
 
   const user = useContext(UserProvider);
   console.log('user', user);
@@ -35,6 +36,10 @@ function Events() {
     };
     fetchEvents();
   });
+
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
 
   return (
     <Box sx={{
@@ -67,7 +72,7 @@ function Events() {
               />
             </LocalizationProvider>
             <row style={{ display: 'flex', 'justify-content': 'flex-end', padding: '10px' }}>
-              
+      
               <Button variant="text">Add Event</Button>
             </row>
           </Paper>
