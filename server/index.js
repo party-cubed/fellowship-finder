@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 const bycrypt = require('bcrypt');
 const db = require('./db/index');
 
-
 const app = require('./app');
 
 const PORT = 3001;
@@ -116,7 +115,6 @@ app.get('/getUser', (req, res) => {
   res.send(req.user);
 });
 
-
 app.use(express.json());
 
 
@@ -135,10 +133,10 @@ app.post('/authenticate', async (req, res) => {
   }
 });
 
-
 app.listen(PORT, (err) => {
   if (err) {
     console.error('server connection failed', err);
   }
   console.log(`Page running at: 127.0.0.1:${PORT}`);
 });
+

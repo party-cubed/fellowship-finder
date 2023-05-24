@@ -13,7 +13,6 @@ import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
 
 function Header() {
   return (
-
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         sx={{
@@ -90,7 +89,6 @@ function Header() {
         </Toolbar>
       </AppBar>
     </Box>
-
   );
 }
 
