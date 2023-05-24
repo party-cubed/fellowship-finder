@@ -2,7 +2,6 @@ const { User } = require('./models');
 
 async function addTestUsers() {
   try {
-    // Create three user objects with the desired data
     const users = [
       {
         username: 'user1',
@@ -15,7 +14,7 @@ async function addTestUsers() {
         strategyHeaviness: 4,
         roleplayFocus: 2,
         storyFocus: 5,
-        friends: ['user2', 'user3']
+        friends: 'user2;user3'
       },
       {
         username: 'user2',
@@ -28,7 +27,7 @@ async function addTestUsers() {
         strategyHeaviness: 3,
         roleplayFocus: 1,
         storyFocus: 4,
-        friends: ['user1']
+        friends: 'user1'
       },
       {
         username: 'user3',
@@ -41,7 +40,7 @@ async function addTestUsers() {
         strategyHeaviness: 5,
         roleplayFocus: 3,
         storyFocus: 1,
-        friends: ['user1']
+        friends: 'user1'
       }
     ];
 
