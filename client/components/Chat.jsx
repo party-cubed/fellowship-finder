@@ -12,8 +12,10 @@ function Chat() {
   if (!user) {
     // eslint-disable-next-line no-shadow
     return <AuthPage onAuth={(user) => setUser(user)} />;
+  // eslint-disable-next-line no-else-return
+  } else {
+    return <ChatsPage user={user} />;
   }
-  return <ChatsPage user={user} />;
 }
 
 export default Chat;
