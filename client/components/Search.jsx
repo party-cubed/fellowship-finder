@@ -106,6 +106,26 @@ const Search = () => {
       });
   };
 
+  const handleUnfriend = (currentUserId, enemyUsername) => {
+    fetch('/api/user/unfriend/14', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        username: enemyUsername
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Friend removed');
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to UNFRIEND in db:', err);
+      });
+  };
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
@@ -235,6 +255,7 @@ const Search = () => {
       {results.length ? results.map((user) => (
         <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
           <button onClick={() => handleAddFriend(user.id, user.username)}>Add Friend</button>
+          <button onClick={() => handleUnfriend(user.id, user.username)}>Unfriend</button>
         </div>
       ))
         : <div>No results to display</div>}
