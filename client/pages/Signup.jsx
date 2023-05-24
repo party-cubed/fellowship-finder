@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import GoogleOAuth from './GoogleOAuth';
+import GoogleOAuth from '../components/GoogleOAuth';
 
 // function Signup() {
 //   return (

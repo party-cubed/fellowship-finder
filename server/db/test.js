@@ -5,6 +5,8 @@ async function addTestUsers() {
     const users = [
       {
         username: 'user1',
+        email: 'fakeemail@fakeaf.fak',
+        password: 'pashwerd',
         age: 25,
         maxTravelDist: 10,
         sober: true,
@@ -18,6 +20,8 @@ async function addTestUsers() {
       },
       {
         username: 'user2',
+        email: 'ruffruff@imadog.woof',
+        password: 'paw?',
         age: 16,
         maxTravelDist: 42,
         sober: false,
@@ -31,6 +35,8 @@ async function addTestUsers() {
       },
       {
         username: 'user3',
+        email: 'helpimtrapped@inthedatabase.com',
+        password: 'LETMEOUTTTTTT',
         age: 67,
         maxTravelDist: 3,
         sober: true,
