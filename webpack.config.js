@@ -48,11 +48,11 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
-        router: () => 'http://localhost:7000',
+        router: () => 'http://localhost:700',
         logLevel: 'debug' /*optional*/
       }
     },
-    port: 3000,
+    port: 3001,
     static: './dist',
     hot: true,
   },

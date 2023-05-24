@@ -15,13 +15,21 @@ const numericRangeValidator = (min, max) => ({
   }
 });
 
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -32,13 +40,13 @@ const User = sequelize.define('user', {
     type: DataTypes.INTEGER
   },
   sober: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   canHost: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   DM: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   combatHeaviness: {
     type: DataTypes.INTEGER,
@@ -57,8 +65,12 @@ const User = sequelize.define('user', {
     validate: numericRangeValidator(1, 5)
   },
   friends: {
-    type: DataTypes.JSON,
-    defaultValue: []
+    // this was originally an array of friends' usernames
+    // but mySQL (without postGRES) doesn't support storing data in an array that way
+    // so for now we could store usernames as a string and separate each one w/ a certain character
+    // ex. a semicolon, like so:
+    // 'friend1;friend2;friend3'
+    type: DataTypes.STRING
   }
 });
 

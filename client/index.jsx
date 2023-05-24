@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
 import UserProvider from './components/UserProvider';
+import Search from './components/Search';
 
 const darkTheme = createTheme({
   palette: {
@@ -45,6 +46,7 @@ export default function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/events" element={<Events />} />
                         <Route path="/user/:id" element={<Profile />} />
+                        <Route path="/search" element={<Search />} />
                         <Route path="*" element={<NoPage />} />
                       </Routes>
                     </UserProvider>
