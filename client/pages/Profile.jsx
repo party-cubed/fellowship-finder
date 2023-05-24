@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import profilepic from '../assets/profilepic.jpg';
 
-const ProfilePage = () => {
+const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
 
@@ -51,5 +51,4 @@ const ProfilePage = () => {
   );
 };
 
-
-export default ProfilePage;
+export default Profile;
