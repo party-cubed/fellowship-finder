@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import GoogleOAuth from './GoogleOAuth';
+import GoogleOAuth from '../components/GoogleOAuth';
 
 // function Signup() {
 //   return (
@@ -41,13 +41,13 @@ function Signup() {
         password: registerPassword,
         age: registerAge,
         maxTravelDist: registerMaxTravelDist,
+        sober: registerSobriety,
         canHost: registerCanHost,
-        Dm: registerDM,
+        DM: registerDM,
         combatHeaviness: registerCombatHeaviness,
         strategyHeaviness: registerStrategyHeaviness,
-        storyFocus: registerRoleplayFocus,
-        roleplayFocus: registerStoryFocus,
-        sober: registerSobriety
+        storyFocus: registerStoryFocus,
+        roleplayFocus: registerRoleplayFocus,
       },
       withCredentials: true,
       url: 'http://localhost:3001/signup'
@@ -111,11 +111,9 @@ function Signup() {
       <div>
         <label>Can Host:</label>
         <input
-          type="number"
+          type="text"
           name="canHost"
           placeholder="canHost"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterCanHost(e.target.value)}
         />
       </div>
@@ -123,11 +121,9 @@ function Signup() {
       <div>
         <label>Sobriety:</label>
         <input
-          type="number"
-          name="sobriety"
+          type="text"
+          name="sober"
           placeholder="sobriety"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterSobriety(e.target.value)}
         />
       </div>
@@ -135,11 +131,9 @@ function Signup() {
       <div>
         <label>DM:</label>
         <input
-          type="number"
+          type="text"
           name="DM"
           placeholder="DM"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterDM(e.target.value)}
         />
       </div>
@@ -199,43 +193,3 @@ function Signup() {
 }
 
 export default Signup;
-
-
-// function Signup() {
-//   const [registerUsername, setRegisterUsername] = useState('');
-//   const [registerPassword, setRegisterPassword] = useState('');
-
-//   const register = () => {
-//     axios({
-//       method: 'post',
-//       data: {
-//         username: registerUsername,
-//         password: registerPassword,
-//       },
-//       withCredentials: true,
-//       url: 'http://localhost:7002/signup'
-//     }).then((res) => console.log(res)).catch((err) => console.error(err));
-//   };
-
-
-//   return (
-//     <div>
-//       <h1>Signup</h1>
-//       <input
-//         type="text"
-//         name="username"
-//         placeholder="username"
-//         onChange={(e) => setRegisterUsername(e.target.value)}
-//       />
-//       <input
-//         type="password"
-//         name="password"
-//         placeholder="password"
-//         onChange={(e) => setRegisterPassword(e.target.value)}
-//       />
-//       <button onClick={register}>Create Account</button>
-//     </div>
-//   );
-// }
-
-// export default Signup;

@@ -26,7 +26,18 @@ module.exports = {
             ]
           }
         }
-      }
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ]
   },
   devtool: 'inline-source-map',
@@ -34,12 +45,11 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
-        router: () => 'http://localhost:7000',
+        target: 'http://localhost:7000',
         logLevel: 'debug' /*optional*/
       }
     },
-    port: 3001,
+    port: 3000,
     static: './dist',
     hot: true,
   },
