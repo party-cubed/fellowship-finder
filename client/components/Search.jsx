@@ -86,14 +86,24 @@ const Search = () => {
       });
   };
 
-  const handleAddFriend = (userId, friendUsername) => {
-    fetch(`/api/user/${userId}`, {
+  const handleAddFriend = (currentUserId, friendUsername) => {
+    fetch(`/api/user/add-friend/${currentUserId}`, {
       method: 'PATCH',
       body: JSON.stringify({
-        field: 'friends',
-        value: friendUsername
+        username: friendUsername
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          setResults(results);
+        }
       })
-    });
+      .catch((err) => {
+        console.error('Failed to ADD FRIEND to db:', err);
+      });
   };
 
   const handleFilterChange = (e) => {
@@ -224,7 +234,7 @@ const Search = () => {
       <button type="submit" onClick={handleSubmit}>Submit</button>
       {results.length ? results.map((user) => (
         <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
-          <button onClick={handleAddFriend(user.id)}>Add Friend</button>
+          <button onClick={() => handleAddFriend(user.id, user.username)}>Add Friend</button>
         </div>
       ))
         : <div>No results to display</div>}
