@@ -41,13 +41,13 @@ function Signup() {
         password: registerPassword,
         age: registerAge,
         maxTravelDist: registerMaxTravelDist,
+        sober: registerSobriety,
         canHost: registerCanHost,
-        Dm: registerDM,
+        DM: registerDM,
         combatHeaviness: registerCombatHeaviness,
         strategyHeaviness: registerStrategyHeaviness,
-        storyFocus: registerRoleplayFocus,
-        roleplayFocus: registerStoryFocus,
-        sober: registerSobriety
+        storyFocus: registerStoryFocus,
+        roleplayFocus: registerRoleplayFocus,
       },
       withCredentials: true,
       url: 'http://localhost:3001/signup'
@@ -111,11 +111,9 @@ function Signup() {
       <div>
         <label>Can Host:</label>
         <input
-          type="number"
+          type="text"
           name="canHost"
           placeholder="canHost"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterCanHost(e.target.value)}
         />
       </div>
@@ -123,11 +121,9 @@ function Signup() {
       <div>
         <label>Sobriety:</label>
         <input
-          type="number"
-          name="sobriety"
+          type="text"
+          name="sober"
           placeholder="sobriety"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterSobriety(e.target.value)}
         />
       </div>
@@ -135,11 +131,9 @@ function Signup() {
       <div>
         <label>DM:</label>
         <input
-          type="number"
+          type="text"
           name="DM"
           placeholder="DM"
-          min="0"
-          max="1"
           onChange={(e) => setRegisterDM(e.target.value)}
         />
       </div>
