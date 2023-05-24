@@ -70,4 +70,31 @@ User.patch('/add-friend/:id/', async (req, res) => {
   }
 });
 
+User.patch('/unfriend/:id/', async (req, res) => {
+  const { id } = req.params;
+  const { username } = req.body;
+  try {
+    const user = await Users.findOne({ where: { username: 'CurrentUser' } });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    let updatedFriends;
+    if (user.friends) {
+      const friendsArr = user.friends.split(';');
+      const updatedFriendsArr = friendsArr.filter((friend) => friend !== username);
+      updatedFriends = updatedFriendsArr.join(';');
+    } else {
+      return res.status(404).json({ error: 'Friend not found' });
+    }
+
+    await user.update({ friends: updatedFriends });
+    return res.status(200).json({ message: 'Friend removed!' });
+  } catch (error) {
+    console.error('Failed to PATCH user BY ID:', error);
+    return res.status(500).json({ error: 'An error occurred while updating user' });
+  }
+});
+
 module.exports = User;
