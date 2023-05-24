@@ -1,6 +1,6 @@
 const { Router } = require('express');
 // const { Users } = require('../models/init-models.js');
-const { Users } = require('../models/init-models.js');
+const { User: Users } = require('../db/models.js');
 
 const User = Router();
 
