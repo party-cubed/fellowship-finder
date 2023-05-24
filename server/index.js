@@ -10,16 +10,16 @@ const db = require('./db/index');
 
 const app = require('./app');
 
-const PORT = 3001;
+const PORT = 7000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'mySecretKey', resave: false, saveUninitialized: false }));
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:3001',
+//   credentials: true
+// }));
 
 app.use(cookieParser('mySecretKey'));
 
@@ -29,47 +29,47 @@ require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
-app.post('/signup', async (req, res) => {
-  const {
-    username,
-    password,
-    email,
-    age,
-    maxTravelDist,
-    canHost,
-    DM,
-    combatHeaviness,
-    strategyHeaviness,
-    roleplayFocus,
-    storyFocus
-  } = req.body;
+// app.post('/signup', async (req, res) => {
+//   const {
+//     username,
+//     password,
+//     email,
+//     age,
+//     maxTravelDist,
+//     canHost,
+//     DM,
+//     combatHeaviness,
+//     strategyHeaviness,
+//     roleplayFocus,
+//     storyFocus
+//   } = req.body;
 
-  try {
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      res.send({ message: 'Username already exists' });
-    } else {
-      const hashedPassword = bycrypt.hashSync(password, 10);
-      await User.create({
-        username,
-        password: hashedPassword,
-        email,
-        age,
-        maxTravelDist,
-        canHost,
-        DM,
-        combatHeaviness,
-        strategyHeaviness,
-        roleplayFocus,
-        storyFocus
-      });
-      res.send({ message: 'User created' });
-    }
-  } catch (error) {
-    console.error('Error during signup:', error);
-    res.status(500).send({ message: 'An error occurred during signup' });
-  }
-});
+//   try {
+//     const existingUser = await User.findOne({ where: { username } });
+//     if (existingUser) {
+//       res.send({ message: 'Username already exists' });
+//     } else {
+//       const hashedPassword = bycrypt.hashSync(password, 10);
+//       await User.create({
+//         username,
+//         password: hashedPassword,
+//         email,
+//         age,
+//         maxTravelDist,
+//         canHost,
+//         DM,
+//         combatHeaviness,
+//         strategyHeaviness,
+//         roleplayFocus,
+//         storyFocus
+//       });
+//       res.send({ message: 'User created' });
+//     }
+//   } catch (error) {
+//     console.error('Error during signup:', error);
+//     res.status(500).send({ message: 'An error occurred during signup' });
+//   }
+// });
 
 app.post('/signin', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {

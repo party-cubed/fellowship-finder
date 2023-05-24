@@ -5,6 +5,18 @@ import { useState } from 'react';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
+// function Signup() {
+//   return (
+//     <main>
+//       {/* {GoogleOAuth()} */}
+//       test
+//     </main>
+//   );
+// }
+
+// export default Signup;
+
+
 function Signup() {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');

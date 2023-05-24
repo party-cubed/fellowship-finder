@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "webpack --watch",
+    "build": "webpack serve",
     "start": "nodemon server/index.js",
     "dev": "concurrently \"npm:build\" \"npm:start\"",
     "seed": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",

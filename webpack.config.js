@@ -43,19 +43,30 @@ module.exports = {
     ]
   },
   devtool: 'inline-source-map',
+  // devServer: {
+  //   historyApiFallback: true,
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:3000',
+  //       router: () => 'http://localhost:7000',
+  //       logLevel: 'debug' /*optional*/
+  //     }
+  //   },
+  //   port: 3001,
+  //   static: './dist',
+  //   hot: true,
+  // },
   devServer: {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
-        router: () => 'http://localhost:700',
-        logLevel: 'debug' /*optional*/
+        target: 'http://localhost:7000',
+        // router: () => 'http://localhost:7000',
+        logLevel: 'debug'
       }
     },
     port: 3001,
-    static: './dist',
-    hot: true,
-  },
+},
   watchOptions: {
     aggregateTimeout: 1000, // Delay before rebuilding in milliseconds
   },
