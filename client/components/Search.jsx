@@ -86,6 +86,16 @@ const Search = () => {
       });
   };
 
+  const handleAddFriend = (userId, friendUsername) => {
+    fetch(`/api/user/${userId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        field: 'friends',
+        value: friendUsername
+      })
+    });
+  };
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
@@ -213,7 +223,9 @@ const Search = () => {
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
       {results.length ? results.map((user) => (
-        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}</div>
+        <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+          <button onClick={handleAddFriend(user.id)}>Add Friend</button>
+        </div>
       ))
         : <div>No results to display</div>}
     </div>
