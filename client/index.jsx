@@ -7,12 +7,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
 import About from './pages/About';
+import Events from './pages/Events';
 import NoPage from './pages/NoPage';
-import Welcome from './pages/Welcome';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import ProfilePage from './pages/ProfilePage';
+import Profile from './pages/Profile';
+import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
+import UserProvider from './components/UserProvider';
 
 const darkTheme = createTheme({
   palette: {
@@ -37,12 +39,15 @@ export default function App() {
                 path="*"
                 element={(
                   <Layout>
-                    <Routes>
-                      <Route path="/home" element={<Home />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/user/:id" element={<ProfilePage />} />
-                      <Route path="*" element={<NoPage />} />
-                    </Routes>
+                    <UserProvider>
+                      <Routes>
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/events" element={<Events />} />
+                        <Route path="/user/:id" element={<Profile />} />
+                        <Route path="*" element={<NoPage />} />
+                      </Routes>
+                    </UserProvider>
                   </Layout>
                 )}
               />
