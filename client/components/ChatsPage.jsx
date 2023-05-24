@@ -30,12 +30,31 @@
 
 // const ChatsPage = (props) => {
 //   return (
-//     <div>
+//     <div style={{ height: '100vh' }}>
 //       <PrettyChatWindow
 //         projectId="dee9ce42-872e-458d-aaff-8b5d651583e4"
 //         username={props.user.username}
 //         secret={props.user.secret}
-//         style={{ height: '100vh' }}
+//         style={{ height: '100%' }}
+//       />
+//     </div>
+//   );
+// };
+
+// export default ChatsPage;
+
+
+// import React from 'react';
+// import { ChatEngine } from 'react-chat-engine';
+
+// const ChatsPage = (props) => {
+//   return (
+//     <div style={{ height: '100vh' }}>
+//       <ChatEngine
+//         publicKey="dee9ce42-872e-458d-aaff-8b5d651583e4"
+//         userName={props.user.username}
+//         userSecret={props.user.secret}
+//         height="100%"
 //       />
 //     </div>
 //   );
@@ -45,19 +64,23 @@
 
 
 import React from 'react';
-import { ChatEngine } from 'react-chat-engine';
+import { ChatEngine, ChatList, ChatFeed } from 'react-chat-engine';
 
 const ChatsPage = (props) => {
   return (
     <div style={{ height: '100vh' }}>
       <ChatEngine
-        publicKey="dee9ce42-872e-458d-aaff-8b5d651583e4"
+        projectID="dee9ce42-872e-458d-aaff-8b5d651583e4"
         userName={props.user.username}
         userSecret={props.user.secret}
         height="100%"
-      />
+      >
+        <ChatList />
+        <ChatFeed activeChat={props.user.username} />
+      </ChatEngine>
     </div>
   );
 };
 
 export default ChatsPage;
+
