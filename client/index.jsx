@@ -14,6 +14,7 @@ import Signin from './pages/Signin';
 import Profile from './pages/Profile';
 import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
+
 import UserProvider from './components/UserProvider';
 import Search from './components/Search';
 import Login from './pages/Login';
@@ -24,10 +25,12 @@ const darkTheme = createTheme({
   },
 });
 
+
 export default function App() {
   const [user, setUser] = useState({});
   return (
     <StrictMode>
+
       <ThemeProvider theme={darkTheme}>
         <CssBaseline>
           <Router>
@@ -59,6 +62,7 @@ export default function App() {
           </Router>
         </CssBaseline>
       </ThemeProvider>
+
     </StrictMode>
   );
 }

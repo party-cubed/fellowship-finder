@@ -1,4 +1,5 @@
 
+const { default: axios } = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'mySecretKey', resave: false, saveUninitialized: false }));
 
+app.use(cors({ origin: true }));
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true
@@ -111,10 +113,27 @@ app.get('/getUser', (req, res) => {
   res.send(req.user);
 });
 
+app.use(express.json());
+
+
+app.post('/authenticate', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const r = await axios.put(
+      'https://api.chatengine.io/users/',
+      { username, secret: username, first_name: username },
+      { headers: { 'private-key': '936bd962-1f79-4d82-bffb-e7239bbbc3c4' } }
+    );
+    return res.status(r.status).json(r.data);
+  } catch (err) {
+    return res.status(err.response.status).json(err.response.data);
+  }
+});
 
 app.listen(PORT, (err) => {
   if (err) {
-    console.log('server connection failed', err);
+    console.error('server connection failed', err);
   }
   console.log(`Page running at: 127.0.0.1:${PORT}`);
 });
