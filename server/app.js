@@ -1,9 +1,11 @@
 const express = require('express');
+const passport = require('passport');
 const path = require('path');
 const cookieSession = require('cookie-session'); //
 const User = require('./routers/userRouter');
 const authRoutes = require('./routers/authRouter'); //
 const passportSetup = require('../config/passport-setup'); //
+const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
 
 // initilize App
@@ -15,6 +17,16 @@ app.use(express.static(clientPath));
 
 // configure App
 app.use(express.json());
+app.use(cookieSession({
+  // define expiration date of cookie (24 hrs)
+  maxAge: 24 * 60 * 60 * 1000,
+  // use key to encrypt cookie
+  keys: [keys.session.cookieKey]
+}));
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //ROUTERS
 app.use('/api/user', User);
