@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieSession = require('cookie-session'); //
 const User = require('./routers/userRouter');
 const authRoutes = require('./routers/authRouter'); //
 const passportSetup = require('../config/passport-setup'); //
