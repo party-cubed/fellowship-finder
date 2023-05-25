@@ -27,6 +27,7 @@ module.exports = {
           }
         }
       {
+
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
@@ -38,6 +39,7 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+
     ]
   },
   devtool: 'inline-source-map',
