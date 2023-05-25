@@ -48,7 +48,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/search"
             >
               <SearchIcon />
             </IconButton>
@@ -59,9 +59,7 @@ function Header() {
               component={Link}
               to="/home"
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <Badge><MailIcon /></Badge>
             </IconButton>
             <IconButton
               size="large"
@@ -70,7 +68,7 @@ function Header() {
               component={Link}
               to="/events"
             >
-              <Badge badgeContent={1} color="error">
+              <Badge>
                 <TodayTwoToneIcon />
               </Badge>
             </IconButton>
