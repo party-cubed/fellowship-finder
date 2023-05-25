@@ -12,6 +12,7 @@ const authCheck = (req, res, next) => {
 
 // fire authCheck to check if user logged in before displaying profile
 router.get('/', authCheck, (req, res) => {
+  // need to edit to display current user's profile
   res.send(`You are logged in, this is your profile: ${req.user.email}`);
 });
 
