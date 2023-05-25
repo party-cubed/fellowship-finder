@@ -24,7 +24,7 @@ router.get('/google', passport.authenticate('google', {
 // grab code to exchange for profile info (passport.authenticate)
 // before (req, res), cb function from passport-setup fires
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.send('you reached the callback URI');
+  res.send(req.user);
 });
 
 module.exports = router;
