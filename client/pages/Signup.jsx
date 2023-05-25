@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* global google */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
@@ -30,23 +30,27 @@ function Signup() {
   const [registerRoleplayFocus, setRegisterRoleplayFocus] = useState('');
   const [registerStoryFocus, setRegisterStoryFocus] = useState('');
   const [registerSobriety, setRegisterSobriety] = useState('');
-
+  const [currentUserId, setCurrentUserId] = useState('');
 
   const getUser = () => {
     axios.get('http://localhost:3001/auth/login/success', {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response.data);
+        setCurrentUserId(response.data.id);
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const register = () => {
     axios({
-      method: 'post',
+      method: 'POST',
       data: {
         username: registerUsername,
         email: registerEmail,
@@ -60,6 +64,7 @@ function Signup() {
         strategyHeaviness: registerStrategyHeaviness,
         storyFocus: registerStoryFocus,
         roleplayFocus: registerRoleplayFocus,
+        id: currentUserId,
       },
       withCredentials: true,
       url: 'http://localhost:3001/signup'

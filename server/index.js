@@ -42,31 +42,29 @@ app.post('/signup', async (req, res) => {
     combatHeaviness,
     strategyHeaviness,
     roleplayFocus,
-    storyFocus
+    storyFocus,
+    id
   } = req.body;
 
   try {
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      res.send({ message: 'Username already exists' });
-    } else {
-      const hashedPassword = bycrypt.hashSync(password, 10);
-      await User.create({
-        username,
-        password: hashedPassword,
-        email,
-        age,
-        maxTravelDist,
-        sober,
-        canHost,
-        DM,
-        combatHeaviness,
-        strategyHeaviness,
-        roleplayFocus,
-        storyFocus
-      });
-      res.send({ message: 'User created' });
-    }
+    const existingUser = await User.findByPk(id);
+    const hashedPassword = bycrypt.hashSync(password, 10);
+    await existingUser.update({
+      username,
+      password: hashedPassword,
+      email,
+      age,
+      maxTravelDist,
+      sober,
+      canHost,
+      DM,
+      combatHeaviness,
+      strategyHeaviness,
+      roleplayFocus,
+      storyFocus
+    });
+    await existingUser.save();
+    res.send({ message: 'User created' });
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).send({ message: 'An error occurred during signup' });
