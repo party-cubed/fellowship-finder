@@ -12,7 +12,10 @@ module.exports = {
   },
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@emotion/react': require.resolve('@emotion/react'),
+    }
   },
   module: {
     rules: [
