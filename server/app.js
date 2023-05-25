@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const User = require('./routers/userRouter');
+const Event = require('./routers/eventRouter');
 const { sequelize } = require('./db/index');
 
 // initilize App
@@ -15,6 +16,7 @@ app.use(express.json());
 
 //ROUTERS
 app.use('/api/user', User);
+app.use('/api/event', Event);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
@@ -25,7 +27,7 @@ app.get('*', (req, res) => {
   });
 });
 
-// ADD APP ROUTERS
+// ADD APP ROUTERS`
 // app.get('/api/users', (req, res) => {
 //   User.findAll()
 //     .then((users) => {
