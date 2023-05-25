@@ -103,7 +103,7 @@ const Events = sequelize.define('Events', {
     type: DataTypes.DATE,
     allowNull: false
   },
-  name: {
+  title: {
     type: DataTypes.STRING(255),
     allowNull: true
   },
