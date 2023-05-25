@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+const { User: Users } = require('../db/models');
 
 // auth login
 router.get('/login/success', (req, res) => {
@@ -24,7 +25,19 @@ router.get('/google', passport.authenticate('google', {
 // grab code to exchange for profile info (passport.authenticate)
 // before (req, res), cb function from passport-setup fires
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.send(req.user);
+  Users.findByPk(req.user.id)
+    .then((user) => {
+      if (user.username === null) {
+        // redirect to signup
+        res.redirect('/profile');
+      } else {
+        res.redirect('/profile');
+      }
+    })
+    .catch((err) => {
+      console.error('Failed to FIND user BY ID:', err);
+    });
+  // res.send(req.user);
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ const path = require('path');
 const cookieSession = require('cookie-session'); //
 const User = require('./routers/userRouter');
 const authRoutes = require('./routers/authRouter'); //
+const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
 const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
@@ -31,6 +32,7 @@ app.use(passport.session());
 //ROUTERS
 app.use('/api/user', User);
 app.use('/auth', authRoutes); //
+app.use('/profile', profileRoutes); //
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
