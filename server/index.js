@@ -23,9 +23,9 @@ app.use(cors({
 
 app.use(cookieParser('mySecretKey'));
 
-app.use(passport.initialize());
-app.use(passport.session());
-require('./passportConfig')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
