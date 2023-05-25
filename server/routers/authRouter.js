@@ -17,13 +17,13 @@ router.get('/logout', (req, res) => {
 
 // auth with google
 router.get('/google', passport.authenticate('google', {
-  scope: ['profile']
+  scope: ['profile', 'email']
 }));
 
 // cb route for google to redirect to
 // grab code to exchange for profile info (passport.authenticate)
 // before (req, res), cb function from passport-setup fires
-router.get('/google/redirect', (req, res) => {
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.send('you reached the callback URI');
 });
 
