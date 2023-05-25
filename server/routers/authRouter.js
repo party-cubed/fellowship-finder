@@ -29,9 +29,9 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     .then((user) => {
       if (user.username === null) {
         // redirect to signup
-        res.redirect('/profile');
+        res.redirect('/signup');
       } else {
-        res.redirect('/profile');
+        res.redirect(`/user/${req.user.id}`);
       }
     })
     .catch((err) => {
