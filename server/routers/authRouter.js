@@ -4,9 +4,7 @@ const { User: Users } = require('../db/models');
 
 // auth login
 router.get('/login/success', (req, res) => {
-  const { user } = req.body;
-  // const user = req.user;
-  // console.log(user);
+  const { user } = req;
   res.status(200).send(user); // render login page
 });
 
@@ -29,7 +27,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     .then((user) => {
       if (user.username === null) {
         // redirect to signup
-        res.redirect('/signup');
+        res.redirect('/signup').send(user);
       } else {
         res.redirect(`/user/${req.user.id}`);
       }

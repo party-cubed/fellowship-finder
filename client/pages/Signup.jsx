@@ -32,6 +32,18 @@ function Signup() {
   const [registerSobriety, setRegisterSobriety] = useState('');
 
 
+  const getUser = () => {
+    axios.get('http://localhost:3001/auth/login/success', {
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   const register = () => {
     axios({
       method: 'post',
@@ -187,6 +199,7 @@ function Signup() {
       </div>
 
       <button onClick={register}>Create Account</button>
+      <button onClick={getUser}>Test getUser</button>
     </div>
 
   );
