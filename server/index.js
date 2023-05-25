@@ -45,11 +45,11 @@ app.post('/signup', async (req, res) => {
     strategyHeaviness,
     roleplayFocus,
     storyFocus,
-    id
+    googleId
   } = req.body;
 
   try {
-    const existingUser = await User.findByPk(id);
+    const existingUser = await User.findOne({ where: { googleId } });
     const hashedPassword = bycrypt.hashSync(password, 10);
     await existingUser.update({
       username,

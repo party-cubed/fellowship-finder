@@ -37,7 +37,7 @@ function Signup() {
       withCredentials: true,
     })
       .then((response) => {
-        setCurrentUserId(response.data.id);
+        setCurrentUserId(response.data.googleId);
       })
       .catch((err) => {
         console.error(err);
@@ -64,7 +64,7 @@ function Signup() {
         strategyHeaviness: registerStrategyHeaviness,
         storyFocus: registerStoryFocus,
         roleplayFocus: registerRoleplayFocus,
-        id: currentUserId,
+        googleId: currentUserId,
       },
       withCredentials: true,
       url: 'http://localhost:3001/signup'
