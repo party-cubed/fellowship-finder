@@ -26,7 +26,7 @@ const User = sequelize.define('User', {
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false
+    // allowNull: false
   },
   email: {
     type: DataTypes.STRING,
@@ -34,7 +34,7 @@ const User = sequelize.define('User', {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    // allowNull: false
   },
   age: {
     type: DataTypes.INTEGER
