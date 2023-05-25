@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Search = () => {
+const Search = ({ currUser }) => {
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState({
     ageMin: '',
@@ -27,6 +27,7 @@ const Search = () => {
         throw response;
       })
       .then((users) => {
+        // console.log(currUser);
         setResults(users);
       })
       .catch((err) => {
