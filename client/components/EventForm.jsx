@@ -30,8 +30,8 @@ const EventForm = ({ event, setEventValue, users }) => {
         </form>
       </div>
       <div>
-        <DateSelect date={event ? event.start : new Date()} label="Start" setDate={(date) => setEventValue('start', date)} />
-        <DateSelect date={event ? event.end : new Date()} label="End" setDate={(date) => setEventValue('end', date)} />
+        <DateSelect date={event ? dayjs(event.start) : dayjs(new Date())} label="Start" setDate={(date) => setEventValue('start', date)} />
+        <DateSelect date={event ? dayjs(event.end) : dayjs(new Date())} label="End" setDate={(date) => setEventValue('end', date)} />
       </div>
       <AddressForm address={event ? event.address : ''} setAddress={(address) => setEventValue('address', address)} style={{ width: '90%' }} />
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
