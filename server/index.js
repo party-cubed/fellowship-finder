@@ -11,7 +11,7 @@ const db = require('./db/index');
 
 const app = require('./app');
 
-const PORT = 3002;
+const PORT = 3001;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

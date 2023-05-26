@@ -23,15 +23,15 @@ const User = sequelize.define('User', {
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true //set to allow true temporarily
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true //set to allow true
+    allowNull: true //set to allow true temporarily
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true //set to allow true temporarily
   },
   age: {
     type: DataTypes.INTEGER

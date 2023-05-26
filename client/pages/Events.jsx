@@ -72,7 +72,6 @@ function Events() {
               />
             </LocalizationProvider>
             <row style={{ display: 'flex', 'justify-content': 'flex-end', padding: '10px' }}>
-      
               <Button variant="text">Add Event</Button>
             </row>
           </Paper>
