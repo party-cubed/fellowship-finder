@@ -155,6 +155,7 @@ const Search = () => {
 
   return (
     <div>
+      <h1>Search the Realms</h1>
       <div className="search-options">
         <div className="age">
           <h3>Age</h3>
