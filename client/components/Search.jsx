@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, Select, MenuItem, Button } from '@mui/material';
+import {
+  TextField, Select, MenuItem, Button, Avatar
+} from '@mui/material';
 import axios from 'axios';
+import profilepic from '../assets/profilepic.jpg';
 
 const Search = () => {
   const [userId, setUserId] = useState('');
@@ -269,24 +272,39 @@ const Search = () => {
             onChange={handleFilterChange}
           />
         </div>
+        <br />
         <Button variant="contained" onClick={handleSubmit}>Search</Button>
       </div>
       <div className="search-results">
         {results.length ? results.map((user) => (
-          <div key={user.id}>
-            <h3>
-              <Link to={`/user/${user.id}`}>{user.username}</Link>
-            </h3>
-            {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
-            {userId !== user.id && (
-              <>
-                <br />
-                <br />
-                <Button variant="contained" onClick={() => handleAddFriend(user.username)}>Add Friend</Button>
-                <Button variant="contained" onClick={() => handleUnfriend(user.username)}>Unfriend</Button>
-              </>
-            )}
-          </div>
+          user.googleId === userId ? null
+            : (
+              <div key={user.id}>
+                <Avatar
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    position: 'relative',
+                    mr: '225px',
+                    mt: '20px',
+                  }}
+                  alt="WizardKitty"
+                  src={profilepic}
+                />
+                <h3>
+                  <Link to={`/user/${user.id}`}>{user.username}</Link>
+                </h3>
+                {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+                {userId !== user.id && (
+                <>
+                  <br />
+                  <br />
+                  <Button variant="contained" onClick={() => handleAddFriend(user.username)}>Add Companion</Button>
+                  <Button variant="contained" onClick={() => handleUnfriend(user.username)}>Make Enemy</Button>
+                </>
+                )}
+              </div>
+            )
         ))
           : <div>Curses! There are no adventurers to display.</div> }
       </div>
@@ -296,7 +314,6 @@ const Search = () => {
 };
 
 export default Search;
-
 
 
 // import React, { useState, useEffect } from 'react';
