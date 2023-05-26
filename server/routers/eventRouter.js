@@ -57,4 +57,19 @@ Event.patch('/:id', async (req, res) => {
   }
 });
 
+Event.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await Events.findByPk(id);
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    await event.destroy();
+    return res.status(200).json({ message: 'Event deleted ' });
+  } catch (error) {
+    console.log('An error occurred while deleting event', error);
+    return res.status(500).json({ error: 'An error occurred while deleting event' });
+  }
+})
+
 module.exports = Event;
