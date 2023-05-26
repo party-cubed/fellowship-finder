@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -13,6 +14,7 @@ import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
 
 function Header() {
   return (
+
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         sx={{
@@ -89,6 +91,7 @@ function Header() {
         </Toolbar>
       </AppBar>
     </Box>
+
   );
 }
 

@@ -1,4 +1,5 @@
 
+const { default: axios } = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -16,16 +17,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'mySecretKey', resave: false, saveUninitialized: false }));
 
+//app.use(cors({ origin: true }));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3002'],
   credentials: true
 }));
 
 app.use(cookieParser('mySecretKey'));
 
-app.use(passport.initialize());
-app.use(passport.session());
-require('./passportConfig')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
@@ -42,31 +44,29 @@ app.post('/signup', async (req, res) => {
     combatHeaviness,
     strategyHeaviness,
     roleplayFocus,
-    storyFocus
+    storyFocus,
+    googleId
   } = req.body;
 
   try {
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      res.send({ message: 'Username already exists' });
-    } else {
-      const hashedPassword = bycrypt.hashSync(password, 10);
-      await User.create({
-        username,
-        password: hashedPassword,
-        email,
-        age,
-        maxTravelDist,
-        sober,
-        canHost,
-        DM,
-        combatHeaviness,
-        strategyHeaviness,
-        roleplayFocus,
-        storyFocus
-      });
-      res.send({ message: 'User created' });
-    }
+    const existingUser = await User.findOne({ where: { googleId } });
+    const hashedPassword = bycrypt.hashSync(password, 10);
+    await existingUser.update({
+      username,
+      password: hashedPassword,
+      email,
+      age,
+      maxTravelDist,
+      sober,
+      canHost,
+      DM,
+      combatHeaviness,
+      strategyHeaviness,
+      roleplayFocus,
+      storyFocus
+    });
+    await existingUser.save();
+    res.send({ message: 'User created' });
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).send({ message: 'An error occurred during signup' });
@@ -113,10 +113,27 @@ app.get('/getUser', (req, res) => {
   res.send(req.user);
 });
 
+app.use(express.json());
+
+
+app.post('/authenticate', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const r = await axios.put(
+      'https://api.chatengine.io/users/',
+      { username, secret: username, first_name: username },
+      { headers: { 'private-key': '936bd962-1f79-4d82-bffb-e7239bbbc3c4' } }
+    );
+    return res.status(r.status).json(r.data);
+  } catch (err) {
+    return res.status(err.response.status).json(err.response.data);
+  }
+});
 
 app.listen(PORT, (err) => {
   if (err) {
-    console.log('server connection failed', err);
+    console.error('server connection failed', err);
   }
   console.log(`Page running at: 127.0.0.1:${PORT}`);
 });

@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/index.jsx'),
-  stats: 'minimal',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -32,6 +31,7 @@ module.exports = {
         }
       },
       {
+
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
@@ -43,6 +43,7 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+
     ]
   },
   devtool: 'inline-source-map',

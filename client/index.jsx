@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
+// eslint-disable-next-line import/no-unresolved, object-curly-newline
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { StrictMode, useState } from 'react';
@@ -14,8 +14,11 @@ import Signin from './pages/Signin';
 import Profile from './pages/Profile';
 import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
+import Chat from './pages/ChatPageStuff/Chat';
+
 import UserProvider from './components/UserProvider';
 import Search from './components/Search';
+import Login from './pages/Login';
 
 const darkTheme = createTheme({
   palette: {
@@ -23,10 +26,12 @@ const darkTheme = createTheme({
   },
 });
 
+
 export default function App() {
   const [user, setUser] = useState({});
   return (
     <StrictMode>
+
       <ThemeProvider theme={darkTheme}>
         <CssBaseline>
           <Router>
@@ -46,7 +51,10 @@ export default function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/events" element={<Events />} />
                         <Route path="/user/:id" element={<Profile />} />
-                        <Route path="/search" element={<Search />} />
+
+                        <Route path="/search" element={<Search currUser={user} />} />
+                        <Route path="/auth/login" element={<Login />} />
+
                         <Route path="*" element={<NoPage />} />
                       </Routes>
                     </UserProvider>
@@ -57,6 +65,7 @@ export default function App() {
           </Router>
         </CssBaseline>
       </ThemeProvider>
+
     </StrictMode>
   );
 }
