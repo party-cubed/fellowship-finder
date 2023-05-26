@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+// eslint-disable-next-line react/prop-types
 const Search = ({ currUser }) => {
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState({
