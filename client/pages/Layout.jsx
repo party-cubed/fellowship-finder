@@ -36,6 +36,7 @@ function Header() {
             noWrap
             component={Link}
             to="/home"
+            // eslint-disable-next-line object-curly-newline
             sx={{ display: { xs: 'none', sm: 'block', textDecoration: 'none', color: 'inherit' } }}
           >
             𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻
@@ -57,7 +58,7 @@ function Header() {
               aria-label="show 4 new messages"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/chat"
             >
               <Badge badgeContent={4} color="error">
                 <MailIcon />
