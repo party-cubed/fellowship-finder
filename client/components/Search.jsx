@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from './UserProvider';
 
@@ -270,13 +271,14 @@ const Search = () => {
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
       {results.length ? results.map((user) => (
-        <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
-          <button onClick={() => handleAddFriend(user.username)}>Add Friend</button>
-          <button onClick={() => handleUnfriend(user.username)}>Unfriend</button>
-          <button onClick={() => getUser()}>Test getUser</button>
+        <div key={user.id}>
+          <Link to={`/user/${user.id}`}>{user.username}</Link>
+          {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+          <button onClick={() => handleAddFriend(user.username)}>Add Companion</button>
+          <button onClick={() => handleUnfriend(user.username)}>Make Enemy</button>
         </div>
       ))
-        : <div>No results to display</div>}
+        : <div>Curses! There are no adventurers to display.</div>}
     </div>
   );
 };
