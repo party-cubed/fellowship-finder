@@ -16,11 +16,12 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
       getOptionLabel={(option) => option.username}
       onChange={handleUsersSelect}
       value={selectedUsers}
+      sx={{ width: '90%' }}
       renderInput={(params) => (
         <TextField
           {...params}
           variant="standard"
-          label="users"
+          label="invites"
           placeholder="Users"
         />
       )}
