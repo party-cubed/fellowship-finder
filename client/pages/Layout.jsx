@@ -58,7 +58,7 @@ function Header() {
               aria-label="show 4 new messages"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/chat"
             >
               <Badge badgeContent={4} color="error">
                 <MailIcon />
