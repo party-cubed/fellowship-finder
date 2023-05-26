@@ -104,7 +104,7 @@ const Search = () => {
   };
 
   const handleAddFriend = (friendUsername) => {
-    fetch(`/api/user/${userId}/add-friend/`, {
+    fetch(`/api/user/add-friend/${userId}`, {
       method: 'PATCH',
       body: JSON.stringify({
         username: friendUsername
@@ -123,8 +123,8 @@ const Search = () => {
       });
   };
 
-  const handleUnfriend = (currUserId, enemyUsername) => {
-    fetch('/api/user/unfriend/14', {
+  const handleUnfriend = (enemyUsername) => {
+    fetch(`/api/user/unfriend/${userId}`, {
       method: 'PATCH',
       body: JSON.stringify({
         username: enemyUsername
@@ -272,7 +272,7 @@ const Search = () => {
       {results.length ? results.map((user) => (
         <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
           <button onClick={() => handleAddFriend(user.username)}>Add Friend</button>
-          <button onClick={() => handleUnfriend(userId, user.username)}>Unfriend</button>
+          <button onClick={() => handleUnfriend(user.username)}>Unfriend</button>
           <button onClick={() => getUser()}>Test getUser</button>
         </div>
       ))
