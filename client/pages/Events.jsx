@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import {
-  Box, Grid, Paper, Button, Typography, Container, TextField
+  Box, Grid, Paper, Button, Typography, Container
 } from '@mui/material';
 import EventDialog from '../components/EventDialog';
 import EventForm from '../components/EventForm';
@@ -19,8 +19,8 @@ function Events() {
   const [event, setEvent] = useState({
     title: '',
     description: '',
-    start: dayjs(new Date()),
-    end: dayjs(new Date()),
+    start: dayjs(),
+    end: dayjs(),
     selectedUsers: null,
     selectedEvent: null,
     address: {
@@ -66,7 +66,6 @@ function Events() {
   }, []);
 
   const handleSubmit = async () => {
-    console.log(event);
     try {
       await axios.post('api/event', {
         title: event.title || 'Session',
@@ -80,8 +79,8 @@ function Events() {
       });
       console.log('posted event to server');
       setEventValue('title', '');
-      setEventValue('start', dayjs(new Date()));
-      setEventValue('end', dayjs(new Date()));
+      setEventValue('start', dayjs());
+      setEventValue('end', dayjs());
       setEventValue('address', { street: '', city: '', state: '', zip: '' });
       setEventValue('selectedUsers', []);
       fetchEvents();
@@ -91,51 +90,90 @@ function Events() {
   };
 
   return (
-    <Box sx={{
-      flexGrow: 1, m: 0, marginTop: 0, padding: '15px', height: '80vh'
-    }}
-    >
-      <Grid container spacing={2} sx={{ height: '100%' }}>
-        <Grid item xs={3}>
-          <Paper style={{
-            display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '10px'
-          }}
-          >
-            <Typography variant="h5" gutterBottom>Create a new event:</Typography>
-            <EventForm event={event} setEventValue={setEventValue} users={users} />
-            <Container style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-              <Button variant="text" onClick={handleSubmit}>Add Event</Button>
-            </Container>
-          </Paper>
-        </Grid>
-        <Grid item xs={9}>
-          <Paper sx={{ height: '100%' }}>
+    <div style={{ flexGrow: 1, margin: 0, marginTop: 0, padding: '15px', height: '80vh' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', height: '100%' }}>
+        <div style={{ gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <h5>Create a new event:</h5>
+          <EventForm event={event} setEventValue={setEventValue} users={users} />
+          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+            <button onClick={handleSubmit}>Add Event</button>
+          </div>
+        </div>
+        <div style={{ gridColumn: '2 / 3' }}>
+          <div style={{ height: '100%' }}>
             <Calendar
               localizer={localizer}
               events={events}
               startAccessor="start"
               endAccessor="end"
               onSelectEvent={(key) => {
-                console.log(key);
                 setEventValue('selectedEvent', key);
               }}
-              sx={{
+              style={{
                 height: '100%',
                 '&& .rbc-off-range-bg': {
                   background: 'black'
                 }
               }}
             />
-          </Paper>
-        </Grid>
-      </Grid>
+          </div>
+        </div>
+      </div>
       <EventDialog
         event={event.selectedEvent}
         onClose={() => setEventValue('selectedEvent', null)}
         fetchEvents={fetchEvents}
         users={users}
       />
-    </Box>
+    </div>
+
+
+    //  MUI VERSION
+    // <Box sx={{
+    //   flexGrow: 1, m: 0, marginTop: 0, padding: '15px', height: '80vh'
+    // }}
+    // >
+    //   <Grid container spacing={2} sx={{ height: '100%' }}>
+    //     <Grid item xs={3}>
+    //       <Paper style={{
+    //         display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '10px'
+    //       }}
+    //       >
+    //         <Typography variant="h5" gutterBottom>Create a new event:</Typography>
+    //         <EventForm event={event} setEventValue={setEventValue} users={users} />
+    //         <Container style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+    //           <Button variant="text" onClick={handleSubmit}>Add Event</Button>
+    //         </Container>
+    //       </Paper>
+    //     </Grid>
+    //     <Grid item xs={9}>
+    //       <Paper sx={{ height: '100%' }}>
+    //         <Calendar
+    //           localizer={localizer}
+    //           events={events}
+    //           startAccessor="start"
+    //           endAccessor="end"
+    //           onSelectEvent={(key) => {
+    //             console.log(key);
+    //             setEventValue('selectedEvent', key);
+    //           }}
+    //           sx={{
+    //             height: '100%',
+    //             '&& .rbc-off-range-bg': {
+    //               background: 'black'
+    //             }
+    //           }}
+    //         />
+    //       </Paper>
+    //     </Grid>
+    //   </Grid>
+    //   <EventDialog
+    //     event={event.selectedEvent}
+    //     onClose={() => setEventValue('selectedEvent', null)}
+    //     fetchEvents={fetchEvents}
+    //     users={users}
+    //   />
+    // </Box>
   );
 }
 
