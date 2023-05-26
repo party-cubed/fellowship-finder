@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Search = () => {
+const Search = ({ currUser }) => {
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState({
     ageMin: '',
@@ -27,6 +27,7 @@ const Search = () => {
         throw response;
       })
       .then((users) => {
+        // console.log(currUser);
         setResults(users);
       })
       .catch((err) => {
@@ -83,6 +84,46 @@ const Search = () => {
       })
       .catch((err) => {
         console.error('Failed to FETCH users from db:', err);
+      });
+  };
+
+  const handleAddFriend = (currentUserId, friendUsername) => {
+    fetch(`/api/user/add-friend/${currentUserId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        username: friendUsername
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          setResults(results);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to ADD FRIEND to db:', err);
+      });
+  };
+
+  const handleUnfriend = (currentUserId, enemyUsername) => {
+    fetch('/api/user/unfriend/14', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        username: enemyUsername
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Friend removed');
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to UNFRIEND in db:', err);
       });
   };
 
@@ -213,7 +254,10 @@ const Search = () => {
       </div>
       <button type="submit" onClick={handleSubmit}>Submit</button>
       {results.length ? results.map((user) => (
-        <div key={user.id}>{`${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}</div>
+        <div key={user.id}>{`id: ${user.id} ${user.username} ${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+          <button onClick={() => handleAddFriend(user.id, user.username)}>Add Friend</button>
+          <button onClick={() => handleUnfriend(user.id, user.username)}>Unfriend</button>
+        </div>
       ))
         : <div>No results to display</div>}
     </div>
