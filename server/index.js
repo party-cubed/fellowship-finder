@@ -25,9 +25,9 @@ app.use(cors({
 
 app.use(cookieParser('mySecretKey'));
 
-app.use(passport.initialize());
-app.use(passport.session());
-require('./passportConfig')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
@@ -44,31 +44,29 @@ app.post('/signup', async (req, res) => {
     combatHeaviness,
     strategyHeaviness,
     roleplayFocus,
-    storyFocus
+    storyFocus,
+    googleId
   } = req.body;
 
   try {
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      res.send({ message: 'Username already exists' });
-    } else {
-      const hashedPassword = bycrypt.hashSync(password, 10);
-      await User.create({
-        username,
-        password: hashedPassword,
-        email,
-        age,
-        maxTravelDist,
-        sober,
-        canHost,
-        DM,
-        combatHeaviness,
-        strategyHeaviness,
-        roleplayFocus,
-        storyFocus
-      });
-      res.send({ message: 'User created' });
-    }
+    const existingUser = await User.findOne({ where: { googleId } });
+    const hashedPassword = bycrypt.hashSync(password, 10);
+    await existingUser.update({
+      username,
+      password: hashedPassword,
+      email,
+      age,
+      maxTravelDist,
+      sober,
+      canHost,
+      DM,
+      combatHeaviness,
+      strategyHeaviness,
+      roleplayFocus,
+      storyFocus
+    });
+    await existingUser.save();
+    res.send({ message: 'User created' });
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).send({ message: 'An error occurred during signup' });

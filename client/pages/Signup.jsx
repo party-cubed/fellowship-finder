@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* global google */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
@@ -30,11 +30,27 @@ function Signup() {
   const [registerRoleplayFocus, setRegisterRoleplayFocus] = useState('');
   const [registerStoryFocus, setRegisterStoryFocus] = useState('');
   const [registerSobriety, setRegisterSobriety] = useState('');
+  const [currentUserId, setCurrentUserId] = useState('');
 
+  const getUser = () => {
+    axios.get('http://localhost:3001/auth/login/success', {
+      withCredentials: true,
+    })
+      .then((response) => {
+        setCurrentUserId(response.data.googleId);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const register = () => {
     axios({
-      method: 'post',
+      method: 'POST',
       data: {
         username: registerUsername,
         email: registerEmail,
@@ -48,6 +64,7 @@ function Signup() {
         strategyHeaviness: registerStrategyHeaviness,
         storyFocus: registerStoryFocus,
         roleplayFocus: registerRoleplayFocus,
+        googleId: currentUserId,
       },
       withCredentials: true,
       url: 'http://localhost:3001/signup'
@@ -187,6 +204,7 @@ function Signup() {
       </div>
 
       <button onClick={register}>Create Account</button>
+      <button onClick={getUser}>Test getUser</button>
     </div>
 
   );
