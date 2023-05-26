@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
+// eslint-disable-next-line import/no-unresolved, object-curly-newline
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { StrictMode, useState } from 'react';
@@ -14,6 +14,7 @@ import Signin from './pages/Signin';
 import Profile from './pages/Profile';
 import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
+import Chat from './pages/ChatPageStuff/Chat';
 
 import UserProvider from './components/UserProvider';
 import Search from './components/Search';
@@ -50,6 +51,7 @@ export default function App() {
                         <Route path="/events" element={<Events />} />
                         <Route path="/user/:id" element={<Profile />} />
                         <Route path="/search" element={<Search />} />
+                        <Route path="/chat" element={<Chat />} />
                         <Route path="*" element={<NoPage />} />
                       </Routes>
                     </UserProvider>
