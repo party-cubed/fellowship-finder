@@ -3,8 +3,8 @@
 /* global google */
 
 
+import { useState, useEffect } from 'react';
 
-import { useState } from 'react';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
@@ -22,6 +22,25 @@ function Signup() {
   const [registerRoleplayFocus, setRegisterRoleplayFocus] = useState('');
   const [registerStoryFocus, setRegisterStoryFocus] = useState('');
   const [registerSobriety, setRegisterSobriety] = useState('');
+  const [currentUserId, setCurrentUserId] = useState('');
+
+
+
+  const getUser = () => {
+    axios.get('http://localhost:3001/auth/login/success', {
+      withCredentials: true,
+    })
+      .then((response) => {
+        setCurrentUserId(response.data.googleId);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const register = async () => {
     try {
@@ -39,6 +58,7 @@ function Signup() {
         strategyHeaviness: registerStrategyHeaviness,
         storyFocus: registerStoryFocus,
         roleplayFocus: registerRoleplayFocus,
+        googleId: currentUserId,
       });
 
       console.log('Account created on server:', serverResponse.data);
@@ -200,14 +220,11 @@ function Signup() {
       </div>
 
       <button onClick={register}>Create Account</button>
+      <button onClick={getUser}>Test getUser</button>
     </div>
 
   );
 }
 
 export default Signup;
-
-
-
-
 

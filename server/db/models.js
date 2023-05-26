@@ -21,9 +21,14 @@ const User = sequelize.define('User', {
     autoIncrement: true,
     primaryKey: true,
   },
+  googleId: {
+    type: DataTypes.STRING,
+  },
   username: {
     type: DataTypes.STRING,
-    allowNull: true //set to allow true temporarily
+
+    // allowNull: false
+
   },
   email: {
     type: DataTypes.STRING,
@@ -31,7 +36,9 @@ const User = sequelize.define('User', {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: true //set to allow true temporarily
+
+    // allowNull: false
+
   },
   age: {
     type: DataTypes.INTEGER
