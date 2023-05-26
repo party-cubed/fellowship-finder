@@ -43,18 +43,18 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
               </option>
             ))}
           </select>
-          <ul>
-            {selectedUsers.map((selectedUser) => (
-              <li key={selectedUser}>
-                {selectedUser}
-                <button onClick={() => removeUser(selectedUser)}>
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
         </div>
       )}
+      <ul>
+        {selectedUsers.map((selectedUser) => (
+          <li key={selectedUser}>
+            {selectedUser}
+            <button onClick={() => removeUser(selectedUser)}>
+              ✕
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
