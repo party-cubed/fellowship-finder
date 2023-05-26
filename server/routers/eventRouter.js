@@ -39,13 +39,11 @@ Event.post('/', async (req, res) => {
   }
 });
 
-//Stolen from user, probably needs to be fine tuned
 Event.patch('/:id', async (req, res) => {
   const { id } = req.params;
   const { field, value } = req.body;
   try {
     const event = await Events.findByPk(id);
-
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
