@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { TextField, Select, MenuItem, Button } from '@mui/material';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
-import { Link as MUILink } from '@mui/material';
 
 const Search = () => {
   const [userId, setUserId] = useState('');
@@ -31,8 +27,9 @@ const Search = () => {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response.data.googleId);
-        setUserId(response.data.googleId);
+        const { googleId } = response.data;
+        console.log(googleId);
+        setUserId(googleId);
       })
       .catch((err) => {
         console.error(err);
@@ -181,8 +178,8 @@ const Search = () => {
             onChange={handleFilterChange}
           >
             <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="false">No</MenuItem>
             <MenuItem value="true">Yes</MenuItem>
+            <MenuItem value="false">No</MenuItem>
           </Select>
         </div>
         <div className="can-host">
@@ -193,8 +190,8 @@ const Search = () => {
             onChange={handleFilterChange}
           >
             <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="false">No</MenuItem>
             <MenuItem value="true">Yes</MenuItem>
+            <MenuItem value="false">No</MenuItem>
           </Select>
         </div>
         <div className="DM">
@@ -205,8 +202,8 @@ const Search = () => {
             onChange={handleFilterChange}
           >
             <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="no">No</MenuItem>
             <MenuItem value="yes">Yes</MenuItem>
+            <MenuItem value="no">No</MenuItem>
             <MenuItem value="maybe">Maybe</MenuItem>
           </Select>
         </div>
