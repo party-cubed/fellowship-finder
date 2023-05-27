@@ -53,7 +53,7 @@ export default function App() {
                         <Route path="/user/:id" element={<Profile />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/auth/login" element={<Login />} />
-
+                        <Route path="/chat" element={<Chat />} />
                         <Route path="*" element={<NoPage />} />
                       </Routes>
                     </UserProvider>
