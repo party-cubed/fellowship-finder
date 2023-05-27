@@ -19,12 +19,12 @@ function Welcome() {
       <h3>
         Are you ready to trade your NPC companions for some real-life party members?
       </h3>
-      <h3>Enter Felloship Finder!</h3>
+      <h3>Enter Fellowship Finder!</h3>
       <p>
         Maybe you're a seasoned Dungeon Master in need of
         brave heroes, or perhaps you're a level 1 Bard itching to narrate your first saga.
-        Our platform is designed to help you find your perfect adventuring compangions, whether
-        you're a stary-eyed newcomer or a travel worn veteran. So, roll the dice, cast
+        Our platform is designed to help you find your perfect adventuring companions, whether
+        you're a starry-eyed newcomer or a travel-worn veteran. So, roll the dice, cast
         'Summon Allies', and find yourself the perfect party!
       </p>
       <Link to="/signup">
