@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,11 +10,40 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
-import { UserContext } from '../components/UserProvider';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import axios from 'axios';
+import { UserContext, UserProvider } from '../components/UserProvider';
 
 
 function Header() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const { activeUser, setActiveUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    axios.get('http://localhost:3001/auth/logout', {
+      withCredentials: true,
+    })
+      .then(() => {
+        setActiveUser(null);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -88,6 +117,34 @@ function Header() {
             >
               <AccountCircle />
             </IconButton>
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={open ? 'long-menu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  width: '20ch',
+                },
+              }}
+            >
+              <MenuItem onClick={handleLogout}>
+                LOGOUT
+              </MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>

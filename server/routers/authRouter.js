@@ -13,7 +13,9 @@ Auth.get('/login/success', (req, res) => {
 // auth logout
 Auth.get('/logout', (req, res) => {
   // handle with passport
-  res.send('logging out');
+  req.logout(() => {
+    res.redirect('/');
+  });
 });
 
 // auth with google
