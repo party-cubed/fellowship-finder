@@ -17,7 +17,6 @@ const Profile = () => {
       try {
         const { data } = await axios.get(`api/user/${id}`);
         setUser(data);
-        console.log(data);
       } catch (err) {
         console.error('Error fetching user data: ', err);
       }
@@ -42,7 +41,7 @@ const Profile = () => {
       <Grid container>
         <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
           <Chip label={`Name: ${user ? user.username : ''}`} variant="outlined" />
-          <Chip label={`Email: ${user ? user.age : ''}`} variant="outlined" />
+          <Chip label={`Email: ${user ? user.email : ''}`} variant="outlined" />
           <Chip label={`Location: ${user ? user.username : ''}`} variant="outlined" />
           <Typography variant="body1">{user ? user.username : ''}</Typography>
         </Grid>

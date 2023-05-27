@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Login from './Login';
 
 function Welcome() {
   return (
@@ -7,9 +8,10 @@ function Welcome() {
         <div style={{ fontWeight: 'bold', fontSize: '24px' }}>𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻</div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span>Already a party member?</span>
-          <Link to="/signin">
+          {/* <Link to="/signin">
             <button>Sign In</button>
-          </Link>
+          </Link> */}
+          <Login />
         </div>
       </header>
       <hr />

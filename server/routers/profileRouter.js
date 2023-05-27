@@ -1,8 +1,11 @@
-const router = require('express').Router();
+const { Router } = require('express');
+
+const Profile = Router();
 
 const authCheck = (req, res, next) => {
+  const { user } = req;
   // check if user NOT logged in
-  if (!req.user) {
+  if (!user) {
     res.redirect('/auth/login');
   } else {
     // move to next function
@@ -11,11 +14,12 @@ const authCheck = (req, res, next) => {
 };
 
 // fire authCheck to check if user logged in before displaying profile
-router.get('/', authCheck, (req, res) => {
+Profile.get('/', authCheck, (req, res) => {
+  const { user } = req;
   // need to edit to display current user's profile
-  res.send(`You are logged in, this is your profile: ${req.user.email}`);
+  res.send(`You are logged in, this is your profile: ${user.email}`);
 });
 
-module.exports = router;
+module.exports = Profile;
 
 
