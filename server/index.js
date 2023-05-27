@@ -17,9 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'mySecretKey', resave: false, saveUninitialized: false }));
 
-app.use(cors({ origin: true }));
+//app.use(cors({ origin: true }));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3002'],
   credentials: true
 }));
 

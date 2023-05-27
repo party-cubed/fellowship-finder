@@ -4,17 +4,6 @@ import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
 
-// function Signin() {
-//   return (
-//     <main>
-//       {/* {GoogleOAuth()} */}
-
-//       test
-//     </main>
-//   );
-// }
-
-// export default Signin;
 
 function Signin() {
   const [signinUsername, setSigninUsername] = useState('');

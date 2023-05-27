@@ -3,6 +3,7 @@ const passport = require('passport');
 const path = require('path');
 const cookieSession = require('cookie-session'); //
 const User = require('./routers/userRouter');
+const Event = require('./routers/eventRouter');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
@@ -34,6 +35,10 @@ app.use('/api/user', User);
 app.use('/auth', authRoutes); //
 app.use('/profile', profileRoutes); //
 
+//ROUTERS
+app.use('/api/user', User);
+app.use('/api/event', Event);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
     if (err) {
@@ -43,7 +48,7 @@ app.get('*', (req, res) => {
   });
 });
 
-// ADD APP ROUTERS
+// ADD APP ROUTERS`
 // app.get('/api/users', (req, res) => {
 //   User.findAll()
 //     .then((users) => {

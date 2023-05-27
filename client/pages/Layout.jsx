@@ -36,6 +36,7 @@ function Header() {
             noWrap
             component={Link}
             to="/home"
+            // eslint-disable-next-line object-curly-newline
             sx={{ display: { xs: 'none', sm: 'block', textDecoration: 'none', color: 'inherit' } }}
           >
             𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻
@@ -48,7 +49,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/search"
             >
               <SearchIcon />
             </IconButton>
@@ -57,11 +58,9 @@ function Header() {
               aria-label="show 4 new messages"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/chat"
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <Badge><MailIcon /></Badge>
             </IconButton>
             <IconButton
               size="large"
@@ -70,7 +69,7 @@ function Header() {
               component={Link}
               to="/events"
             >
-              <Badge badgeContent={1} color="error">
+              <Badge>
                 <TodayTwoToneIcon />
               </Badge>
             </IconButton>

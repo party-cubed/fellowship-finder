@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/index.jsx'),
-  stats: 'minimal',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -12,7 +11,10 @@ module.exports = {
   },
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@emotion/react': require.resolve('@emotion/react'),
+    }
   },
   module: {
     rules: [

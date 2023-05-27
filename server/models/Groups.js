@@ -1,3 +1,6 @@
+/* eslint-disable quotes */
+/* eslint-disable space-before-function-paren */
+// eslint-disable-next-line import/newline-after-import
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Groups', {

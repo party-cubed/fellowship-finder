@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
