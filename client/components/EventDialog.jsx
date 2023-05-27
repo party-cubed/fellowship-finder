@@ -99,7 +99,7 @@ function EventDialog({
           <input
             type="text"
             id="description"
-            value={editedEvent.description}
+            value={editedEvent ? editedEvent.description : ''}
             onChange={({ target }) => setEditedEventValue(target.id, target.value)}
           />
         </label>
