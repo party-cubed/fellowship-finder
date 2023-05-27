@@ -19,13 +19,13 @@ function DateSelect({ date, setDate, label }) {
   return (
     <div style={{ padding: '8px' }}>
       <label htmlFor={inputId}>
-        {label}
+        {label}:
+        <br />
         <input
           type="datetime-local"
           id={inputId}
           value={selectedDate.format('YYYY-MM-DDTHH:mm')}
           onChange={handleDateChange}
-          style={{ width: '90%' }}
         />
       </label>
     </div>

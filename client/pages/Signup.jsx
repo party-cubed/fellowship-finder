@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
-
 function Signup() {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
@@ -90,7 +89,7 @@ function Signup() {
   return (
     <div>
       <h1>Signup</h1>
-      <div>
+      {/* <div>
         <label>Username:</label>
         <input
           type="text"
@@ -220,7 +219,7 @@ function Signup() {
       </div>
 
       <button onClick={register}>Create Account</button>
-      <button onClick={getUser}>Test getUser</button>
+      <button onClick={getUser}>Test getUser</button> */}
     </div>
 
   );

@@ -15,16 +15,16 @@ const EventForm = ({ event, setEventValue, users }) => {
   return (
     <>
       <div style={{ marginBottom: '20px' }}>
-        <form noValidate autoComplete="off" style={{ width: '90%' }}>
+        <form noValidate autoComplete="off">
           <label htmlFor="eventName">
             Event Name:
+            <br />
             <input
               type="text"
               id="eventName"
               name="link"
               value={event ? event.title : ''}
               onChange={(event) => setEventValue('title', event.target.value)}
-              style={{ width: '100%' }}
             />
           </label>
         </form>
@@ -33,7 +33,8 @@ const EventForm = ({ event, setEventValue, users }) => {
         <DateSelect date={event ? dayjs(event.start) : dayjs(new Date())} label="Start" setDate={(date) => setEventValue('start', date)} />
         <DateSelect date={event ? dayjs(event.end) : dayjs(new Date())} label="End" setDate={(date) => setEventValue('end', date)} />
       </div>
-      <AddressForm address={event ? event.address : ''} setAddress={(address) => setEventValue('address', address)} style={{ width: '90%' }} />
+      <br />
+      <AddressForm event={event} setEventValue={setEventValue} style={{ width: '90%' }} />
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
         <UsersSelect
           users={users || []}
