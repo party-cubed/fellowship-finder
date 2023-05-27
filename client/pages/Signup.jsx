@@ -4,6 +4,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
@@ -23,7 +24,7 @@ function Signup() {
   const [registerStoryFocus, setRegisterStoryFocus] = useState('');
   const [registerSobriety, setRegisterSobriety] = useState('');
   const [currentUserId, setCurrentUserId] = useState('');
-
+  const navigate = useNavigate();
 
 
   const getUser = () => {
@@ -45,7 +46,7 @@ function Signup() {
   const register = async () => {
     try {
       // Register account on your server
-      const serverResponse = await axios.post('http://localhost:3002/signup', {
+      const serverResponse = await axios.post('http://localhost:3001/signup', {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
@@ -81,6 +82,8 @@ function Signup() {
       const chatEngineResponse = await axios.post(chatEngineUrl, userData, { headers });
 
       console.log('User created on ChatEngine:', chatEngineResponse.data);
+
+      navigate('/home');
     } catch (error) {
       console.error('Error creating account:', error);
     }
@@ -220,7 +223,6 @@ function Signup() {
       </div>
 
       <button onClick={register}>Create Account</button>
-      <button onClick={getUser}>Test getUser</button>
     </div>
 
   );
