@@ -17,7 +17,6 @@ const Profile = () => {
       try {
         const { data } = await axios.get(`api/user/${id}`);
         setUser(data);
-        console.log(data);
       } catch (err) {
         console.error('Error fetching user data: ', err);
       }
