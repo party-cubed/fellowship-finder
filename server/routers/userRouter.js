@@ -29,28 +29,11 @@ User.get('/:id', async (req, res) => {
   }
 });
 
-// User.patch('/add-friend/:id/', async (req, res) => {
-//   const { id } = req.params;
-//   const { field, value } = req.body;
-//   try {
-//     const user = await Users.findByPk(id); // will be current user ID
-
-//     if (!user) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-//     await user.update({ [field]: value });
-//     return res.status(200).json({ message: 'User updated' });
-//   } catch (error) {
-//     console.error('Failed to PATCH user BY ID:', error);
-//     return res.status(500).json({ error: 'An error occurred while updating user' });
-//   }
-// });
-
-User.patch('/add-friend/:id/', async (req, res) => {
+User.patch('/add-friend/:id', async (req, res) => {
   const { id } = req.params;
   const { username } = req.body;
   try {
-    const user = await Users.findOne({ where: { username: 'CurrentUser' } });
+    const user = await Users.findOne({ where: { googleId: id } }); // will be current user ID
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -62,6 +45,7 @@ User.patch('/add-friend/:id/', async (req, res) => {
     } else {
       updatedFriends = username;
     }
+
     await user.update({ friends: updatedFriends });
     return res.status(200).json({ message: 'Friend added!' });
   } catch (error) {
@@ -74,7 +58,7 @@ User.patch('/unfriend/:id/', async (req, res) => {
   const { id } = req.params;
   const { username } = req.body;
   try {
-    const user = await Users.findOne({ where: { username: 'CurrentUser' } });
+    const user = await Users.findOne({ where: { googleId: id } });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });

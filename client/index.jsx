@@ -50,8 +50,9 @@ export default function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/events" element={<Events />} />
                         <Route path="/user/:id" element={<Profile />} />
-                        <Route path="/search" element={<Search currUser={user} />} />
+                        <Route path="/search" element={<Search />} />
                         <Route path="/auth/login" element={<Login />} />
+                        <Route path="/chat" element={<Chat />} />
                         <Route path="*" element={<NoPage />} />
                       </Routes>
                     </UserProvider>
