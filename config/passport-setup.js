@@ -32,7 +32,7 @@ passport.use(
     // refreshToken refreshes accessToken
     // profile is user info
     // done is a func to call when done w/ cb
-    const { id, emails } = profile;
+    const { id, emails, photos } = profile;
 
     // check if user already exists
     Users.findOne({ where: { googleId: id } })
@@ -44,7 +44,8 @@ passport.use(
         } else {
           Users.create({
             googleId: id,
-            email: emails[0].value
+            email: emails[0].value,
+            image: photos[0].value,
           })
             .then((newUser) => {
               console.log('New user created:', newUser);

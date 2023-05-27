@@ -24,6 +24,9 @@ const User = sequelize.define('User', {
   googleId: {
     type: DataTypes.STRING,
   },
+  image: {
+    type: DataTypes.STRING,
+  },
   username: {
     type: DataTypes.STRING,
 
@@ -118,9 +121,25 @@ const Events = sequelize.define('Events', {
     type: DataTypes.STRING(255),
     allowNull: true
   },
-  address: {
+  street: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: true
+  },
+  city: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  state: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  zip: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  link: {
+    type: DataTypes.STRING(255),
+    allowNull: true
   },
   hostId: {
     type: DataTypes.INTEGER,

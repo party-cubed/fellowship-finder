@@ -9,7 +9,9 @@ import axios from 'axios';
 import EventForm from './EventForm';
 
 
-function EventDialog({ event, onClose, fetchEvents, users }) {
+function EventDialog({
+  event, onClose, fetchEvents, users
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedEvent, setEditedEvent] = useState(null);
 
@@ -60,7 +62,7 @@ function EventDialog({ event, onClose, fetchEvents, users }) {
   }
 
   return (
-    <Dialog open={!!event} onClose={onClose}>
+    <Dialog open={!!event} onClose={onClose} fullWidth maxWidth="xs">
       <div>
         {isEditing ? (
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -89,9 +91,19 @@ function EventDialog({ event, onClose, fetchEvents, users }) {
           </div>
         )}
       </div>
-      <div>
-        <EventForm event={editedEvent || event} setEventValue={setEditedEventValue} users={users} />
-      </div>
+      <EventForm event={editedEvent || event} setEventValue={setEditedEventValue} users={users} />
+      <form noValidate autoComplete="off" style={{ width: '90%' }}>
+        <label htmlFor="description">
+          Description:
+          <br />
+          <input
+            type="text"
+            id="description"
+            value={editedEvent ? editedEvent.description : ''}
+            onChange={({ target }) => setEditedEventValue(target.id, target.value)}
+          />
+        </label>
+      </form>
     </Dialog>
   );
 }

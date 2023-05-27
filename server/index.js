@@ -45,7 +45,7 @@ app.post('/signup', async (req, res) => {
     strategyHeaviness,
     roleplayFocus,
     storyFocus,
-    googleId
+    googleId,
   } = req.body;
 
   try {
@@ -63,7 +63,7 @@ app.post('/signup', async (req, res) => {
       combatHeaviness,
       strategyHeaviness,
       roleplayFocus,
-      storyFocus
+      storyFocus,
     });
     await existingUser.save();
     res.send({ message: 'User created' });
