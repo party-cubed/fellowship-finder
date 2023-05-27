@@ -25,6 +25,7 @@ function Events() {
     state: '',
     zip: '',
     link: '',
+    description: '',
     selectedUsers: [],
   };
   const [event, setEvent] = useState(initialEventState);
@@ -68,7 +69,6 @@ function Events() {
       await axios.post('api/event', {
         ...event,
         title: event.title || 'Session',
-        description: '',
         hostId: 1
       });
       console.log('posted event to server');
