@@ -39,9 +39,9 @@ export function UserProvider({ children }) {
       });
   };
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <UserContext.Provider value={{ activeUser, setActiveUser }}>
