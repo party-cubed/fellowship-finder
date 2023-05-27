@@ -41,7 +41,7 @@ export default function App({ setUser }) {
           <Routes>
             <Route path="/" element={<Navigate to="/welcometraveler" />} />
             <Route path="/welcometraveler" element={<Welcome />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup activeUser={activeUser} />} />
             <Route path="/signin" element={<Signin />} />
             <Route
               path="*"

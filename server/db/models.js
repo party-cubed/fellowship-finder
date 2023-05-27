@@ -24,6 +24,9 @@ const User = sequelize.define('User', {
   googleId: {
     type: DataTypes.STRING,
   },
+  image: {
+    type: DataTypes.STRING,
+  },
   username: {
     type: DataTypes.STRING,
 

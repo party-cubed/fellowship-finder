@@ -20,7 +20,7 @@ import { UserContext, UserProvider } from '../components/UserProvider';
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { setActiveUser } = useContext(UserContext);
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleClick = (event) => {
@@ -113,7 +113,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to="/user/2"
+              to={activeUser ? `/user/${activeUser.id}` : '/auth/login'}
             >
               <AccountCircle />
             </IconButton>
@@ -156,7 +156,7 @@ function Header() {
 function Layout({ children }) {
   return (
     <div>
-      {Header()}
+      <Header />
       <main>{children}</main>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
@@ -7,8 +7,10 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import profilepic from '../assets/profilepic.jpg';
+import { UserContext } from './UserProvider.jsx';
 
 const Search = () => {
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const [userId, setUserId] = useState('');
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState({
@@ -33,8 +35,8 @@ const Search = () => {
     })
       .then((response) => {
         const { googleId } = response.data;
-        console.log(googleId);
         setUserId(googleId);
+        setActiveUser(response.data);
       })
       .catch((err) => {
         console.error(err);
@@ -591,12 +593,15 @@ export default Search;
 //       </div>
 //       <button type="submit" onClick={handleSubmit}>Submit</button>
 //       {results.length ? results.map((user) => (
-//         <div key={user.id}>
-//           <Link to={`/user/${user.id}`}>{user.username}</Link>
-//           {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
-//           <button onClick={() => handleAddFriend(user.username)}>Add Companion</button>
-//           <button onClick={() => handleUnfriend(user.username)}>Make Enemy</button>
-//         </div>
+//         user.googleId === userId ? null
+//           : (
+//             <div key={user.id}>
+//               <Link to={`/user/${user.id}`}>{user.username}</Link>
+//               {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+//               <button onClick={() => handleAddFriend(user.username)}>Add Companion</button>
+//               <button onClick={() => handleUnfriend(user.username)}>Make Enemy</button>
+//             </div>
+//           )
 //       ))
 //         : <div>Curses! There are no adventurers to display.</div>}
 //     </div>

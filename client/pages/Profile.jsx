@@ -38,14 +38,17 @@ const Profile = () => {
           margin: '0 auto',
         }}
         alt="Marvy Warvy"
-        src={profilepic}
+        src={user ? user.image : profilepic}
       />
       <Grid container>
         <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
-          <Chip label={`Name: ${user ? user.username : ''}`} variant="outlined" />
+          <Typography variant="h2">{user ? user.username : ''}</Typography>
           <Chip label={`Email: ${user ? user.email : ''}`} variant="outlined" />
-          <Chip label={`Location: ${user ? user.username : ''}`} variant="outlined" />
-          <Typography variant="body1">{user ? user.username : ''}</Typography>
+          <Chip label={`Companions: ${user ? (user.friends ? user.friends : 'Nary a one') : ''}`} variant="outlined" />
+          <Chip label={`Combat Heaviness: ${user ? user.combatHeaviness : ''}`} variant="outlined" />
+          <Chip label={`Strategy Heaviness: ${user ? user.strategyHeaviness : ''}`} variant="outlined" />
+          <Chip label={`Roleplay Focus: ${user ? user.roleplayFocus : ''}`} variant="outlined" />
+          <Chip label={`Story Focus: ${user ? user.storyFocus : ''}`} variant="outlined" />
         </Grid>
       </Grid>
     </Container>
