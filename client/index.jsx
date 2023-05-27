@@ -16,7 +16,7 @@ import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
 import Chat from './pages/ChatPageStuff/Chat';
 
-import UserProvider from './components/UserProvider';
+import { UserProvider } from './components/UserProvider';
 import Search from './components/Search';
 import Login from './pages/Login';
 

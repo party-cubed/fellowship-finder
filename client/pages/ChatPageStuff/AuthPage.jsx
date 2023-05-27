@@ -1,27 +1,21 @@
 
 import axios from 'axios';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { UserContext } from '../../components/UserProvider';
 
 const AuthPage = (props) => {
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const { value } = e.target[0];
+  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { id } = useParams();
+  const [user, setUser] = useState(null);
 
-    axios.post(
-      'http://localhost:3002/authenticate',
-      { username: value }
-    )
-      // eslint-disable-next-line react/destructuring-assignment, react/prop-types
-      .then((r) => props.onAuth({ ...r.data, secret: value }))
-      .catch((err) => console.error('Error: ', err));
-
-    // eslint-disable-next-line react/destructuring-assignment, react/prop-types
-    props.onAuth({ username: value, secret: value });
-  };
+  useEffect(() => {
+    console.log(activeUser);
+  }, [activeUser]);
 
   return (
     <div className="background">
-      <form onSubmit={onSubmit} className="form-card">
+      <form>
         <div className="form-title">Welcome 👋</div>
 
         <div className="form-subtitle">Set a username to get started</div>

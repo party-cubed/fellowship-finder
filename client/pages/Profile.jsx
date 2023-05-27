@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
@@ -7,22 +7,16 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import profilepic from '../assets/profilepic.jpg';
+import { UserContext } from '../components/UserProvider';
 
 const Profile = () => {
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const { id } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await axios.get(`api/user/${id}`);
-        setUser(data);
-      } catch (err) {
-        console.error('Error fetching user data: ', err);
-      }
-    };
-    fetchUser();
-  }, [id]);
+    console.log(activeUser);
+  }, [activeUser]);
 
   return (
     <Container>

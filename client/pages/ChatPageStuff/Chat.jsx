@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
+import { UserContext } from '../../components/UserProvider';
 //import './Chat.css';
 
 import AuthPage from './AuthPage';
