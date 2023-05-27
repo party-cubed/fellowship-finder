@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -8,16 +9,15 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
 
   const addUser = ({ target }) => {
     const user = target.selectedOptions[0].value;
-    console.log(user);
-    console.log(selectedUsers);
-    setSelectedUsers([...selectedUsers, user]);
+    const updatedSelectedUsers = new Set(selectedUsers);
+    updatedSelectedUsers.add(user);
+    setSelectedUsers(updatedSelectedUsers);
   };
 
-  const removeUser = (username) => {
-    const updatedUsers = selectedUsers.filter(
-      (selectedUser) => selectedUser !== username
-    );
-    setSelectedUsers(updatedUsers);
+  const removeUser = (user) => {
+    const updatedSelectedUsers = new Set(selectedUsers);
+    updatedSelectedUsers.delete(user);
+    setSelectedUsers(updatedSelectedUsers);
   };
 
   return (
@@ -46,7 +46,7 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
         </div>
       )}
       <ul>
-        {selectedUsers.map((selectedUser) => (
+        {[...selectedUsers].map((selectedUser) => (
           <li key={selectedUser}>
             {selectedUser}
             <button onClick={() => removeUser(selectedUser)}>
