@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
-
 function Signup() {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
@@ -82,7 +81,7 @@ function Signup() {
       const chatEngineResponse = await axios.post(chatEngineUrl, userData, { headers });
 
       console.log('User created on ChatEngine:', chatEngineResponse.data);
-
+      
       navigate('/home');
     } catch (error) {
       console.error('Error creating account:', error);

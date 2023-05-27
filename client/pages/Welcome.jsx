@@ -1,7 +1,18 @@
-import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { UserContext } from '../components/UserProvider';
 import Login from './Login';
 
 function Welcome() {
+  const { activeUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeUser) {
+      navigate('/home');
+    }
+  }, [activeUser, navigate]);
+
   return (
     <div>
       <header style={{ display: 'flex', justifyContent: 'space-between' }}>

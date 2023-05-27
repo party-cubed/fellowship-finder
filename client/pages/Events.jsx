@@ -16,20 +16,19 @@ const localizer = dayjsLocalizer(dayjs);
 function Events() {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
-  const [event, setEvent] = useState({
+  const initialEventState = {
     title: '',
-    description: '',
     start: dayjs(),
     end: dayjs(),
-    selectedUsers: null,
-    selectedEvent: null,
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      zip: ''
-    }
-  });
+    street: '',
+    city: '',
+    state: '',
+    zip: '',
+    link: '',
+    description: '',
+    selectedUsers: [],
+  };
+  const [event, setEvent] = useState(initialEventState);
 
   const setEventValue = (key, value) => {
     setEvent((prevEvent) => ({ ...prevEvent, [key]: value }));
@@ -68,21 +67,12 @@ function Events() {
   const handleSubmit = async () => {
     try {
       await axios.post('api/event', {
+        ...event,
         title: event.title || 'Session',
-        start: event.start,
-        end: event.end,
-        description: '',
-        address: event.address.street.length
-          ? event.address.street.concat('|', event.address.city, '|', event.address.state, '|', event.address.zip)
-          : event.address.link || 'No address',
         hostId: 1
       });
       console.log('posted event to server');
-      setEventValue('title', '');
-      setEventValue('start', dayjs());
-      setEventValue('end', dayjs());
-      setEventValue('address', { street: '', city: '', state: '', zip: '' });
-      setEventValue('selectedUsers', []);
+      setEvent(initialEventState);
       fetchEvents();
     } catch (err) {
       console.error('Error posting event: ', err);

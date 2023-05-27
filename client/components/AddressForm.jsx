@@ -1,88 +1,105 @@
 import React, { useState } from 'react';
 import { TextField, Tabs, Tab, Typography, Box, Button, Container } from '@mui/material';
 
-const AddressForm = ({ address, setAddress }) => {
-  const [isinperson, setIsInPerson] = useState(0);
+const AddressForm = ({ event, setEventValue }) => {
+  const [isInPersonChecked, setInPersonChecked] = useState(false);
+  const [isOnlineChecked, setOnlineChecked] = useState(false);
 
-  const handleChange = (event, newIsInPerson) => {
-    setIsInPerson(newIsInPerson);
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setAddress({ ...address, [name]: value });
-  };
+  // const setEventValue = ( { target }) => {
+  //   setAddress(target.id, target.value);
+  // };
 
   return (
     <div>
       <div>
-        <button onClick={(event) => handleChange(event, 0)}>In Person</button>
-        <button onClick={(event) => handleChange(event, 1)}>Online</button>
+        <label htmlFor="inPersonCheckbox">
+          <input
+            type="checkbox"
+            id="inPersonCheckbox"
+            checked={isInPersonChecked}
+            onChange={() => setInPersonChecked(!isInPersonChecked)}
+          />
+          In Person
+        </label>
+        <label htmlFor="onlineCheckbox">
+          <input
+            type="checkbox"
+            id="onlineCheckbox"
+            checked={isOnlineChecked}
+            onChange={() => setOnlineChecked(!isOnlineChecked)}
+          />
+          Online
+        </label>
       </div>
-      {isinperson === 0 && (
+      {isInPersonChecked && (
         <form noValidate autoComplete="off" style={{ width: '90%' }}>
-          <label htmlFor="streetName">
+          <label htmlFor="street">
             Street:
+            <br />
             <input
               type="text"
-              name="street"
-              id="streetName"
-              value={address.street}
-              onChange={handleInputChange}
-              style={{ width: '100%' }}
+              id="street"
+              value={event.street}
+              onChange={({target}) => setEventValue(target.id, target.value)}
+              required={isInPersonChecked}
             />
           </label>
-          <label htmlFor="cityName">
+          <br />
+          <label htmlFor="city">
             City:
+            <br />
             <input
               type="text"
-              name="city"
-              id="cityName"
-              value={address.city}
-              onChange={handleInputChange}
-              style={{ width: '100%' }}
+              id="city"
+              value={event.city}
+              onChange={({target}) => setEventValue(target.id, target.value)}
+              required={isInPersonChecked}
             />
           </label>
-          <label htmlFor="stateName">
+          <br />
+          <label htmlFor="state">
             State:
+            <br />
             <input
               type="text"
-              name="state"
-              id="stateName"
-              value={address.state}
-              onChange={handleInputChange}
-              style={{ width: '100%' }}
+              id="state"
+              value={event.state}
+              onChange={({target}) => setEventValue(target.id, target.value)}
+              required={isInPersonChecked}
             />
           </label>
-          <label htmlFor="zipName">
+          <br />
+          <label htmlFor="zip">
             Zip Code:
+            <br />
             <input
               type="text"
-              name="zip"
-              id="zipName"
-              value={address.zip}
-              onChange={handleInputChange}
-              style={{ width: '100%' }}
+              id="zip"
+              value={event.zip}
+              onChange={({target}) => setEventValue(target.id, target.value)}
+              required={isInPersonChecked}
             />
           </label>
+          <br />
         </form>
       )}
-      {isinperson === 1 && (
+      {isOnlineChecked && (
         <form noValidate autoComplete="off" style={{ width: '90%' }}>
-          <label htmlFor="linkName">
+          <label htmlFor="link">
             Link:
+            <br />
             <input
               type="text"
-              name="link"
-              id="linkName"
-              value={address.link}
-              onChange={handleInputChange}
-              style={{ width: '100%' }}
+              id="link"
+              value={event.link}
+              onChange={({target}) => setEventValue(target.id, target.value)}
+              required={isOnlineChecked}
             />
           </label>
         </form>
       )}
     </div>
+
 
     // MUI VERSION
     // <Container>
