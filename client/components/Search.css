@@ -1,0 +1,74 @@
+.search-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.search-options h3 {
+  margin-top: 0;
+}
+
+.search-options input,
+.search-options select {
+  width: 100%;
+}
+
+.search-results {
+  margin-bottom: 20px;
+}
+
+.search-results h3 {
+  margin-top: 0;
+}
+
+.search-results .search-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-results .search-item h3 {
+  margin-bottom: 5px;
+}
+
+.search-results .search-item p {
+  margin: 0;
+}
+
+.search-results .search-item .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.search-results .search-item .button-group {
+  margin-top: 10px;
+}
+
+.search-results .search-item .button-group button {
+  margin-right: 10px;
+}
+
+/* Add this CSS code to your stylesheet */
+.user-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.user-info span {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.user-info .label {
+  font-weight: bold;
+}
+
+.user-info .value {
+  color: #888;
+}

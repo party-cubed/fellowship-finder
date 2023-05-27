@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import profilepic from '../assets/profilepic.jpg';
+import './Search.css'; // Import the CSS file
 
 const Search = () => {
   const [userId, setUserId] = useState('');
@@ -593,6 +594,7 @@ export default Search;
 //       {results.length ? results.map((user) => (
 //         <div key={user.id}>
 //           <Link to={`/user/${user.id}`}>{user.username}</Link>
+// eslint-disable-next-line max-len
 //           {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
 //           <button onClick={() => handleAddFriend(user.username)}>Add Companion</button>
 //           <button onClick={() => handleUnfriend(user.username)}>Make Enemy</button>

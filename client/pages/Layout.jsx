@@ -49,7 +49,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to="/home"
+              to="/search"
             >
               <SearchIcon />
             </IconButton>

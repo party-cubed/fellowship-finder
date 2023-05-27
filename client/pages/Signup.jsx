@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
-import GoogleOAuth from '../components/GoogleOAuth';
+//import GoogleOAuth from '../components/GoogleOAuth';
 
 
 function Signup() {
@@ -45,7 +45,7 @@ function Signup() {
   const register = async () => {
     try {
       // Register account on your server
-      const serverResponse = await axios.post('http://localhost:3002/signup', {
+      const serverResponse = await axios.post('http://localhost:3001/signup', {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
