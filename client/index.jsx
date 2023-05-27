@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-unresolved, object-curly-newline
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-import { StrictMode, useState } from 'react';
+import { StrictMode, useState, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
 import About from './pages/About';
@@ -16,7 +17,7 @@ import Welcome from './pages/Welcome';
 import GoogleOAuth from './components/GoogleOAuth';
 import Chat from './pages/ChatPageStuff/Chat';
 
-import UserProvider from './components/UserProvider';
+import { UserProvider } from './components/UserProvider.jsx';
 import Search from './components/Search';
 import Login from './pages/Login';
 
@@ -29,6 +30,7 @@ const darkTheme = createTheme({
 
 export default function App() {
   const [user, setUser] = useState({});
+
   return (
     <StrictMode>
 
@@ -44,8 +46,8 @@ export default function App() {
               <Route
                 path="*"
                 element={(
-                  <Layout>
-                    <UserProvider>
+                  <UserProvider>
+                    <Layout>
                       <Routes>
                         <Route path="/home" element={<Home />} />
                         <Route path="/about" element={<About />} />
@@ -56,8 +58,8 @@ export default function App() {
                         <Route path="/chat" element={<Chat />} />
                         <Route path="*" element={<NoPage />} />
                       </Routes>
-                    </UserProvider>
-                  </Layout>
+                    </Layout>
+                  </UserProvider>
                 )}
               />
             </Routes>

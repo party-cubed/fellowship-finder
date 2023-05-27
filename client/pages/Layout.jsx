@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,8 +10,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
+import { UserContext } from '../components/UserProvider';
+
 
 function Header() {
+  const { activeUser, setActiveUser } = useContext(UserContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -80,7 +84,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to="/user/2"
+              to={activeUser ? `/user/${activeUser.id}` : '/auth/login'}
             >
               <AccountCircle />
             </IconButton>
@@ -95,7 +99,7 @@ function Header() {
 function Layout({ children }) {
   return (
     <div>
-      {Header()}
+      <Header />
       <main>{children}</main>
     </div>
   );

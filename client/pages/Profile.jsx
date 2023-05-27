@@ -43,6 +43,7 @@ const Profile = () => {
           <Chip label={`Name: ${user ? user.username : ''}`} variant="outlined" />
           <Chip label={`Email: ${user ? user.email : ''}`} variant="outlined" />
           <Chip label={`Location: ${user ? user.username : ''}`} variant="outlined" />
+          <Chip label={`Friends: ${user ? user.friends : ''}`} variant="outlined" />
           <Typography variant="body1">{user ? user.username : ''}</Typography>
         </Grid>
       </Grid>
