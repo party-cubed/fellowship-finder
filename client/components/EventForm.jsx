@@ -34,7 +34,7 @@ const EventForm = ({ event, setEventValue, users }) => {
         <DateSelect date={event ? dayjs(event.end) : dayjs(new Date())} label="End" setDate={(date) => setEventValue('end', date)} />
       </div>
       <br />
-      <AddressForm event={event} setEventValue={setEventValue} style={{ width: '90%' }} />
+      <AddressForm event={event} setEventValue={setEventValue} />
       <div style={{ marginTop: '20px', marginBottom: '20px' }}>
         <UsersSelect
           users={users || []}
