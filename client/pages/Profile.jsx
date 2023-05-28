@@ -12,7 +12,7 @@ import { UserContext } from '../components/UserProvider';
 const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchUser = async () => {
