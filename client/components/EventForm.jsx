@@ -1,7 +1,3 @@
-import { useEffect } from 'react';
-import {
-  Box, Grid, Paper, Button, Typography, Container, TextField
-} from '@mui/material';
 import dayjs from 'dayjs';
 import DateSelect from './DateSelect';
 import AddressForm from './AddressForm';
@@ -36,7 +32,7 @@ const EventForm = ({ event, setEventValue, users }) => {
           </label>
         </form>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <DateSelect date={event ? dayjs(event.start) : dayjs(new Date())} label="Start" setDate={(date) => setEventValue('start', date)} />
         <DateSelect date={event ? dayjs(event.end) : dayjs(new Date())} label="End" setDate={(date) => setEventValue('end', date)} />
       </div>

@@ -137,6 +137,7 @@ function EventDialog({
                 padding: '10px',
                 border: '1px solid #ddd',
                 borderRadius: '5px',
+                fontSize: '18',
                 marginTop: '5px'
               }}
             />

@@ -14,7 +14,8 @@ const AddressForm = ({ event, setEventValue }) => {
             padding: '10px',
             borderRadius: '5px',
             border: 'none',
-            marginRight: '10px'
+            marginRight: '10px',
+            cursor: 'pointer',
           }}
         >
           In Person
@@ -28,7 +29,8 @@ const AddressForm = ({ event, setEventValue }) => {
             color: 'white',
             padding: '10px',
             borderRadius: '5px',
-            border: 'none'
+            border: 'none',
+            cursor: 'pointer',
           }}
         >
           Online
