@@ -38,7 +38,7 @@ const Profile = () => {
           margin: '0 auto',
         }}
         alt="Marvy Warvy"
-        src={user ? user.image : profilepic}
+        src={user.image ? user.image : profilepic}
       />
       <Grid container>
         <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
