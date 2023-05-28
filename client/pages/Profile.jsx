@@ -12,11 +12,19 @@ import { UserContext } from '../components/UserProvider';
 const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    console.log(activeUser);
-  }, [activeUser]);
+    const fetchUser = async () => {
+      try {
+        const { data } = await axios.get(`api/user/${id}`);
+        setUser(data);
+      } catch (err) {
+        console.error('Error fetching user data: ', err);
+      }
+    };
+    fetchUser();
+  }, [id]);
 
   return (
     <Container>
@@ -30,7 +38,7 @@ const Profile = () => {
           margin: '0 auto',
         }}
         alt="Marvy Warvy"
-        src={user ? user.image : profilepic}
+        src={user.image ? user.image : profilepic}
       />
       <Grid container>
         <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
