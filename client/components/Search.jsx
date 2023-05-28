@@ -169,14 +169,14 @@ const Search = () => {
               <TextField
                 name="ageMin"
                 type="number"
-                label="Min age"
+                label="Min"
                 value={filters.ageMin}
                 onChange={handleFilterChange}
               />
               <TextField
                 name="ageMax"
                 type="number"
-                label="Max age"
+                label="Max"
                 value={filters.ageMax}
                 onChange={handleFilterChange}
               />
