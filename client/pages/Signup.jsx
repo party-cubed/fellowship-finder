@@ -81,10 +81,10 @@ function Signup() {
       const chatEngineResponse = await axios.post(chatEngineUrl, userData, { headers });
 
       console.log('User created on ChatEngine:', chatEngineResponse.data);
-      
       navigate('/home');
     } catch (error) {
       console.error('Error creating account:', error);
+      navigate('/home');
     }
   };
 
