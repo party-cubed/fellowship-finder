@@ -49,7 +49,7 @@ function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         sx={{
-          background: 'linear-gradient(90deg, hsla(177, 87%, 79%, 1) 0%, hsla(235, 89%, 70%, 1) 100%)',
+          background: 'linear-gradient(90deg, rgb(0, 124, 119) 0%, rgb(0, 11, 158) 100%)',
           width: '100vw',
           height: '20vh',
           objectFit: 'cover',
@@ -93,7 +93,7 @@ function Header() {
               component={Link}
               to="/chat"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge>
                 <MailIcon />
               </Badge>
             </IconButton>
@@ -104,7 +104,7 @@ function Header() {
               component={Link}
               to="/events"
             >
-              <Badge badgeContent={1} color="error">
+              <Badge>
                 <TodayTwoToneIcon />
               </Badge>
             </IconButton>
