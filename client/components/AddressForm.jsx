@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import { TextField, Tabs, Tab, Typography, Box, Button, Container } from '@mui/material';
 
 const AddressForm = ({ event, setEventValue }) => {
-  const [isInPersonChecked, setInPersonChecked] = useState(false);
-  const [isOnlineChecked, setOnlineChecked] = useState(false);
-
-  // const setEventValue = ( { target }) => {
-  //   setAddress(target.id, target.value);
-  // };
 
   return (
     <div>
@@ -16,8 +10,8 @@ const AddressForm = ({ event, setEventValue }) => {
           <input
             type="checkbox"
             id="inPersonCheckbox"
-            checked={isInPersonChecked}
-            onChange={() => setInPersonChecked(!isInPersonChecked)}
+            checked={event.isInPerson}
+            onChange={() => setEventValue('isInPerson', !event.isInPerson)}
           />
           In Person
         </label>
@@ -25,13 +19,13 @@ const AddressForm = ({ event, setEventValue }) => {
           <input
             type="checkbox"
             id="onlineCheckbox"
-            checked={isOnlineChecked}
-            onChange={() => setOnlineChecked(!isOnlineChecked)}
+            checked={event.isOnline}
+            onChange={() => setEventValue('isOnline', !event.isOnline)}
           />
           Online
         </label>
       </div>
-      {isInPersonChecked && (
+      {event.isInPerson && (
         <form noValidate autoComplete="off" style={{ width: '90%' }}>
           <label htmlFor="street">
             Street:
@@ -41,7 +35,7 @@ const AddressForm = ({ event, setEventValue }) => {
               id="street"
               value={event.street}
               onChange={({target}) => setEventValue(target.id, target.value)}
-              required={isInPersonChecked}
+              required={event.isInPerson}
             />
           </label>
           <br />
@@ -53,7 +47,7 @@ const AddressForm = ({ event, setEventValue }) => {
               id="city"
               value={event.city}
               onChange={({target}) => setEventValue(target.id, target.value)}
-              required={isInPersonChecked}
+              required={event.isInPerson}
             />
           </label>
           <br />
@@ -65,7 +59,7 @@ const AddressForm = ({ event, setEventValue }) => {
               id="state"
               value={event.state}
               onChange={({target}) => setEventValue(target.id, target.value)}
-              required={isInPersonChecked}
+              required={event.isInPerson}
             />
           </label>
           <br />
@@ -77,13 +71,13 @@ const AddressForm = ({ event, setEventValue }) => {
               id="zip"
               value={event.zip}
               onChange={({target}) => setEventValue(target.id, target.value)}
-              required={isInPersonChecked}
+              required={event.isInPerson}
             />
           </label>
           <br />
         </form>
       )}
-      {isOnlineChecked && (
+      {event.isOnline && (
         <form noValidate autoComplete="off" style={{ width: '90%' }}>
           <label htmlFor="link">
             Link:
@@ -93,7 +87,7 @@ const AddressForm = ({ event, setEventValue }) => {
               id="link"
               value={event.link}
               onChange={({target}) => setEventValue(target.id, target.value)}
-              required={isOnlineChecked}
+              required={event.isOnline}
             />
           </label>
         </form>
