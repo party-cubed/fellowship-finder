@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import Grid from '@mui/material/Grid';
 import axios from 'axios';
 import profilepic from '../assets/profilepic.jpg';
 import { UserContext } from './UserProvider.jsx';
@@ -159,161 +160,167 @@ const Search = () => {
 
   return (
     <div>
-      <h1>Search the Realms</h1>
-      <div className="search-options">
-        <div className="age">
-          <h3>Age</h3>
-          <TextField
-            name="ageMin"
-            type="number"
-            label="Min age"
-            value={filters.ageMin}
-            onChange={handleFilterChange}
-          />
-          <TextField
-            name="ageMax"
-            type="number"
-            label="Max age"
-            value={filters.ageMax}
-            onChange={handleFilterChange}
-          />
-        </div>
-        <div className="sober">
-          <h3>Sober</h3>
-          <Select
-            name="sober"
-            value={filters.sober.toString()}
-            onChange={handleFilterChange}
-          >
-            <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="true">Yes</MenuItem>
-            <MenuItem value="false">No</MenuItem>
-          </Select>
-        </div>
-        <div className="can-host">
-          <h3>Can Host</h3>
-          <Select
-            name="canHost"
-            value={filters.canHost.toString()}
-            onChange={handleFilterChange}
-          >
-            <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="true">Yes</MenuItem>
-            <MenuItem value="false">No</MenuItem>
-          </Select>
-        </div>
-        <div className="DM">
-          <h3>DM</h3>
-          <Select
-            name="DM"
-            value={filters.DM}
-            onChange={handleFilterChange}
-          >
-            <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="yes">Yes</MenuItem>
-            <MenuItem value="no">No</MenuItem>
-            <MenuItem value="maybe">Maybe</MenuItem>
-          </Select>
-        </div>
-        <div className="game-preferences">
-          <h3>Combat Heaviness</h3>
-          <TextField
-            name="combatHeavinessMin"
-            type="number"
-            label="Min combat heaviness"
-            value={filters.combatHeavinessMin}
-            onChange={handleFilterChange}
-          />
-          <TextField
-            name="combatHeavinessMax"
-            type="number"
-            label="Max combat heaviness"
-            value={filters.combatHeavinessMax}
-            onChange={handleFilterChange}
-          />
-          <h3>Strategy Heaviness</h3>
-          <TextField
-            name="strategyHeavinessMin"
-            type="number"
-            label="Min strategy heaviness"
-            value={filters.strategyHeavinessMin}
-            onChange={handleFilterChange}
-          />
-          <TextField
-            name="strategyHeavinessMax"
-            type="number"
-            label="Max strategy heaviness"
-            value={filters.strategyHeavinessMax}
-            onChange={handleFilterChange}
-          />
-          <h3>Roleplay Focus</h3>
-          <TextField
-            name="roleplayFocusMin"
-            type="number"
-            label="Min roleplay focus"
-            value={filters.roleplayFocusMin}
-            onChange={handleFilterChange}
-          />
-          <TextField
-            name="roleplayFocusMax"
-            type="number"
-            label="Max roleplay focus"
-            value={filters.roleplayFocusMax}
-            onChange={handleFilterChange}
-          />
-          <h3>Story Focus</h3>
-          <TextField
-            name="storyFocusMin"
-            type="number"
-            label="Min story focus"
-            value={filters.storyFocusMin}
-            onChange={handleFilterChange}
-          />
-          <TextField
-            name="storyFocusMax"
-            type="number"
-            label="Max story focus"
-            value={filters.storyFocusMax}
-            onChange={handleFilterChange}
-          />
-        </div>
-        <br />
-        <Button variant="contained" onClick={handleSubmit}>Search</Button>
-      </div>
-      <div className="search-results">
-        {results.length ? results.map((user) => (
-          user.googleId === userId ? null
-            : (
-              <div key={user.id}>
-                <Avatar
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    position: 'relative',
-                    mr: '225px',
-                    mt: '20px',
-                  }}
-                  alt="WizardKitty"
-                  src={profilepic}
-                />
-                <h3>
-                  <Link to={`/user/${user.id}`}>{user.username}</Link>
-                </h3>
-                {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
-                {userId !== user.id && (
-                <>
-                  <br />
-                  <br />
-                  <Button variant="contained" onClick={() => handleAddFriend(user.username)}>Add Companion</Button>
-                  <Button variant="contained" onClick={() => handleUnfriend(user.username)}>Make Enemy</Button>
-                </>
-                )}
-              </div>
-            )
-        ))
-          : <div>Curses! There are no adventurers to display.</div> }
-      </div>
-      <Link to="/">Back to Home</Link>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <h1>Search the Realms</h1>
+          <div className="search-options">
+            <div className="age">
+              <h3>Age</h3>
+              <TextField
+                name="ageMin"
+                type="number"
+                label="Min age"
+                value={filters.ageMin}
+                onChange={handleFilterChange}
+              />
+              <TextField
+                name="ageMax"
+                type="number"
+                label="Max age"
+                value={filters.ageMax}
+                onChange={handleFilterChange}
+              />
+            </div>
+            <div className="sober">
+              <h3>Sober</h3>
+              <Select
+                name="sober"
+                value={filters.sober.toString()}
+                onChange={handleFilterChange}
+              >
+                <MenuItem value="any">Any</MenuItem>
+                <MenuItem value="true">Yes</MenuItem>
+                <MenuItem value="false">No</MenuItem>
+              </Select>
+            </div>
+            <div className="can-host">
+              <h3>Can Host</h3>
+              <Select
+                name="canHost"
+                value={filters.canHost.toString()}
+                onChange={handleFilterChange}
+              >
+                <MenuItem value="any">Any</MenuItem>
+                <MenuItem value="true">Yes</MenuItem>
+                <MenuItem value="false">No</MenuItem>
+              </Select>
+            </div>
+            <div className="DM">
+              <h3>DM</h3>
+              <Select
+                name="DM"
+                value={filters.DM}
+                onChange={handleFilterChange}
+              >
+                <MenuItem value="any">Any</MenuItem>
+                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="no">No</MenuItem>
+                <MenuItem value="maybe">Maybe</MenuItem>
+              </Select>
+            </div>
+            <div className="game-preferences">
+              <h3>Combat Heaviness</h3>
+              <TextField
+                name="combatHeavinessMin"
+                type="number"
+                label="Min"
+                value={filters.combatHeavinessMin}
+                onChange={handleFilterChange}
+              />
+              <TextField
+                name="combatHeavinessMax"
+                type="number"
+                label="Max"
+                value={filters.combatHeavinessMax}
+                onChange={handleFilterChange}
+              />
+              <h3>Strategy Heaviness</h3>
+              <TextField
+                name="strategyHeavinessMin"
+                type="number"
+                label="Min"
+                value={filters.strategyHeavinessMin}
+                onChange={handleFilterChange}
+              />
+              <TextField
+                name="strategyHeavinessMax"
+                type="number"
+                label="Max"
+                value={filters.strategyHeavinessMax}
+                onChange={handleFilterChange}
+              />
+              <h3>Roleplay Focus</h3>
+              <TextField
+                name="roleplayFocusMin"
+                type="number"
+                label="Min"
+                value={filters.roleplayFocusMin}
+                onChange={handleFilterChange}
+              />
+              <TextField
+                name="roleplayFocusMax"
+                type="number"
+                label="Max"
+                value={filters.roleplayFocusMax}
+                onChange={handleFilterChange}
+              />
+              <h3>Story Focus</h3>
+              <TextField
+                name="storyFocusMin"
+                type="number"
+                label="Min"
+                value={filters.storyFocusMin}
+                onChange={handleFilterChange}
+              />
+              <TextField
+                name="storyFocusMax"
+                type="number"
+                label="Max"
+                value={filters.storyFocusMax}
+                onChange={handleFilterChange}
+              />
+            </div>
+            <br />
+            <Button variant="contained" onClick={handleSubmit}>Search</Button>
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <h1>Adventurers</h1>
+          <div className="search-results">
+            {results.length ? results.map((user) => (
+              user.googleId === userId ? null
+                : (
+                  <div key={user.id}>
+                    <Avatar
+                      sx={{
+                        width: 50,
+                        height: 50,
+                        position: 'relative',
+                        mr: '225px',
+                        mt: '20px',
+                      }}
+                      alt="WizardKitty"
+                      src={profilepic}
+                    />
+                    <h3>
+                      <Link to={`/user/${user.id}`}>{user.username}</Link>
+                    </h3>
+                    {`${user.age} sober: ${user.sober}, host: ${user.canHost}, DM: ${user.DM}, combatHeaviness: ${user.combatHeaviness}, strategyHeaviness: ${user.strategyHeaviness}, roleplayFocus: ${user.roleplayFocus}, storyFocus: ${user.storyFocus}`}
+                    {userId !== user.id && (
+                    <>
+                      <br />
+                      <br />
+                      <Button variant="contained" onClick={() => handleAddFriend(user.username)}>Add Companion</Button>
+                      <Button variant="contained" onClick={() => handleUnfriend(user.username)}>Make Enemy</Button>
+                    </>
+                    )}
+                  </div>
+                )
+            ))
+              : <div>Curses! There are no adventurers to display.</div> }
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
