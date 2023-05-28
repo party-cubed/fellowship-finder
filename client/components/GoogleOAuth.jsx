@@ -34,28 +34,28 @@ function GoogleOAuth() {
   }
 
 
-  useEffect(() => {
-    //had to add this to check to see if we were on signup.
-    //otherwise the prompt box was displaying on all pages
-    if (location.pathname === '/signup') {
-      google.accounts.id.initialize({
-        client_id: '111434177614-ecnk3ilhihnp3rdhu36thb3atrn35ve7.apps.googleusercontent.com',
-        callback: handleCallbackResponse
-      });
+  // useEffect(() => {
+  //   //had to add this to check to see if we were on signup.
+  //   //otherwise the prompt box was displaying on all pages
+  //   // if (location.pathname === '/signup') {
+  //   //   google.accounts.id.initialize({
+  //   //     client_id: '111434177614-ecnk3ilhihnp3rdhu36thb3atrn35ve7.apps.googleusercontent.com',
+  //   //     callback: handleCallbackResponse
+  //   //   });
 
-      //  shows the signin prompt
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          document.cookie = 'g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT';
-          google.accounts.id.prompt();
-        }
-      });
-    }
-    //basically if user has length that means it was authorized correctly
-    if (Object.keys(user).length !== 0) {
-      setAuthenticated(true); // Set authentication state to true
-    }
-  }, [location.pathname, user]);
+  //     //  shows the signin prompt
+  //     google.accounts.id.prompt((notification) => {
+  //       if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+  //         document.cookie = 'g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  //         google.accounts.id.prompt();
+  //       }
+  //     });
+  //   }
+  //   //basically if user has length that means it was authorized correctly
+  //   if (Object.keys(user).length !== 0) {
+  //     setAuthenticated(true); // Set authentication state to true
+  //   }
+  // }, [location.pathname, user]);
   // if no user: show signin button
   // if user: show the log out button
 

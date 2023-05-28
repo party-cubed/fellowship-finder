@@ -40,7 +40,11 @@ function Header() {
             noWrap
             component={Link}
             to="/home"
-            sx={{ display: { xs: 'none', sm: 'block', textDecoration: 'none', color: 'inherit' } }}
+            sx={{
+              display: {
+                xs: 'none', sm: 'block', textDecoration: 'none', color: 'inherit'
+              }
+            }}
           >
             𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻
           </Typography>

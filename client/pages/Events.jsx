@@ -47,6 +47,7 @@ function Events() {
   const fetchEvents = async () => {
     try {
       const { data } = await axios.get('api/event/all');
+      // eslint-disable-next-line no-shadow
       const dates = data.map((event) => ({
         ...event,
         start: new Date(event.start),
@@ -80,9 +81,15 @@ function Events() {
   };
 
   return (
-    <div style={{ flexGrow: 1, margin: 0, marginTop: 0, padding: '15px', height: '80vh' }}>
+    <div style={{
+      flexGrow: 1, margin: 0, marginTop: 0, padding: '15px', height: '80vh'
+    }}
+    >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', height: '100%' }}>
-        <div style={{ gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{
+          gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center'
+        }}
+        >
           <h5>Create a new event:</h5>
           <EventForm event={event} setEventValue={setEventValue} users={users} />
           <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
@@ -118,52 +125,52 @@ function Events() {
     </div>
 
 
-    //  MUI VERSION
-    // <Box sx={{
-    //   flexGrow: 1, m: 0, marginTop: 0, padding: '15px', height: '80vh'
-    // }}
-    // >
-    //   <Grid container spacing={2} sx={{ height: '100%' }}>
-    //     <Grid item xs={3}>
-    //       <Paper style={{
-    //         display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '10px'
-    //       }}
-    //       >
-    //         <Typography variant="h5" gutterBottom>Create a new event:</Typography>
-    //         <EventForm event={event} setEventValue={setEventValue} users={users} />
-    //         <Container style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-    //           <Button variant="text" onClick={handleSubmit}>Add Event</Button>
-    //         </Container>
-    //       </Paper>
-    //     </Grid>
-    //     <Grid item xs={9}>
-    //       <Paper sx={{ height: '100%' }}>
-    //         <Calendar
-    //           localizer={localizer}
-    //           events={events}
-    //           startAccessor="start"
-    //           endAccessor="end"
-    //           onSelectEvent={(key) => {
-    //             console.log(key);
-    //             setEventValue('selectedEvent', key);
-    //           }}
-    //           sx={{
-    //             height: '100%',
-    //             '&& .rbc-off-range-bg': {
-    //               background: 'black'
-    //             }
-    //           }}
-    //         />
-    //       </Paper>
-    //     </Grid>
-    //   </Grid>
-    //   <EventDialog
-    //     event={event.selectedEvent}
-    //     onClose={() => setEventValue('selectedEvent', null)}
-    //     fetchEvents={fetchEvents}
-    //     users={users}
-    //   />
-    // </Box>
+  //  MUI VERSION
+  // <Box sx={{
+  //   flexGrow: 1, m: 0, marginTop: 0, padding: '15px', height: '80vh'
+  // }}
+  // >
+  //   <Grid container spacing={2} sx={{ height: '100%' }}>
+  //     <Grid item xs={3}>
+  //       <Paper style={{
+  //         display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '10px'
+  //       }}
+  //       >
+  //         <Typography variant="h5" gutterBottom>Create a new event:</Typography>
+  //         <EventForm event={event} setEventValue={setEventValue} users={users} />
+  //         <Container style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+  //           <Button variant="text" onClick={handleSubmit}>Add Event</Button>
+  //         </Container>
+  //       </Paper>
+  //     </Grid>
+  //     <Grid item xs={9}>
+  //       <Paper sx={{ height: '100%' }}>
+  //         <Calendar
+  //           localizer={localizer}
+  //           events={events}
+  //           startAccessor="start"
+  //           endAccessor="end"
+  //           onSelectEvent={(key) => {
+  //             console.log(key);
+  //             setEventValue('selectedEvent', key);
+  //           }}
+  //           sx={{
+  //             height: '100%',
+  //             '&& .rbc-off-range-bg': {
+  //               background: 'black'
+  //             }
+  //           }}
+  //         />
+  //       </Paper>
+  //     </Grid>
+  //   </Grid>
+  //   <EventDialog
+  //     event={event.selectedEvent}
+  //     onClose={() => setEventValue('selectedEvent', null)}
+  //     fetchEvents={fetchEvents}
+  //     users={users}
+  //   />
+  // </Box>
   );
 }
 

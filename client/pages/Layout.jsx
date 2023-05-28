@@ -93,7 +93,9 @@ function Header() {
               component={Link}
               to="/chat"
             >
-              <Badge><MailIcon /></Badge>
+              <Badge badgeContent={4} color="error">
+                <MailIcon />
+              </Badge>
             </IconButton>
             <IconButton
               size="large"
@@ -102,7 +104,7 @@ function Header() {
               component={Link}
               to="/events"
             >
-              <Badge>
+              <Badge badgeContent={1} color="error">
                 <TodayTwoToneIcon />
               </Badge>
             </IconButton>

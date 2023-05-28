@@ -15,16 +15,8 @@ const Profile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await axios.get(`api/user/${id}`);
-        setUser(data);
-      } catch (err) {
-        console.error('Error fetching user data: ', err);
-      }
-    };
-    fetchUser();
-  }, [id]);
+    console.log(activeUser);
+  }, [activeUser]);
 
   return (
     <Container>
