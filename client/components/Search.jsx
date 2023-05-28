@@ -181,43 +181,55 @@ const Search = () => {
                 onChange={handleFilterChange}
               />
             </div>
-            <div className="sober">
-              <h3>Sober</h3>
-              <Select
-                name="sober"
-                value={filters.sober.toString()}
-                onChange={handleFilterChange}
-              >
-                <MenuItem value="any">Any</MenuItem>
-                <MenuItem value="true">Yes</MenuItem>
-                <MenuItem value="false">No</MenuItem>
-              </Select>
-            </div>
-            <div className="can-host">
-              <h3>Can Host</h3>
-              <Select
-                name="canHost"
-                value={filters.canHost.toString()}
-                onChange={handleFilterChange}
-              >
-                <MenuItem value="any">Any</MenuItem>
-                <MenuItem value="true">Yes</MenuItem>
-                <MenuItem value="false">No</MenuItem>
-              </Select>
-            </div>
-            <div className="DM">
-              <h3>DM</h3>
-              <Select
-                name="DM"
-                value={filters.DM}
-                onChange={handleFilterChange}
-              >
-                <MenuItem value="any">Any</MenuItem>
-                <MenuItem value="yes">Yes</MenuItem>
-                <MenuItem value="no">No</MenuItem>
-                <MenuItem value="maybe">Maybe</MenuItem>
-              </Select>
-            </div>
+            <br />
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <div className="DM">
+                  <h3>DM</h3>
+                  <Select
+                    name="DM"
+                    value={filters.DM}
+                    onChange={handleFilterChange}
+                  >
+                    <MenuItem value="any">Any</MenuItem>
+                    <MenuItem value="yes">Yes</MenuItem>
+                    <MenuItem value="no">No</MenuItem>
+                    <MenuItem value="maybe">Maybe</MenuItem>
+                  </Select>
+                </div>
+                <br />
+              </Grid>
+              <Grid item xs={4}>
+                <div className="can-host">
+                  <h3>Can Host</h3>
+                  <Select
+                    name="canHost"
+                    value={filters.canHost.toString()}
+                    onChange={handleFilterChange}
+                  >
+                    <MenuItem value="any">Any</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                  </Select>
+                </div>
+                <br />
+              </Grid>
+              <Grid item xs={4}>
+                <div className="sober">
+                  <h3>Sober</h3>
+                  <Select
+                    name="sober"
+                    value={filters.sober.toString()}
+                    onChange={handleFilterChange}
+                  >
+                    <MenuItem value="any">Any</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                  </Select>
+                </div>
+              </Grid>
+            </Grid>
+            <br />
             <div className="game-preferences">
               <h3>Combat Heaviness</h3>
               <TextField
@@ -234,6 +246,7 @@ const Search = () => {
                 value={filters.combatHeavinessMax}
                 onChange={handleFilterChange}
               />
+              <br />
               <h3>Strategy Heaviness</h3>
               <TextField
                 name="strategyHeavinessMin"
