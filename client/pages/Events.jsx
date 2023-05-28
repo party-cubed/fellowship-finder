@@ -91,13 +91,23 @@ function Events() {
     >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', height: '100%' }}>
         <div style={{
-          gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center'
+          gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column',
         }}
         >
-          <h5>Create a new event:</h5>
+          <h2>Create a new event:</h2>
           <EventForm event={event} setEventValue={setEventValue} users={users} />
           <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-            <button onClick={handleSubmit}>Add Event</button>
+            <button
+              style={{
+                backgroundColor: '#ddd',
+                border: 'none',
+                padding: '18px',
+                borderRadius: '10px',
+                marginRight: '10px'
+              }}
+              onClick={handleSubmit}
+            >Add Event
+            </button>
           </div>
         </div>
         <div style={{ gridColumn: '2 / 3' }}>

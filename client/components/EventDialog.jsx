@@ -6,7 +6,9 @@ import axios from 'axios';
 import EventForm from './EventForm';
 
 
-function EventDialog({ event, onClose, fetchEvents, users }) {
+function EventDialog({
+  event, onClose, fetchEvents, users
+}) {
   const [editedEvent, setEditedEvent] = useState(null);
 
   // Render initial edited event
@@ -59,32 +61,90 @@ function EventDialog({ event, onClose, fetchEvents, users }) {
   }
 
   return (
-    <Dialog open={!!event} onClose={onClose} fullWidth maxWidth="xs">
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <button onClick={onClose}>Close</button>
-            <button style={{ color: 'red' }} onClick={handleDelete}>Delete</button>
+    <Dialog
+      open={!!event}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      style={{ borderRadius: '20px' }}
+    >
+      <div style={{ padding: '20px' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
+          borderBottom: '1px solid #ddd'
+        }}
+        >
+          <div style={{ display: 'flex' }}>
+            <button
+              onClick={onClose}
+              style={{
+                backgroundColor: '#ddd',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px',
+                marginRight: '10px'
+              }}
+            >
+              Close
+            </button>
+            <button
+              style={{
+                backgroundColor: 'red',
+                color: '#fff',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px'
+              }}
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <button onClick={handlePatch}>Save</button>
+          <div>
+            <button
+              onClick={handlePatch}
+              style={{
+                backgroundColor: '#4CAF50',
+                color: '#fff',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px'
+              }}
+            >
+              Save
+            </button>
           </div>
         </div>
+        <EventForm event={editedEvent} setEventValue={setEditedEventValue} users={users} />
+        <form
+          noValidate
+          autoComplete="off"
+          style={{ width: '100%', marginTop: '20px' }}
+        >
+          <label htmlFor="description" style={{ fontSize: '18px', fontWeight: 'bold' }}>
+            Description:
+            <br />
+            <input
+              type="text"
+              id="description"
+              value={editedEvent ? editedEvent.description : ''}
+              onChange={({ target }) => setEditedEventValue(target.id, target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                border: '1px solid #ddd',
+                borderRadius: '5px',
+                marginTop: '5px'
+              }}
+            />
+          </label>
+        </form>
       </div>
-      <EventForm event={editedEvent} setEventValue={setEditedEventValue} users={users} />
-      <form noValidate autoComplete="off" style={{ width: '90%' }}>
-        <label htmlFor="description">
-          Description:
-          <br />
-          <input
-            type="text"
-            id="description"
-            value={editedEvent ? editedEvent.description : ''}
-            onChange={({ target }) => setEditedEventValue(target.id, target.value)}
-          />
-        </label>
-      </form>
     </Dialog>
+
   );
 }
 
