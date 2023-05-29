@@ -27,8 +27,6 @@ const darkTheme = createTheme({
 
 export default function App({ setUser }) {
   const { activeUser, loading } = useContext(UserContext);
-  console.log(activeUser);
-
   if (loading) {
     return <div>Loading...</div>;
   }

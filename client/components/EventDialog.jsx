@@ -1,9 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import {
-  Dialog, DialogContent, DialogActions, Button, IconButton
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
+import { Dialog } from '@mui/material';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import EventForm from './EventForm';
@@ -12,7 +9,6 @@ import EventForm from './EventForm';
 function EventDialog({
   event, onClose, fetchEvents, users
 }) {
-  const [isEditing, setIsEditing] = useState(false);
   const [editedEvent, setEditedEvent] = useState(null);
 
   // Render initial edited event
@@ -41,18 +37,21 @@ function EventDialog({
   };
 
   const handlePatch = async () => {
+    const updatedEvent = {
+      ...editedEvent,
+      title: editedEvent.title || 'Session',
+      selectedUsers: [...editedEvent.selectedUsers].join(',$, ')
+    };
     try {
-      const res = await axios.patch(`/api/event/${editedEvent.id}`, editedEvent);
+      const res = await axios.patch(`/api/event/${editedEvent.id}`, updatedEvent);
       console.log('Patch event successful');
       fetchEvents();
-      setIsEditing(false);
     } catch (err) {
       console.log('Patch event failed');
     }
   };
 
   const handleCancelClick = () => {
-    setIsEditing(false);
     setEditedEvent({ ...event, start: dayjs(event.start), end: dayjs(event.end) });
   };
 
@@ -62,49 +61,91 @@ function EventDialog({
   }
 
   return (
-    <Dialog open={!!event} onClose={onClose} fullWidth maxWidth="xs">
-      <div>
-        {isEditing ? (
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <button onClick={handleCancelClick}>Cancel</button>
-              <button style={{ color: 'red' }} onClick={handleDelete}>
-                Delete
-              </button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button onClick={handlePatch}>Save</button>
-            </div>
+    <Dialog
+      open={!!event}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      style={{ borderRadius: '20px' }}
+    >
+      <div style={{ padding: '20px' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
+          borderBottom: '1px solid #ddd'
+        }}
+        >
+          <div style={{ display: 'flex' }}>
+            <button
+              onClick={onClose}
+              style={{
+                backgroundColor: '#ddd',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px',
+                marginRight: '10px'
+              }}
+            >
+              Close
+            </button>
+            <button
+              style={{
+                backgroundColor: 'red',
+                color: '#fff',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px'
+              }}
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </div>
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <button onClick={onClose}>
-                Close
-              </button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button onClick={() => setIsEditing(!isEditing)}>
-                Edit
-              </button>
-            </div>
+          <div>
+            <button
+              onClick={handlePatch}
+              style={{
+                backgroundColor: '#4CAF50',
+                color: '#fff',
+                border: 'none',
+                padding: '10px',
+                borderRadius: '5px'
+              }}
+            >
+              Save
+            </button>
           </div>
-        )}
+        </div>
+        <EventForm event={editedEvent} setEventValue={setEditedEventValue} users={users} />
+        <form
+          noValidate
+          autoComplete="off"
+          style={{ width: '100%', marginTop: '20px' }}
+        >
+          <label htmlFor="description" style={{ fontSize: '18px', fontWeight: 'bold' }}>
+            Description:
+            <br />
+            <input
+              type="text"
+              id="description"
+              value={editedEvent ? editedEvent.description : ''}
+              onChange={({ target }) => setEditedEventValue(target.id, target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                border: '1px solid #ddd',
+                borderRadius: '5px',
+                fontSize: '18',
+                marginTop: '5px'
+              }}
+            />
+          </label>
+        </form>
       </div>
-      <EventForm event={editedEvent || event} setEventValue={setEditedEventValue} users={users} />
-      <form noValidate autoComplete="off" style={{ width: '90%' }}>
-        <label htmlFor="description">
-          Description:
-          <br />
-          <input
-            type="text"
-            id="description"
-            value={editedEvent ? editedEvent.description : ''}
-            onChange={({ target }) => setEditedEventValue(target.id, target.value)}
-          />
-        </label>
-      </form>
     </Dialog>
+
   );
 }
 

@@ -2,6 +2,44 @@ import { useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../components/UserProvider';
 import Login from './Login';
+import welcome from '../assets/welcome.jpg';
+
+const style = {
+  background: {
+    backgroundImage: `url(${welcome})`,
+    backgroundSize: 'cover',
+    height: '100vh',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '100px',
+    marginLeft: '200px',
+    marginRight: '280px',
+  },
+  header: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'end',
+    marginBottom: '2em',
+  },
+  joinButton: {
+    background: 'rgba(0, 0, 0, 0.25)',
+    borderRadius: '15px',
+    borderStyle: 'none',
+    fontFamily: 'Nova Cut',
+    fontWeight: '600',
+    fontSize: '48px',
+    lineHeight: '1.8',
+    width: '420px',
+    color: '#FFFFFF',
+    position: 'absolute',
+    top: '50%',
+    left: '15%',
+  },
+};
+
 
 function Welcome() {
   const { activeUser } = useContext(UserContext);
@@ -14,33 +52,17 @@ function Welcome() {
   }, [activeUser, navigate]);
 
   return (
-    <div>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ fontWeight: 'bold', fontSize: '24px' }}>𝓕𝓮𝓵𝓵𝓸𝔀𝓼𝓱𝓲𝓹 𝓕𝓲𝓷𝓭𝓮𝓻</div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span>Already a party member?</span>
-          {/* <Link to="/signin">
-            <button>Sign In</button>
-          </Link> */}
-          <Login />
-        </div>
-      </header>
-      <hr />
-      <h1>ROLL FOR FRIENDS</h1>
-      <h3>
-        Are you ready to trade your NPC companions for some real-life party members?
-      </h3>
-      <h3>Enter Fellowship Finder!</h3>
-      <p>
-        Maybe you're a seasoned Dungeon Master in need of
-        brave heroes, or perhaps you're a level 1 Bard itching to narrate your first saga.
-        Our platform is designed to help you find your perfect adventuring companions, whether
-        you're a starry-eyed newcomer or a travel-worn veteran. So, roll the dice, cast
-        'Summon Allies', and find yourself the perfect party!
-      </p>
-      <Link to="/signup">
-        <button>Join the Party</button>
-      </Link>
+    <div style={style.background}>
+      <div style={style.container}>
+        <header style={style.header}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Login />
+          </div>
+        </header>
+        <Link to="/signup">
+          <button style={style.joinButton}>Join the Party</button>
+        </Link>
+      </div>
     </div>
   );
 }

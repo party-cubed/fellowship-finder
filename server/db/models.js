@@ -121,6 +121,12 @@ const Events = sequelize.define('Events', {
     type: DataTypes.STRING(255),
     allowNull: true
   },
+  isOnline: {
+    type: DataTypes.BOOLEAN
+  },
+  isInPerson: {
+    type: DataTypes.BOOLEAN
+  },
   street: {
     type: DataTypes.STRING(255),
     allowNull: true
@@ -145,47 +151,21 @@ const Events = sequelize.define('Events', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
+  selectedUsers: {
+    type: DataTypes.STRING(1000),
+    allowNull: true
+  }
   // chatId: {
   //   type: DataTypes.INTEGER,
   //   allowNull: true
   // }
 });
 
-const UserEvents = sequelize.define('UserEvents', {
-  id: {
-    autoIncrement: true,
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id'
-    }
-  },
-  eventId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Events',
-      key: 'id'
-    }
-  }
-});
-
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-UserEvents.belongsTo(Events, { as: 'event', foreignKey: 'eventId' });
-Events.hasMany(UserEvents, { as: 'userevents', foreignKey: 'eventId' });
-UserEvents.belongsTo(User, { as: 'user', foreignKey: 'userId' });
-User.hasMany(UserEvents, { as: 'userevents', foreignKey: 'userId' });
 
 module.exports = {
   User,
   Message,
   Events,
-  UserEvents
 };

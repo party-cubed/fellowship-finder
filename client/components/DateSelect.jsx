@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 
 
@@ -17,8 +14,11 @@ function DateSelect({ date, setDate, label }) {
   const inputId = `datetimepicker-${label.replace(/\s+/g, '').toLowerCase()}`;
 
   return (
-    <div style={{ padding: '8px' }}>
-      <label htmlFor={inputId}>
+    <div style={{
+      padding: '6px', width: '200px', marginRight: '10px', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '5px'
+    }}
+    >
+      <label htmlFor={inputId} style={{ fontSize: '14px', color: '#333' }}>
         {label}:
         <br />
         <input
@@ -26,11 +26,22 @@ function DateSelect({ date, setDate, label }) {
           id={inputId}
           value={selectedDate.format('YYYY-MM-DDTHH:mm')}
           onChange={handleDateChange}
+          style={{
+            width: '100%',
+            padding: '8px',
+            border: '1px solid #ddd',
+            borderRadius: '4px',
+            marginTop: '4px',
+            fontSize: '14px',
+            cursor: 'pointer',
+          }}
         />
       </label>
     </div>
+
+
   );
-  
+
   // MUI VERSION
 
   // return (

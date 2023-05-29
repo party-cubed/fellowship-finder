@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Events, UserEvents } = require('../db/models');
+const { Events } = require('../db/models');
 
 const Event = Router();
 
@@ -41,13 +41,14 @@ Event.post('/', async (req, res) => {
 
 Event.patch('/:id', async (req, res) => {
   const { id } = req.params;
-  const { field, value } = req.body;
+  const newEvent = req.body;
+  console.log(id, newEvent);
   try {
     const event = await Events.findByPk(id);
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
-    await event.update({ [field]: value });
+    await event.update(newEvent);
     return res.status(200).json({ message: 'Event updated' });
   } catch (error) {
     console.error('Failed to PATCH event BY ID:', error);

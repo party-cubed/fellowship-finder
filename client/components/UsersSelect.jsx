@@ -21,41 +21,73 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
   };
 
   return (
-    <div style={{ width: '90%' }}>
-      <label htmlFor="users-dropdown">Invites:</label>
+    <div style={{
+      width: '90%', padding: '8px',
+    }}
+    >
+      <label htmlFor="users-dropdown" style={{ fontSize: '16px', color: '#333' }}>Invites:</label>
       <div>
-        <button onClick={()=>{setDropdownOpen(!isDropdownOpen)}}>
+        <button
+          onClick={() => { setDropdownOpen(!isDropdownOpen); }}
+          style={{
+            background: 'darkgray',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '4px',
+            padding: '8px',
+            marginTop: '8px',
+            cursor: 'pointer',
+          }}
+        >
           {isDropdownOpen ? 'Users ▲' : 'Users ▼'}
         </button>
       </div>
       {isDropdownOpen && (
-        <div>
-          <select
-            multiple
-            id="users-dropdown"
-            value={selectedUsers}
-            onChange={addUser}
-            style={{ width: '100%' }}
-          >
-            {users.map((user) => (
-              <option key={user.username} value={user.username}>
-                {user.username}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div style={{ marginTop: '8px' }}>
+        <select
+          multiple
+          id="users-dropdown"
+          value={selectedUsers}
+          onChange={addUser}
+          style={{
+            width: '100%', height: '100px', border: '1px solid #ddd', borderRadius: '4px'
+          }}
+        >
+          {users.map((user) => (
+            <option key={user.username} value={user.username} style={{ fontSize: '16px', color: '#333' }}>
+              {user.username}<hr />
+            </option>
+          ))}
+        </select>
+      </div>
       )}
-      <ul>
+      <ul style={{ listStyleType: 'none', padding: '0' }}>
         {[...selectedUsers].map((selectedUser) => (
-          <li key={selectedUser}>
+          <li
+            key={selectedUser}
+            style={{
+              padding: '8px', borderBottom: '1px solid #ddd', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+            }}
+          >
             {selectedUser}
-            <button onClick={() => removeUser(selectedUser)}>
+            <button
+              onClick={() => removeUser(selectedUser)}
+              style={{
+                background: '#f44336',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '50%',
+                padding: '4px 8px',
+                cursor: 'pointer',
+              }}
+            >
               ✕
             </button>
           </li>
         ))}
       </ul>
     </div>
+
   );
 };
 
