@@ -43,6 +43,8 @@ Database: mySQL
 
 ORM: Sequelize
 
+HTTP Client: Axios
+
 Deployment site: AWS
 
 Server: Express
@@ -52,5 +54,7 @@ Authentication: Passport and Google auth
 Client: React
 
 Styling: Material-UI
+
+Calendar UI: Big React Calendar
 
 Project management: Trello
