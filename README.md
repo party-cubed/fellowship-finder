@@ -11,29 +11,68 @@ The app allows users to create profiles, filter through other users based on int
 
 3. Install the requirements
 
-   ```bash
-   $ npm install
-   ```
+```
+npm install
+```
 
-4. Make a copy of the example environment variables file
+4. Make an account or sign in the [Google Cloud](https://cloud.google.com/).
 
-   On Linux systems: 
-   ```bash
-   $ cp .env.example .env
-   ```
-   On Windows:
-   ```powershell
-   $ copy .env.example .env
-   ```
-5. Add your [API key](PUT LINK TO API WEBSITE INSIDE THESE PARENTHESES) to the `.env` file
+5. Navigate to the [credentials section](https://console.cloud.google.com/apis/credentials?project=massive-concept-383720) of the API's and services.
 
-6. Run the app
+6. Create a OAuth cliend ID credential. Name it whatever you like. For *Application type* select Web application. 
 
-   ```bash
-   $ npm start
-   ```
+7. Add the following Authorized origins:
+```
+http://localhost:8080
+```
+```
+http://localhost:3001
+```
 
-7. You should now be able to access the app at [http://localhost:7000](http://localhost:7000)
+8. Add the following redirect URI's:
+
+```
+http://localhost:3001/auth/google/redirect
+```
+```
+http://localhost:8080/auth/google/callback
+```
+
+
+9. Make a copy of the config/keys.js file by running this command.
+
+    On Linux or Mac: 
+
+```
+cp config/keys.example.js config/keys.js
+```
+
+    On Windows:
+
+```
+copy .config/keys.example.js .config/keys.js
+```
+
+10. Inside of the new config/keys.js file, replace the empty strings with your new Google Oauth Client ID and Client secret. The session cookieKey can be named whatever you like. 
+
+11. Run the app
+
+```
+npm run dev
+```
+
+
+12. You should now be able to access the app at [http://localhost:7000](http://localhost:7000)
+
+## Designed by @party-cubed:
+  *Emmy Bishop*
+  @emmy-bishop
+
+  *Kalypso Homan* 
+  @catcatmcgee
+
+  *Marvas McCladdie*
+  @MarvyWarvy
 
 ## Stack
 
@@ -54,3 +93,8 @@ Client: React
 Styling: Material-UI
 
 Project management: Trello
+
+
+## License
+This project is licensed under the VERYREALVERYSECURE License.
+

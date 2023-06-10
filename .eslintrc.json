@@ -19,6 +19,7 @@
   "ignorePatterns": [".eslint*", "dist", "node_modules"],
   "rules": {
       "no-console": 0,
+      "react/prop-types": 0,
       "comma-dangle": 0,
       "import/no-extraneous-dependencies": 0,
       "camelcase": 0,

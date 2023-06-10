@@ -3,15 +3,13 @@ import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {
-  Box, Grid, Paper, Button, Typography, Container
-} from '@mui/material';
 import EventDialog from '../components/EventDialog';
 import EventForm from '../components/EventForm';
 
-
 const localizer = dayjsLocalizer(dayjs);
 
+// const styles={
+// };
 
 function Events() {
   const [events, setEvents] = useState([]);
@@ -20,6 +18,8 @@ function Events() {
     title: '',
     start: dayjs(),
     end: dayjs(),
+    isInPerson: false,
+    isOnline: false,
     street: '',
     city: '',
     state: '',
@@ -52,6 +52,7 @@ function Events() {
         ...event,
         start: new Date(event.start),
         end: new Date(event.end),
+        selectedUsers: event.selectedUsers.split(',$, ')
       }));
       setEvents(dates);
       console.log('retrieved dates from server', dates);
@@ -66,13 +67,16 @@ function Events() {
   }, []);
 
   const handleSubmit = async () => {
+    const newEvent = {
+      ...event,
+      title: event.title || 'Session',
+      //CHANGE IF THERES TIME TO BE BASED ON LOGGED IN USER
+      hostId: 1,
+      selectedUsers: [...event.selectedUsers].join(',$, ')
+    };
     try {
-      await axios.post('api/event', {
-        ...event,
-        title: event.title || 'Session',
-        hostId: 1
-      });
-      console.log('posted event to server');
+      await axios.post('api/event', newEvent);
+      console.log('posted event to server', newEvent);
       setEvent(initialEventState);
       fetchEvents();
     } catch (err) {
@@ -87,13 +91,23 @@ function Events() {
     >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', height: '100%' }}>
         <div style={{
-          gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center'
+          gridColumn: '1 / 2', padding: '10px', display: 'flex', flexDirection: 'column',
         }}
         >
-          <h5>Create a new event:</h5>
+          <h2>Create a new event:</h2>
           <EventForm event={event} setEventValue={setEventValue} users={users} />
           <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-            <button onClick={handleSubmit}>Add Event</button>
+            <button
+              style={{
+                backgroundColor: '#ddd',
+                border: 'none',
+                padding: '18px',
+                borderRadius: '10px',
+                marginRight: '10px'
+              }}
+              onClick={handleSubmit}
+            >Add Event
+            </button>
           </div>
         </div>
         <div style={{ gridColumn: '2 / 3' }}>
@@ -109,7 +123,7 @@ function Events() {
               style={{
                 height: '100%',
                 '&& .rbc-off-range-bg': {
-                  background: 'black'
+                  backgroundColor: 'rgb(35, 39, 42)'
                 }
               }}
             />
