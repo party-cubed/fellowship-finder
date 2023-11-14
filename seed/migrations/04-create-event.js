@@ -13,6 +13,12 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
+      start: {
+        type: Sequelize.DATE
+      },
+      end: {
+        type: Sequelize.DATE
+      },
       name: {
         type: Sequelize.STRING
       },

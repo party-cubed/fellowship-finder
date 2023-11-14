@@ -6,6 +6,8 @@ module.exports = {
     await queryInterface.bulkInsert('Events', [
       {
         date: new Date(),
+        start: new Date(),
+        end: new Date(),
         name: 'Fellowship of the Ring',
         description: 'I came here to suck eggs and chew bubble gum, and were all outta bubblegum.',
         address: '123 Fake St',
