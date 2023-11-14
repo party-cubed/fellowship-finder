@@ -6,6 +6,7 @@ const Event = Router();
 Event.get('/all', async (req, res) => {
   try {
     const events = await Events.findAll();
+    console.log('evv', events)
     return res.json(events);
   } catch (error) {
     console.error(error);

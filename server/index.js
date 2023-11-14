@@ -48,6 +48,20 @@ app.post('/signup', async (req, res) => {
     googleId,
   } = req.body;
 
+  console.log('adds', username,
+  password,
+  email,
+  age,
+  maxTravelDist,
+  sober,
+  canHost,
+  DM,
+  combatHeaviness,
+  strategyHeaviness,
+  roleplayFocus,
+  storyFocus,
+  googleId)
+
   try {
     const existingUser = await User.findOne({ where: { googleId } });
     const hashedPassword = bycrypt.hashSync(password, 10);
@@ -119,11 +133,13 @@ app.use(express.json());
 app.post('/authenticate', async (req, res) => {
   const { username } = req.body;
 
+  console.log('user', username)
+
   try {
     const r = await axios.put(
       'https://api.chatengine.io/users/',
       { username, secret: username, first_name: username },
-      { headers: { 'private-key': '936bd962-1f79-4d82-bffb-e7239bbbc3c4' } }
+      { headers: { 'private-key': 'f6ef300d-fd54-4179-a2bb-2f20c0802a14' } }
     );
     return res.status(r.status).json(r.data);
   } catch (err) {
