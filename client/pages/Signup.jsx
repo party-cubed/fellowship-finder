@@ -65,7 +65,7 @@ function Signup() {
 
       // Create user on ChatEngine
       const chatEngineUrl = 'https://api.chatengine.io/users/';
-      const privateKey = '936bd962-1f79-4d82-bffb-e7239bbbc3c4';
+      const privateKey = 'f6ef300d-fd54-4179-a2bb-2f20c0802a14';
 
       const userData = {
         username: `${registerUsername}`,

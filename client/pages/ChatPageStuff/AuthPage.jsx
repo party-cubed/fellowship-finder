@@ -11,12 +11,15 @@ const AuthPage = (props) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (activeUser) {
+    if (activeUser !== null) {
       const { username } = activeUser;
+
+      console.log('use', activeUser)
 
       axios
         .post('http://localhost:3001/authenticate', { username })
         .then((r) => {
+          console.log('res', r.data)
           const data = { ...r.data, secret: username };
           // eslint-disable-next-line react/prop-types
           props.onAuth(data);
