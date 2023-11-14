@@ -56,7 +56,7 @@ function Events() {
         ...event,
         start: new Date(event.start),
         end: new Date(event.end),
-        selectedUsers: event.selectedUsers.includes('$') ? event.selectedUsers.split(',$, ') : [event.selectedUsers]
+        selectedUsers: event.selectedUsers ? event.selectedUsers.split(',$, ') : ''
       }));
       setEvents(dates);
       console.log('retrieved dates from server', dates);
