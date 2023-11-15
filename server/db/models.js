@@ -183,14 +183,74 @@ const Post = sequelize.define('post', {
   },
 });
 
+const Sheet = sequelize.define('post', {
+  userId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  },
+  id: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  charName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  charRace: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  charClass: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  str: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  dex: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  con: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  int: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  wis: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  cha: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  charDesc: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+});
+
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Post, { foreignKey: 'userId' });
 Post.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Sheet, { foreignKey: 'userId' });
+Sheet.belongsTo(User, { foreignKey: 'userId' });
+
 
 module.exports = {
   User,
   Message,
   Events,
   Post,
+  Sheet
 };
