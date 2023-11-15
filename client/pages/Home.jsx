@@ -59,9 +59,10 @@ function Home() {
       withCredentials: true,
     })
       .then((response) => {
-        const { googleId } = response.data;
-        console.log(googleId);
-        setUserId(googleId);
+        console.log('auth login response', response);
+        const { id } = response.data;
+        console.log(id);
+        setUserId(id);
       })
       .catch((err) => {
         console.error(err);

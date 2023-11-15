@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
+import MapIcon from '@mui/icons-material/Map';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -107,6 +108,17 @@ function Header() {
               </IconButton>
               <Badge>
                 <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new messages"
+              color="inherit"
+              component={Link}
+              to="/map"
+            >
+              <Badge>
+                <MapIcon />
               </Badge>
             </IconButton>
             <IconButton

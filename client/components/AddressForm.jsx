@@ -38,7 +38,7 @@ const AddressForm = ({ event, setEventValue }) => {
       </div>
       {event.isInPerson && (
       <form noValidate autoComplete="off" style={{ width: '90%' }}>
-        {['Street', 'City', 'State', 'Zip Code'].map((field) => (
+        {['Street', 'City', 'State', 'Zip'].map((field) => (
           <div
             key={field}
             style={{
