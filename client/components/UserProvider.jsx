@@ -33,6 +33,7 @@ export function UserProvider({ children }) {
       withCredentials: true,
     })
       .then((response) => {
+        console.log('spon', response)
         const { data } = response;
         setActiveUser(data);
         setLoading(false);

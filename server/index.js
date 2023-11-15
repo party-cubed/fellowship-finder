@@ -25,9 +25,9 @@ app.use(cors({
 
 app.use(cookieParser('mySecretKey'));
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-// require('./passportConfig')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
@@ -44,8 +44,7 @@ app.post('/signup', async (req, res) => {
     combatHeaviness,
     strategyHeaviness,
     roleplayFocus,
-    storyFocus,
-    googleId,
+    storyFocus
   } = req.body;
 
   console.log('adds', username,
@@ -59,15 +58,32 @@ app.post('/signup', async (req, res) => {
   combatHeaviness,
   strategyHeaviness,
   roleplayFocus,
-  storyFocus,
-  googleId)
+  storyFocus)
 
   try {
-    const existingUser = await User.findOne({ where: { googleId } });
+    const existingUser = await User.findOne({ where: { username } });
     const hashedPassword = bycrypt.hashSync(password, 10);
-    await existingUser.update({
-      username,
-      password: hashedPassword,
+    if(existingUser){
+
+      await existingUser.update({
+        username,
+        password: hashedPassword,
+        email,
+        age,
+        maxTravelDist,
+        sober,
+        canHost,
+        DM,
+        combatHeaviness,
+        strategyHeaviness,
+        roleplayFocus,
+        storyFocus,
+      });
+      console.log('exist', existingUser)
+      await existingUser.save();
+    }else{
+     const newUser = await User.create({username,
+      password,
       email,
       age,
       maxTravelDist,
@@ -77,10 +93,10 @@ app.post('/signup', async (req, res) => {
       combatHeaviness,
       strategyHeaviness,
       roleplayFocus,
-      storyFocus,
-    });
-    await existingUser.save();
-    res.send({ message: 'User created' });
+      storyFocus})
+      await newUser.save()
+      res.status(201).send(newUser);
+    }
   } catch (error) {
     console.error('Error during signup:', error);
     res.status(500).send({ message: 'An error occurred during signup' });
@@ -93,6 +109,7 @@ app.post('/signin', (req, res, next) => {
       throw err;
     }
     if (!user) {
+      
       res.send('No user exists');
     }
     if (user) {

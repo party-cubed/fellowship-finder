@@ -15,6 +15,7 @@ import { UserContext } from './UserProvider.jsx';
 
 function Header() {
   const { activeUser, setActiveUser } = useContext(UserContext);
+  
   return (
 
     <Box sx={{ flexGrow: 1 }}>
@@ -89,7 +90,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={activeUser ? `/user/${activeUser.id}` : '/auth/login'}
+              to={activeUser ? `/user/${5}` : '/auth/login'}
             >
               <AccountCircle />
             </IconButton>
