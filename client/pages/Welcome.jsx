@@ -42,14 +42,14 @@ const style = {
 
 
 function Welcome() {
-  const { activeUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  // const { activeUser } = useContext(UserContext);
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (activeUser) {
-      navigate('/home');
-    }
-  }, [activeUser, navigate]);
+  // useEffect(() => {
+  //   if (activeUser) {
+  //     navigate('/home');
+  //   }
+  // }, [activeUser, navigate]);
 
   return (
     <div style={style.background}>

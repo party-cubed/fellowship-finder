@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,6 +22,7 @@ function Header() {
   const open = Boolean(anchorEl);
   const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -115,7 +116,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={activeUser ? `/user/${activeUser.id}` : '/auth/login'}
+              to={ `/user/${activeUser.id}` }
             >
               <AccountCircle />
             </IconButton>

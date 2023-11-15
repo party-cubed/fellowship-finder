@@ -26,33 +26,32 @@ const darkTheme = createTheme({
 
 
 export default function App({ setUser }) {
-  const { activeUser, loading } = useContext(UserContext);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // const { activeUser, loading } = useContext(UserContext);
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <UserProvider>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline>
-          <GoogleOAuth setUser={setUser} />
           <Routes>
             <Route path="/" element={<Navigate to="/welcometraveler" />} />
             <Route path="/welcometraveler" element={<Welcome />} />
-            <Route path="/signup" element={<Signup activeUser={activeUser} />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
             <Route
               path="*"
               element={(
                 <Layout>
                   <Routes>
-                    <Route path="/home" element={activeUser ? <Home /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/about" element={activeUser ? <About /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/events" element={activeUser ? <Events /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/user/:id" element={activeUser ? <Profile /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/search" element={activeUser ? <Search /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/auth/login" element={activeUser ? <Login /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/chat" element={activeUser ? <Chat /> : <Navigate to="/welcometraveler" replace />} />
+                    <Route path="/home" element={<Home /> } />
+                    <Route path="/about" element={<About /> } />
+                    <Route path="/events" element={<Events /> } />
+                    <Route path="/user/:id" element={<Profile /> } />
+                    <Route path="/search" element={<Search /> } />
+                    <Route path="/auth/login" element={<Login /> } />
+                    <Route path="/chat" element={<Chat /> } />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
                 </Layout>
@@ -61,6 +60,6 @@ export default function App({ setUser }) {
           </Routes>
         </CssBaseline>
       </ThemeProvider>
-    </UserProvider>
+      </UserProvider>
   );
 }

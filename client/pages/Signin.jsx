@@ -1,10 +1,13 @@
-
-import { useState } from 'react';
+import { UserContext } from '../components/UserProvider';
+import { useState, useContext } from 'react';
+import {useNavigate} from  'react-router-dom'
 import axios from 'axios';
 import GoogleOAuth from '../components/GoogleOAuth';
 
 
 function Signin() {
+  const navigate = useNavigate()
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const [signinUsername, setSigninUsername] = useState('');
   const [signinPassword, setSigninPassword] = useState('');
 
@@ -18,7 +21,10 @@ function Signin() {
       },
       withCredentials: true,
       url: 'http://localhost:3001/signin'
-    }).then((res) => console.log(res)).catch((err) => console.error(err));
+    }).then((res) => {
+      setActiveUser(res.data.user)
+      navigate(`/home`)
+    }).catch((err) => console.error(err));
   };
 
 

@@ -3,13 +3,16 @@
 /* global google */
 
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Signin from './Signin.jsx'
 import axios from 'axios';
+import { UserContext } from '../components/UserProvider';
+
 //import GoogleOAuth from '../components/GoogleOAuth';
 
 function Signup() {
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
@@ -26,21 +29,21 @@ function Signup() {
   const navigate = useNavigate();
 
 
-  const getUser = () => {
-    axios.get('http://localhost:3001/auth/login/success', {
-      withCredentials: true,
-    })
-      .then((response) => {
-        setCurrentUserId(response.data.googleId);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+  // const getUser = () => {
+  //   axios.get('http://localhost:3001/auth/login/success', {
+  //     withCredentials: true,
+  //   })
+  //     .then((response) => {
+  //       setCurrentUserId(response.data.googleId);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
   const register = async () => {
     try {
@@ -64,23 +67,24 @@ function Signup() {
       console.log('Account created on server:', serverResponse.data);
 
       // Create user on ChatEngine
-      const chatEngineUrl = 'https://api.chatengine.io/users/';
-      const privateKey = 'f6ef300d-fd54-4179-a2bb-2f20c0802a14';
+      // const chatEngineUrl = 'https://api.chatengine.io/users/';
+      // const privateKey = 'f6ef300d-fd54-4179-a2bb-2f20c0802a14';
 
-      const userData = {
-        username: `${registerUsername}`,
-        first_name: `${registerUsername}`,
-        email: `${registerEmail}`,
-        secret: `${registerUsername}`,
-      };
+      // const userData = {
+      //   username: `${registerUsername}`,
+      //   first_name: `${registerUsername}`,
+      //   email: `${registerEmail}`,
+      //   secret: `${registerUsername}`,
+      // };
 
-      const headers = {
-        'PRIVATE-KEY': privateKey,
-      };
+      // const headers = {
+      //   'PRIVATE-KEY': privateKey,
+      // };
 
-      const chatEngineResponse = await axios.post(chatEngineUrl, userData, { headers });
+      // const chatEngineResponse = await axios.post(chatEngineUrl, userData, { headers });
 
-      console.log('User created on ChatEngine:', chatEngineResponse.data);
+      // console.log('User created on ChatEngine:', chatEngineResponse.data);
+      setActiveUser(serverResponse.data)
       navigate('/home');
     } catch (error) {
       console.error('Error creating account:', error);
@@ -91,6 +95,7 @@ function Signup() {
 
   return (
     <div>
+      <Signin></Signin>
       <h1>Signup</h1>
       <div>
         <label>Username:</label>

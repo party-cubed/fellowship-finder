@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 const style = {
   button: {
@@ -19,6 +20,7 @@ const style = {
 };
 
 function Login() {
+  const navigate = useNavigate()
   const handleLogin = () => {
     axios.get('/auth/login')
       .then((response) => {
@@ -30,7 +32,7 @@ function Login() {
   };
 
   const login = async function () {
-    window.location.href = 'http://localhost:3001/auth/google';
+    navigate('/signup');
   };
 
   return (
