@@ -20,6 +20,7 @@ import Login from './pages/Login';
 import PostList from './pages/PostList';
 import Map from './pages/Map';
 
+import CharSheetMaker from './pages/CharSheetMaker';
 
 const darkTheme = createTheme({
   palette: {
@@ -54,6 +55,7 @@ export default function App({ setUser }) {
                     <Route path="/user/:id" element={<Profile />} />
                     <Route path="/map" element={<Map /> } />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/addSheet" element={<CharSheetMaker /> } />
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/chat" element={<Chat />} />
                     <Route path="/postList" element={<PostList />} />
