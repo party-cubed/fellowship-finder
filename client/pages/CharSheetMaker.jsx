@@ -13,7 +13,7 @@ export default function CharSheetMaker() {
   const [charName, setCharName] = useState('');
   const [charRace, setCharRace] = useState('');
   const [charClass, setCharClass] = useState('');
-  const [str, setStre] = useState(1);
+  const [str, setStr] = useState(1);
   const [dex, setDex] = useState(1);
   const [con, setCon] = useState(1);
   const [int, setInt] = useState(1);
