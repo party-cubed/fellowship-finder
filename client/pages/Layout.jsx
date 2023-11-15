@@ -15,8 +15,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SignpostIcon from '@mui/icons-material/Signpost';
+
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 import axios from 'axios';
 import { UserContext, UserProvider } from '../components/UserProvider';
+
+
 
 
 function Header() {
@@ -131,6 +136,16 @@ function Header() {
               <Badge>
                 <TodayTwoToneIcon />
               </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="search"
+              aria-haspopup="true"
+              color="inherit"
+              component={Link}
+              to="/addSheet"
+            >
+              <AddCircleOutlineIcon />
             </IconButton>
             <IconButton
               size="large"
