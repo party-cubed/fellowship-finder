@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
@@ -136,15 +136,20 @@ const Marker = ({ onClick, children, feature }) => {
 };
 
 const Map = () => {
-
   const markerClicked = (title) => {
     window.alert(title);
   };
 
   const mapContainerRef = useRef(null);
-
+  const [events, setEvents] = useState([]);
   // Initialize map when component mounts
   useEffect(() => {
+    axios.get('/api/event/all')
+      .then((eventsResponse) => {
+        setEvents(eventsResponse.data);
+        console.log(eventsResponse.data);
+      })
+
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -160,7 +165,7 @@ const Map = () => {
       ref.current = document.createElement('div');
       // Render a Marker Component on our new DOM node
       createRoot(ref.current).render(
-        <Marker onClick={markerClicked} feature={feature}/>
+        <Marker onClick={markerClicked} feature={feature} />
       );
 
       // Create a Mapbox Marker at our new DOM node
@@ -169,10 +174,9 @@ const Map = () => {
         .addTo(map);
     });
 
-    // Add navigation control (the +/- zoom buttons)
+    // Navigation control
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-
+    // User geolocation control
     map.addControl(new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
@@ -186,9 +190,18 @@ const Map = () => {
     return () => map.remove();
   }, []);
 
+  const mappedEvents = events.map((event) => {
+    const { title, selectedUsers, street, state, zip} = event;
+    return (
+      <li>{title}</li>
+    )
+  })
 
   return (
     <div>
+      <ul>
+       {mappedEvents}
+      </ul>
       <div className="map-container" ref={mapContainerRef} style={{ position: 'absolute', top: '400px', bottom: '0', left: '0', right: '0' }} />
     </div>
   );
