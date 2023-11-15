@@ -22,8 +22,6 @@ import axios from 'axios';
 import { UserContext, UserProvider } from '../components/UserProvider';
 
 
-
-
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -101,18 +99,20 @@ function Header() {
               component={Link}
               to="/chat"
             >
-              <IconButton
-                size="large"
-                aria-label="search"
-                aria-haspopup="true"
-                color="inherit"
-                component={Link}
-                to="/postList"
-              >
-                <SignpostIcon />
-              </IconButton>
               <Badge>
                 <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="search"
+              aria-haspopup="true"
+              color="inherit"
+              component={Link}
+              to="/postList"
+            >
+              <Badge>
+                <SignpostIcon />
               </Badge>
             </IconButton>
             <IconButton
