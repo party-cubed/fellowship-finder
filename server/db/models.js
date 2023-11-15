@@ -161,7 +161,7 @@ const Events = sequelize.define('Events', {
   // }
 });
 
-const Post = sequelize.define('post', {
+const Posts = sequelize.define('post', {
   userId: {
     type: DataTypes.INTEGER,
     references: {
@@ -185,12 +185,12 @@ const Post = sequelize.define('post', {
 
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Posts, { foreignKey: 'userId' });
+Posts.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
   User,
   Message,
   Events,
-  Post,
+  Posts,
 };
