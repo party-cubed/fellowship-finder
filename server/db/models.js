@@ -183,7 +183,7 @@ const Post = sequelize.define('post', {
   },
 });
 
-const Sheet = sequelize.define('post', {
+const Sheets = sequelize.define('Sheets', {
   userId: {
     type: DataTypes.INTEGER,
     references: {
@@ -243,8 +243,8 @@ User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Post, { foreignKey: 'userId' });
 Post.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Sheet, { foreignKey: 'userId' });
-Sheet.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Sheets, { foreignKey: 'userId' });
+Sheets.belongsTo(User, { foreignKey: 'userId' });
 
 
 module.exports = {
@@ -252,5 +252,5 @@ module.exports = {
   Message,
   Events,
   Post,
-  Sheet
+  Sheets
 };

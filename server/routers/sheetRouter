@@ -1,0 +1,19 @@
+const { Router } = require('express');
+const { Sheets } = require('../db/models.js');
+
+const Sheet = Router();
+
+Sheet.post('/add-sheet', (req, res) => {
+  const { sheet } = req.body;
+  Sheets.create(sheet)
+    .then((charSheet) => {
+      res.status(201)
+        .send(charSheet);
+    })
+    .catch((err) => {
+      console.error('Failed to CREATE character sheet:', err);
+      res.sendStatus(500);
+    });
+});
+
+module.exports = Sheet;

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 // const { Users } = require('../models/init-models.js');
-const { User: Users } = require('../db/models.js');
+const { User: Users, Sheets } = require('../db/models.js');
 
 const User = Router();
 
@@ -80,5 +80,6 @@ User.patch('/unfriend/:id/', async (req, res) => {
     return res.status(500).json({ error: 'An error occurred while updating user' });
   }
 });
+
 
 module.exports = User;
