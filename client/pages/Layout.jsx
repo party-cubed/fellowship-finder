@@ -13,6 +13,7 @@ import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SignpostIcon from '@mui/icons-material/Signpost';
 import axios from 'axios';
 import { UserContext, UserProvider } from '../components/UserProvider';
 
@@ -94,6 +95,16 @@ function Header() {
               component={Link}
               to="/chat"
             >
+              <IconButton
+                size="large"
+                aria-label="search"
+                aria-haspopup="true"
+                color="inherit"
+                component={Link}
+                to="/postList"
+              >
+                <SignpostIcon />
+              </IconButton>
               <Badge>
                 <MailIcon />
               </Badge>
@@ -116,7 +127,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={ `/user/${activeUser.id}` }
+              to={`/user/${activeUser.id}`}
             >
               <AccountCircle />
             </IconButton>

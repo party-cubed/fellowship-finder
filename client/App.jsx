@@ -17,6 +17,7 @@ import GoogleOAuth from './components/GoogleOAuth';
 import Chat from './pages/ChatPageStuff/Chat';
 import Search from './components/Search';
 import Login from './pages/Login';
+import PostList from './pages/PostList';
 
 const darkTheme = createTheme({
   palette: {
@@ -45,13 +46,14 @@ export default function App({ setUser }) {
               element={(
                 <Layout>
                   <Routes>
-                    <Route path="/home" element={<Home /> } />
-                    <Route path="/about" element={<About /> } />
-                    <Route path="/events" element={<Events /> } />
-                    <Route path="/user/:id" element={<Profile /> } />
-                    <Route path="/search" element={<Search /> } />
-                    <Route path="/auth/login" element={<Login /> } />
-                    <Route path="/chat" element={<Chat /> } />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/events" element={<Events />} />
+                    <Route path="/user/:id" element={<Profile />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/auth/login" element={<Login />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/postList" element={<PostList />} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
                 </Layout>
@@ -60,6 +62,6 @@ export default function App({ setUser }) {
           </Routes>
         </CssBaseline>
       </ThemeProvider>
-      </UserProvider>
+    </UserProvider>
   );
 }
