@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   TextField,
   FormControl,
@@ -8,8 +8,12 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import axios from 'axios';
+import { UserContext } from '../components/UserProvider';
+
 
 export default function CharSheetMaker() {
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const [charName, setCharName] = useState('');
   const [charRace, setCharRace] = useState('');
   const [charClass, setCharClass] = useState('');
@@ -21,10 +25,31 @@ export default function CharSheetMaker() {
   const [cha, setCha] = useState(1);
   const [charDesc, setDesc] = useState('');
 
+
   const numArr = [];
 
   for (let i = 1; i <= 20; i++) {
     numArr.push(i);
+  }
+
+  function handleClick() {
+    axios.post('/sheet/', {
+      sheet: {
+        charName,
+        charClass,
+        charRace,
+        charDesc,
+        str,
+        dex,
+        con,
+        int,
+        wis,
+        cha,
+        userId: activeUser.id
+      },
+    })
+      .then(({ data }) => console.log(data))
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -162,28 +187,13 @@ export default function CharSheetMaker() {
       </FormGroup>
       <FormGroup>
         <TextField
-          id="character-name"
+          id="character-desc"
           variant="filled"
-          placeholder="character name"
+          placeholder="character description"
           onChange={(e) => setDesc(e.target.value)}
         />
       </FormGroup>
-      <Button
-        onClick={() => console.log({
-          charName,
-          charRace,
-          charClass,
-          str,
-          dex,
-          con,
-          int,
-          wis,
-          cha,
-          charDesc,
-        })}
-      >
-        Create
-      </Button>
+      <Button onClick={() => handleClick()}>Create</Button>
     </div>
   );
 }

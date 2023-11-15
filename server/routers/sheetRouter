@@ -3,8 +3,9 @@ const { Sheets } = require('../db/models.js');
 
 const Sheet = Router();
 
-Sheet.post('/add-sheet', (req, res) => {
+Sheet.post('/', (req, res) => {
   const { sheet } = req.body;
+  console.log(sheet);
   Sheets.create(sheet)
     .then((charSheet) => {
       res.status(201)
