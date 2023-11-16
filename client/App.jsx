@@ -17,6 +17,10 @@ import GoogleOAuth from './components/GoogleOAuth';
 import Chat from './pages/ChatPageStuff/Chat';
 import Search from './components/Search';
 import Login from './pages/Login';
+import PostList from './pages/PostList';
+import Map from './pages/Map';
+
+import CharSheetMaker from './pages/CharSheetMaker';
 
 const darkTheme = createTheme({
   palette: {
@@ -53,6 +57,9 @@ export default function App({ setUser }) {
                     <Route path="/search" element={activeUser ? <Search /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/auth/login" element={activeUser ? <Login /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/chat" element={activeUser ? <Chat /> : <Navigate to="/welcometraveler" replace />} />
+                    <Route path="/map" element={<Map /> } />
+                    <Route path="/addSheet" element={<CharSheetMaker /> } />
+                    <Route path="/postList" element={<PostList />} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
                 </Layout>
@@ -61,6 +68,6 @@ export default function App({ setUser }) {
           </Routes>
         </CssBaseline>
       </ThemeProvider>
-      </UserProvider>
+    </UserProvider>
   );
 }

@@ -10,9 +10,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
+import MapIcon from '@mui/icons-material/Map';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SignpostIcon from '@mui/icons-material/Signpost';
+
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 import axios from 'axios';
 import { UserContext, UserProvider } from '../components/UserProvider';
 
@@ -104,6 +109,29 @@ function Header() {
             </IconButton>
             <IconButton
               size="large"
+              aria-label="search"
+              aria-haspopup="true"
+              color="inherit"
+              component={Link}
+              to="/postList"
+            >
+              <Badge>
+                <SignpostIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new messages"
+              color="inherit"
+              component={Link}
+              to="/map"
+            >
+              <Badge>
+                <MapIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
               aria-label="show 1 new events"
               color="inherit"
               component={Link}
@@ -112,6 +140,16 @@ function Header() {
               <Badge>
                 <TodayTwoToneIcon />
               </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="search"
+              aria-haspopup="true"
+              color="inherit"
+              component={Link}
+              to="/addSheet"
+            >
+              <AddCircleOutlineIcon />
             </IconButton>
             <IconButton
               size="large"

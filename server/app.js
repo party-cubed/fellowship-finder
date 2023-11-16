@@ -3,7 +3,9 @@ const passport = require('passport');
 const path = require('path');
 const cookieSession = require('cookie-session'); //
 const User = require('./routers/userRouter');
+const Sheet = require('./routers/sheetRouter');
 const Event = require('./routers/eventRouter');
+const Post = require('./routers/postRouter');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
@@ -38,6 +40,8 @@ app.use(passport.session());
 app.use('/api/user', User);
 app.use('/auth', authRoutes); //
 app.use('/profile', profileRoutes); //
+app.use('/sheet', Sheet);
+app.use('/post', Post);
 
 //ROUTERS
 app.use('/api/user', User);

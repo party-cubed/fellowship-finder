@@ -35,8 +35,8 @@ const Search = () => {
       withCredentials: true,
     })
       .then((response) => {
-        const { googleId } = response.data;
-        setUserId(googleId);
+        const { id } = response.data;
+        setUserId(id);
         setActiveUser(response.data);
       })
       .catch((err) => {
