@@ -3,7 +3,12 @@ import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
-import { UserContext, UserProvider } from '../components/UserProvider';
+import { UserContext } from '../components/UserProvider';
+
+import EventTable from '../components/EventTable';
+
+
+
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
@@ -42,8 +47,8 @@ const Map = () => {
   const map = useRef(null);
   const [events, setEvents] = useState([]);
   const [currentMarkers, setCurrentMarkers] = useState([]);
-  const [lng, setLng] = useState(-85.7426);
-  const [lat, setLat] = useState(44.6883);
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
   const [zoom, setZoom] = useState(9);
   const { activeUser, setActiveUser } = useContext(UserContext);
 
@@ -55,7 +60,7 @@ const Map = () => {
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat],
+      center: [longitude, latitude],
       zoom,
     });
 
@@ -66,8 +71,13 @@ const Map = () => {
       return eventsResponse.data;
     }
 
+    // run map logic based on getting events
     getEvents()
       .then((eventsArray) => {
+        console.log('eventsArray', eventsArray);
+        // Calculate and set longitude and latitude state
+        centerMap(eventsArray);
+
         // Add marker to map for each event in events table
         eventsArray.forEach((event, index) => {
           addEventToMap(event, index);
@@ -88,11 +98,31 @@ const Map = () => {
     }));
 
     // Clean up on unmount
-    return () => map.remove();
+    // return () => map.remove();
   }, []);
 
+  function centerMap(eventsArray) {
+    const latitudes = [];
+    const longitudes = [];
+
+    eventsArray.forEach((event) => {
+      if (event.long !== 0 && event.lat !== 0 && event.isInPerson === true) {
+        latitudes.push(event.lat);
+        longitudes.push(event.long);
+      }
+    });
+
+    const avgLatitude = latitudes.reduce((acc, cur) => acc + cur, 0) / latitudes.length;
+    setLatitude(avgLatitude);
+
+    const avgLongitude = longitudes.reduce((acc, cur) => acc + cur, 0) / longitudes.length;
+    setLongitude(avgLongitude);
+    console.log('AVG', avgLatitude, avgLongitude);
+    map.current.flyTo({ center: [avgLatitude, avgLongitude] });
+  }
+
   function addEventToMap(event, index) {
-    if (event.lat !== 0 && event.long !== 0) {
+    if (event.lat !== 0 && event.long !== 0 && event.isInPerson === true) {
       const ref = React.createRef();
       ref.current = document.createElement('div');
       // Render a Marker on new DOM node
@@ -117,9 +147,13 @@ const Map = () => {
   }
 
   const mappedEvents = events.map((event, index) => {
-    const { title, selectedUsers, street, state, zip, long, lat } = event;
+    const {
+      title, selectedUsers, street, state, zip, long, lat
+    } = event;
     return (
-      <li key={index}>{index+1}: {title}: {street}, {state}, {zip}, {long}, {lat}, {selectedUsers}</li>
+      <li key={long + zip}>
+        {index + 1}: {title}: {street}, {state}, {zip}, {long}, {lat}, {selectedUsers}
+      </li>
     )
   })
 
@@ -127,6 +161,7 @@ const Map = () => {
   return (
     <div>
       <button onClick={removeAllMarkers}>Clear Markers</button>
+      <EventTable events = {events}/>
       <ul>
         {mappedEvents}
       </ul>
