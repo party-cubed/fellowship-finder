@@ -38,12 +38,12 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get(`/sheet/${activeUser.id}`)
+      .get(`/sheet/${id}`)
       .then(({ data }) => {
         setSheets(data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   return (
     <Container>
