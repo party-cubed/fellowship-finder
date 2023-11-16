@@ -146,18 +146,12 @@ const Map = () => {
   const [events, setEvents] = useState([]);
 
   // configure map object
-  const map = new mapboxgl.Map({
-    container: mapContainerRef.current,
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-87.65, 41.84],
-    zoom: 10,
-  });
 
-  const getEventCoordinates = (event) => {
-    
-  }
+  const getEventCoordinates = () => {
 
-  
+  };
+
+
   useEffect(() => {
     // get all events
     axios.get('/api/event/all')
@@ -166,9 +160,15 @@ const Map = () => {
         setEvents(eventsResponse.data);
       })
       .then(() => {
-        
+        console.log('events', events);
       })
 
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-87.65, 41.84],
+      zoom: 10,
+    });
 
     // Render custom marker components
     geoJson.features.forEach((feature) => {
@@ -204,7 +204,7 @@ const Map = () => {
   }, []);
 
   const mappedEvents = events.map((event) => {
-    const { title, selectedUsers, street, state, zip} = event;
+    const { title, selectedUsers, street, state, zip } = event;
     return (
       <li>{title}</li>
     )
@@ -213,7 +213,7 @@ const Map = () => {
   return (
     <div>
       <ul>
-       {mappedEvents}
+        {mappedEvents}
       </ul>
       <div className="map-container" ref={mapContainerRef} style={{ position: 'absolute', top: '400px', bottom: '0', left: '0', right: '0' }} />
     </div>

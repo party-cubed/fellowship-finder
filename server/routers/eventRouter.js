@@ -61,7 +61,23 @@ Event.get('/:id', async (req, res) => {
 
 
 Event.post('/', async (req, res) => {
+  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+
   const event = req.body;
+  let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
+  queryString = queryString.replaceAll(' ', '%20');
+  console.log(queryString);
+  
+  const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
+
+  const coordinateResponse = await axios.get(apiUrl);
+
+  console.log('COORDINATE RESPONSE', coordinateResponse.data);
+
+  event.long = 123;
+  event.lat = 4567;
+
   try {
     const newEvent = await Events.create(event);
     return res.json(newEvent);
