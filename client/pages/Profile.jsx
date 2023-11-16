@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
-import Chip from '@mui/material/Chip';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import {
+  Typography,
+  Grid,
+  Container,
+  Chip,
+  Avatar,
+  Table,
+  TableHead,
+  TableContainer,
+  TableRow,
+  TableCell,
+  Paper,
+} from '@mui/material';
 import profilepic from '../assets/profilepic.jpg';
 import { UserContext } from '../components/UserProvider';
 
@@ -13,6 +21,7 @@ const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { id } = useParams();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [sheets, setSheets] = useState([]);
 
   useEffect(() => {
     console.log('imo', user)
@@ -28,7 +37,12 @@ const Profile = () => {
   }, [id]);
 
   useEffect(() => {
-    //TODO: get users character sheets
+    axios
+      .get(`/sheet/${activeUser.id}`)
+      .then(({ data }) => {
+        setSheets(data);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -46,25 +60,68 @@ const Profile = () => {
         src={user.image ? user.image : profilepic}
       />
       <Grid container>
-        <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={6}
+          lg={4}
+          xl={3}
+        >
           <Typography variant="h2">{user ? user.username : ''}</Typography>
-          <Chip label={`Email: ${user ? user.email : ''}`} variant="outlined" />
-          <Chip label={`Companions: ${user.friends ? user.friends : 'Nary a one'}`} variant="outlined" />
-          <Chip label={`Combat Heaviness: ${user ? user.combatHeaviness : ''}`} variant="outlined" />
-          <Chip label={`Strategy Heaviness: ${user ? user.strategyHeaviness : ''}`} variant="outlined" />
-          <Chip label={`Roleplay Focus: ${user ? user.roleplayFocus : ''}`} variant="outlined" />
-          <Chip label={`Story Focus: ${user ? user.storyFocus : ''}`} variant="outlined" />
+          <Chip
+            label={`Email: ${user ? user.email : ''}`}
+            variant="outlined"
+          />
+          <Chip
+            label={`Companions: ${user.friends ? user.friends : 'Nary a one'}`}
+            variant="outlined"
+          />
+          <Chip
+            label={`Combat Heaviness: ${user ? user.combatHeaviness : ''}`}
+            variant="outlined"
+          />
+          <Chip
+            label={`Strategy Heaviness: ${user ? user.strategyHeaviness : ''}`}
+            variant="outlined"
+          />
+          <Chip
+            label={`Roleplay Focus: ${user ? user.roleplayFocus : ''}`}
+            variant="outlined"
+          />
+          <Chip
+            label={`Story Focus: ${user ? user.storyFocus : ''}`}
+            variant="outlined"
+          />
         </Grid>
       </Grid>
-      <Grid>
-        <Grid item xs={1}>
-          {
 
-          }
-        </Grid>
-      </Grid>
+      {sheets.map((sheet) => (
+        <TableContainer key={sheet.id} component={Paper} style={{margin: '100px', border: '10px white solid round' }}>
+          {/* refactor to dividers */}
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name: {sheet.charName}</TableCell>
+                <TableCell>Race: {sheet.charRace}</TableCell>
+                <TableCell>Class: {sheet.charClass}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>STRENGTH: {sheet.str}</TableCell>
+                <TableCell>DEXTERITY: {sheet.dex}</TableCell>
+                <TableCell>CONSTITUTION: {sheet.con}</TableCell>
+                <TableCell>INTELLEGENCE: {sheet.int}</TableCell>
+                <TableCell>WISDOM: {sheet.wis}</TableCell>
+                <TableCell>CHARISMA: {sheet.cha}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Character Description: {sheet.charDesc}</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+        </TableContainer>
+      ))}
     </Container>
-
   );
 };
 
