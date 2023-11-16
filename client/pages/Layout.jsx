@@ -25,9 +25,13 @@ import { UserContext, UserProvider } from '../components/UserProvider';
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log('mhm', activeUser)
+  })
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -154,7 +158,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={`/user/${activeUser.id}`}
+              to={ `/user/${user.id}` }
             >
               <AccountCircle />
             </IconButton>

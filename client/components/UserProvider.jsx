@@ -33,9 +33,10 @@ export function UserProvider({ children }) {
       withCredentials: true,
     })
       .then((response) => {
-        console.log('spon', response)
         const { data } = response;
+        localStorage.setItem('user', JSON.stringify(data))
         setActiveUser(data);
+        console.log('spon', response, activeUser)
         setLoading(false);
       })
       .catch((err) => {
@@ -45,7 +46,16 @@ export function UserProvider({ children }) {
   };
 
   useEffect(() => {
-    getUser();
+    console.log('ayy', JSON.parse(localStorage.getItem('user')))
+
+    if(JSON.parse(localStorage.getItem('user'))){
+      setActiveUser(JSON.parse(localStorage.getItem('user')))
+      setLoading(false)
+    }else{
+      getUser();
+    }
+
+    
   }, []);
 
   if (error) {

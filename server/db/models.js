@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('./index');
+const { PodcastsSharp } = require('@mui/icons-material');
+const { default: PostList } = require('../../client/pages/PostList.jsx');
 
 const numericRangeValidator = (min, max) => ({
   isNumeric: {
@@ -14,6 +16,61 @@ const numericRangeValidator = (min, max) => ({
     msg: `Field must be less than or equal to ${max}`
   }
 });
+
+  const UserEvents =  sequelize.define('UserEvents', {
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    eventId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Events',
+        key: 'id'
+      }
+    }
+  }, {
+    sequelize,
+    tableName: 'UserEvents',
+    timestamps: true,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "userId",
+        using: "BTREE",
+        fields: [
+          { name: "userId" },
+        ]
+      },
+      {
+        name: "eventId",
+        using: "BTREE",
+        fields: [
+          { name: "eventId" },
+        ]
+      },
+    ]
+  });
+
+
 
 const User = sequelize.define('User', {
   id: {
@@ -241,17 +298,16 @@ const Sheets = sequelize.define('Sheets', {
 
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Posts, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Posts, { foreignKey: 'userId' });
 Posts.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
   User,
   Message,
   Events,
+  UserEvents,
   Sheets,
   Posts,
 };

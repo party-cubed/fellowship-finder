@@ -12,12 +12,13 @@ import { UserContext } from '../components/UserProvider';
 const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { id } = useParams();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   useEffect(() => {
+    console.log('imo', user)
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`api/user/${activeUser.id}`);
+        const { data } = await axios.get(`api/user/${id}`);
         setUser(data);
       } catch (err) {
         console.error('Error fetching user data: ', err);

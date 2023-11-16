@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const bycrypt = require('bcrypt');
 const db = require('./db/index');
 
-const app = require('./app');
+const {app, io, server} = require('./app');
 
 const PORT = 3001;
 
@@ -31,6 +31,8 @@ require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
+
+
 app.post('/signup', async (req, res) => {
   const {
     username,
@@ -47,18 +49,6 @@ app.post('/signup', async (req, res) => {
     storyFocus
   } = req.body;
 
-  console.log('adds', username,
-  password,
-  email,
-  age,
-  maxTravelDist,
-  sober,
-  canHost,
-  DM,
-  combatHeaviness,
-  strategyHeaviness,
-  roleplayFocus,
-  storyFocus)
 
   try {
     const existingUser = await User.findOne({ where: { username } });
@@ -164,7 +154,18 @@ app.post('/authenticate', async (req, res) => {
   }
 });
 
-app.listen(PORT, (err) => {
+io.on('connection', (socket) => {
+  console.log('hey!')
+  socket.on('room', (room) => {
+    console.log("room")
+  })
+
+  socket.on('disconnect', () => {
+    console.log('out')
+  })
+})
+
+server.listen(PORT, (err) => {
   if (err) {
     console.error('server connection failed', err);
   }

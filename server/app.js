@@ -11,9 +11,13 @@ const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
 const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
+const http = require('http')
 
 // initilize App
 const app = express();
+const server = http.createServer(app)
+const {Server} = require('socket.io')
+const io = new Server(server)
 
 // connect App to client
 const clientPath = path.resolve(__dirname, '../dist');
@@ -43,7 +47,7 @@ app.use('/post', Post);
 app.use('/api/user', User);
 app.use('/api/event', Event);
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'), (err) => {
     if (err) {
       console.log(err);
@@ -51,6 +55,8 @@ app.get('*', (req, res) => {
     }
   });
 });
+
+
 
 // ADD APP ROUTERS`
 // app.get('/api/users', (req, res) => {
@@ -65,4 +71,4 @@ app.get('*', (req, res) => {
 // });
 
 
-module.exports = app;
+module.exports = {app, io, server};

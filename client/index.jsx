@@ -8,13 +8,11 @@ export default function Index() {
   const [user, setUser] = useState({});
 
   return (
-    <StrictMode>
       <UserProvider>
         <Router>
           <App setUser={setUser} />
         </Router>
       </UserProvider>
-    </StrictMode>
   );
 }
 
