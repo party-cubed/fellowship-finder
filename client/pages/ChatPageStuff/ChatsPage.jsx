@@ -28,16 +28,27 @@
 
 import { PrettyChatWindow } from 'react-chat-engine-pretty';
 
+
 const ChatsPage = (props) => {
+
   return (
-    <div style={{ height: '100vh' }}>
-      <PrettyChatWindow
-        projectId="7907a3ee-3517-4175-8552-fd7aeeaec4cd"
-        username={props.user.username}
-        secret={props.user.secret}
-        style={{ height: '100%' }}
-      />
+    <div>
+      <h1>Chat</h1>
+
+      <span>{}</span>
+
+
     </div>
+
+
+    // <div style={{ height: '100vh' }}>
+    //   <PrettyChatWindow
+    //     projectId="7907a3ee-3517-4175-8552-fd7aeeaec4cd"
+    //     username={props.user.username}
+    //     secret={props.user.secret}
+    //     style={{ height: '100%' }}
+    //   />
+    // </div>
   );
 };
 

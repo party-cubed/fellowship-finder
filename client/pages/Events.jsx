@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import EventDialog from '../components/EventDialog';
 import EventForm from '../components/EventForm';
+import { CollectionsBookmarkOutlined } from '@mui/icons-material';
+import { UserContext } from '../components/UserProvider';
 
 const localizer = dayjsLocalizer(dayjs);
 
@@ -12,6 +14,7 @@ const localizer = dayjsLocalizer(dayjs);
 // };
 
 function Events() {
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const initialEventState = {
@@ -48,6 +51,7 @@ function Events() {
     try {
       const { data } = await axios.get('api/event/all');
       // eslint-disable-next-line no-shadow
+      console.log('last', data[-1])
       const dates = data.map((event) => ({
         ...event,
         start: new Date(event.start),
@@ -79,9 +83,24 @@ function Events() {
       console.log('posted event to server', newEvent);
       setEvent(initialEventState);
       fetchEvents();
+      const { data } = await axios.get(`api/event/all`);
+
+      const nwEv = await axios.get(`api/event/${data[data.length -1].id}`)
+
+      nwEv['userId'] = activeUser.id
+
+      const add = await axios.post('api/event/user', nwEv)
+      // eslint-disable-next-line no-shadow
+      const dates = data.map((event) => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end),
+        selectedUsers: event.selectedUsers.split(',$, ')
+      }));
     } catch (err) {
       console.error('Error posting event: ', err);
     }
+
   };
 
   return (

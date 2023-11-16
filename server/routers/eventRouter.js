@@ -1,12 +1,11 @@
 const { Router } = require('express');
-const { Events } = require('../db/models');
+const { Events, UserEvents } = require('../db/models');
 
 const Event = Router();
 
 Event.get('/all', async (req, res) => {
   try {
     const events = await Events.findAll();
-    console.log('evv', events)
     return res.json(events);
   } catch (error) {
     console.error(error);
@@ -70,6 +69,27 @@ Event.delete('/:id', async (req, res) => {
     console.log('An error occurred while deleting event', error);
     return res.status(500).json({ error: 'An error occurred while deleting event' });
   }
+})
+
+Event.post('/user', (req, res) => {
+  const {id, createdAt, updatedAt} = req.body.data
+  const {userId} = req.body
+
+  console.log('bod', req.body)
+
+  UserEvents.create({userId, eventId: id, createdAt, updatedAt})
+  .then((event) => {
+    console.log('pop', event.dataValues)
+    res.status(201).send(event.dataValues)
+  })
+})
+
+Event.get('/user/:userId', (req, res) => {
+  const {userId} = req.params
+  UserEvents.findAll({where: {userId}})
+  .then((events) => {
+    res.status(200).send(events)
+  })
 })
 
 module.exports = Event;

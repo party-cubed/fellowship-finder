@@ -88,7 +88,7 @@ function Home() {
     <main>
       <div className="search-results">
         {results.length ? results.map((user) => (
-          user.googleId === userId ? null : (
+          user.id === userId ? null : (
             <div key={user.id} className="user-card">
               <div className="avatar-wrapper">
                 <Avatar
