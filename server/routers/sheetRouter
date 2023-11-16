@@ -3,6 +3,20 @@ const { Sheets } = require('../db/models.js');
 
 const Sheet = Router();
 
+Sheet.get('/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  Sheets.findAll({ where: { userId } })
+    .then((sheetArr) => {
+      res.status(200)
+        .send(sheetArr);
+    })
+    .catch((err) => {
+      console.error('Failed to FIND character sheets by userId:', err);
+      res.sendStatus(500);
+    });
+});
+
 Sheet.post('/', (req, res) => {
   const { sheet } = req.body;
   console.log(sheet);

@@ -27,6 +27,10 @@ const Profile = () => {
     fetchUser();
   }, [id]);
 
+  useEffect(() => {
+    //TODO: get users character sheets
+  }, []);
+
   return (
     <Container>
       <Avatar
@@ -45,14 +49,22 @@ const Profile = () => {
         <Grid item xs={12} sm={8} md={6} lg={4} xl={3}>
           <Typography variant="h2">{user ? user.username : ''}</Typography>
           <Chip label={`Email: ${user ? user.email : ''}`} variant="outlined" />
-          <Chip label={`Companions: ${user ? (user.friends ? user.friends : 'Nary a one') : ''}`} variant="outlined" />
+          <Chip label={`Companions: ${user.friends ? user.friends : 'Nary a one'}`} variant="outlined" />
           <Chip label={`Combat Heaviness: ${user ? user.combatHeaviness : ''}`} variant="outlined" />
           <Chip label={`Strategy Heaviness: ${user ? user.strategyHeaviness : ''}`} variant="outlined" />
           <Chip label={`Roleplay Focus: ${user ? user.roleplayFocus : ''}`} variant="outlined" />
           <Chip label={`Story Focus: ${user ? user.storyFocus : ''}`} variant="outlined" />
         </Grid>
       </Grid>
+      <Grid>
+        <Grid item xs={1}>
+          {
+
+          }
+        </Grid>
+      </Grid>
     </Container>
+
   );
 };
 
