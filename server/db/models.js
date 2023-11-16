@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 const { PodcastsSharp } = require('@mui/icons-material');
-const { default: PostList } = require('../../client/pages/PostList.jsx');
+const { sequelize } = require('./index');
+//import PostList from '../../client/pages/PostList.jsx';
 
 const numericRangeValidator = (min, max) => ({
   isNumeric: {
@@ -17,59 +17,58 @@ const numericRangeValidator = (min, max) => ({
   }
 });
 
-  const UserEvents =  sequelize.define('UserEvents', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    },
-    eventId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Events',
-        key: 'id'
-      }
+const UserEvents = sequelize.define('UserEvents', {
+  id: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
     }
-  }, {
-    sequelize,
-    tableName: 'UserEvents',
-    timestamps: true,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "userId",
-        using: "BTREE",
-        fields: [
-          { name: "userId" },
-        ]
-      },
-      {
-        name: "eventId",
-        using: "BTREE",
-        fields: [
-          { name: "eventId" },
-        ]
-      },
-    ]
-  });
-
+  },
+  eventId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Events',
+      key: 'id'
+    }
+  }
+}, {
+  sequelize,
+  tableName: 'UserEvents',
+  timestamps: true,
+  indexes: [
+    {
+      name: 'PRIMARY',
+      unique: true,
+      using: 'BTREE',
+      fields: [
+        { name: 'id' },
+      ]
+    },
+    {
+      name: 'userId',
+      using: 'BTREE',
+      fields: [
+        { name: 'userId' },
+      ]
+    },
+    {
+      name: 'eventId',
+      using: 'BTREE',
+      fields: [
+        { name: 'eventId' },
+      ]
+    },
+  ]
+});
 
 
 const User = sequelize.define('User', {
@@ -236,7 +235,8 @@ const Posts = sequelize.define('post', {
     type: DataTypes.STRING(255)
   },
   upVotes: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
 });
 
@@ -298,10 +298,10 @@ const Sheets = sequelize.define('Sheets', {
 
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Posts, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
-Posts.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Posts, { foreignKey: 'userId' });
+Posts.belongsTo(User, { foreignKey: 'id' });
 
 module.exports = {
   User,

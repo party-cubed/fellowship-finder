@@ -1,14 +1,14 @@
 const express = require('express');
 // const router = express.Router();
 const { Router } = require('express');
-const { Posts } = require('../db/models.js'); //NOTE MAY HAVE TO MATCH other routers
+const { Posts, User } = require('../db/models.js'); //NOTE MAY HAVE TO MATCH other routers
 //const { Post } = require('../db/models')
 
 const Post = Router();
 
 Post.get('/all', async (req, res) => {
   try {
-    const posts = await Posts.findAll();
+    const posts = await Posts.findAll({ include: User });
     console.log('PostGet', posts);
     return res.json(posts);
   } catch (error) {
