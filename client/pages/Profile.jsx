@@ -24,7 +24,6 @@ const Profile = () => {
   const [sheets, setSheets] = useState([]);
 
   useEffect(() => {
-    console.log('imo', user)
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(`api/user/${id}`);

@@ -69,7 +69,6 @@ app.post('/signup', async (req, res) => {
         roleplayFocus,
         storyFocus,
       });
-      console.log('exist', existingUser)
       await existingUser.save();
     }else{
      const newUser = await User.create({username,
@@ -140,7 +139,6 @@ app.use(express.json());
 app.post('/authenticate', async (req, res) => {
   const { username } = req.body;
 
-  console.log('user', username)
 
   try {
     const r = await axios.put(

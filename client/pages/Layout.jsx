@@ -29,9 +29,6 @@ function Header() {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('mhm', activeUser)
-  })
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
