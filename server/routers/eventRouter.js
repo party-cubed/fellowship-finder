@@ -14,36 +14,6 @@ Event.get('/all', async (req, res) => {
   }
 });
 
-// get coordinates for event(s) provided address(es)
-// array of addresses in req body
-Event.get('/coordinates', async (req, res) => {
-  const { queries } = req.body.locations;
-
-  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
-
-  const queryPromises = queries.map((query) => {
-    const queryString = query.join('%20');
-    const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
-    return new Promise((resolve, reject) => {
-      axios.get(apiUrl)
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          console.error('SERVER ERROR: could not GET coordinates from api', error);
-        });
-    });
-  });
-
-  try {
-    const coordinates = await Promise.all(queryPromises);
-    return res.status(200).send(coordinates);
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 Event.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -67,16 +37,15 @@ Event.post('/', async (req, res) => {
   const event = req.body;
   let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
   queryString = queryString.replaceAll(' ', '%20');
-  console.log(queryString);
-  
+
   const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
 
-  const coordinateResponse = await axios.get(apiUrl);
+  const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+  const coordinates = coordinateResponse.data.features[0].center;
 
-  console.log('COORDINATE RESPONSE', coordinateResponse.data);
-
-  event.long = 123;
-  event.lat = 4567;
+  const [lat, long] = coordinates;
+  event.lat = lat;
+  event.long = long;
 
   try {
     const newEvent = await Events.create(event);

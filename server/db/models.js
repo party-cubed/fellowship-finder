@@ -201,11 +201,11 @@ const Events = sequelize.define('Events', {
     allowNull: true
   },
   long: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: true
   },
   lat: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: true
   },
   link: {
