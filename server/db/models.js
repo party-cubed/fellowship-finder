@@ -236,7 +236,8 @@ const Posts = sequelize.define('post', {
     type: DataTypes.STRING(255)
   },
   upVotes: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
 });
 
