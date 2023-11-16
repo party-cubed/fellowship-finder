@@ -90,3 +90,10 @@ h3 {
   color: #888;
 }
 
+.post {
+  background-color: #88888882;
+  border-style: solid;
+  border-color: blue;
+  margin-right: 100px;
+  margin-left: 100px;
+}

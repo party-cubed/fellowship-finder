@@ -12,30 +12,35 @@ function PostList() {
     axios.get('/post/all')
       .then((postArray) => {
         console.log('postArray', postArray);
-        setAllPosts(postArray);
+        setAllPosts(postArray.data);
       })
       .catch((err) => {
         console.error('Failed to get posts to render', err);
       });
   }, []);
 
-  console.log('allPosts', allPosts.data);
-  const postDataArray = allPosts.data;
+  //const {post} = allPosts[0];
+  console.log('allPosts', allPosts);
   return (
     <div className="postlist-container">
-      <h3>POSTLIST TESTER</h3>
-      <div>
-        {/* {postDataArray.map((post) => ( */}
-        <Post
-          message={postDataArray}
-        />
+      <div className="postlist">
+        <h3 className="post-header">Post your Requests</h3>
+        <div>
+          {allPosts.map((post) => (
+            <Post
+              message={post.post}
+              key={post.id}
+              user={post.User.username}
+              upVotes={post.upVotes}
+            />
 
-        {/* // ))} */}
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-// export default PostList;
+export default PostList;
 
 

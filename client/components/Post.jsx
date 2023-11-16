@@ -1,12 +1,13 @@
 import React from "react";
 //CHILD OF POSTLIST
 
-function Post(props) {
-  console.log('post props', props)
+function Post({ message, user, upVotes }) {
+  //console.log('post props', props)
   return (
-    <div>
-      <h5>Post component test</h5>
-      <div>{props.message.post}</div>
+    <div className="post">
+      <h4 className="post-message">{message}</h4>
+      <div className="post-user">{user}</div>
+      {/* <div className="post-upvotes">Upvotes:{ upVotes}</div> */}
     </div>
   );
 }
