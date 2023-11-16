@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('./index');
+const { PodcastsSharp } = require('@mui/icons-material');
+const { default: PostList } = require('../../client/pages/PostList.jsx');
 
 const numericRangeValidator = (min, max) => ({
   isNumeric: {
@@ -296,11 +298,9 @@ const Sheets = sequelize.define('Sheets', {
 
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Posts, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Posts, { foreignKey: 'userId' });
 Posts.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
