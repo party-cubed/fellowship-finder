@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const axios = require('axios');
 const { Events, UserEvents } = require('../db/models');
 
 const Event = Router();
@@ -10,6 +11,36 @@ Event.get('/all', async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'An error occurred while retrieving events' });
+  }
+});
+
+// get coordinates for event(s) provided address(es)
+// array of addresses in req body
+Event.get('/coordinates', async (req, res) => {
+  const { queries } = req.body.locations;
+
+  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+
+  const queryPromises = queries.map((query) => {
+    const queryString = query.join('%20');
+    const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
+    return new Promise((resolve, reject) => {
+      axios.get(apiUrl)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error('SERVER ERROR: could not GET coordinates from api', error);
+        });
+    });
+  });
+
+  try {
+    const coordinates = await Promise.all(queryPromises);
+    return res.status(200).send(coordinates);
+  } catch (error) {
+    console.error(error);
   }
 });
 
@@ -27,6 +58,7 @@ Event.get('/:id', async (req, res) => {
     return res.status(500).json({ error: 'An error occurred while retrieving event' });
   }
 });
+
 
 Event.post('/', async (req, res) => {
   const event = req.body;

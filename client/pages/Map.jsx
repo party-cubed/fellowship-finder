@@ -116,7 +116,7 @@ const Marker = ({ onClick, children, feature }) => {
   const _onClick = () => {
     onClick(feature.properties.description);
   };
-
+  console.log('Marker', feature);
   return (
     <button onClick={_onClick} className="marker" style={{
       backgroundColor: '#4CAF50',
@@ -130,32 +130,45 @@ const Marker = ({ onClick, children, feature }) => {
       borderRadius: '50%',
     }}
     >
-      {children}
+      {/* {children} */}
+      {feature.properties.title}
     </button>
   );
 };
 
 const Map = () => {
+  // what happens when map marker is clicked
   const markerClicked = (title) => {
     window.alert(title);
   };
 
   const mapContainerRef = useRef(null);
   const [events, setEvents] = useState([]);
-  // Initialize map when component mounts
+
+  // configure map object
+  const map = new mapboxgl.Map({
+    container: mapContainerRef.current,
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-87.65, 41.84],
+    zoom: 10,
+  });
+
+  const getEventCoordinates = (event) => {
+    
+  }
+
+  
   useEffect(() => {
+    // get all events
     axios.get('/api/event/all')
+      // set state
       .then((eventsResponse) => {
         setEvents(eventsResponse.data);
-        console.log(eventsResponse.data);
+      })
+      .then(() => {
+        
       })
 
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-87.65, 41.84],
-      zoom: 10,
-    });
 
     // Render custom marker components
     geoJson.features.forEach((feature) => {
