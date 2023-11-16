@@ -7,9 +7,16 @@ const passport = require('passport');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const bycrypt = require('bcrypt');
+//const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 const db = require('./db/index');
+require('dotenv').config();
 
 const {app, io, server} = require('./app');
+
+const { cloudinaryKeys } = require('../config/keys');
+
+//const app = require('./app');
 
 const PORT = 3001;
 
@@ -31,6 +38,42 @@ require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
+// Return "https" URLs by setting secure: true
+cloudinary.config({
+  secure: true,
+  cloud_name: 'dx4mrqtne',
+  api_key: cloudinaryKeys.apiKey,
+  api_secret: cloudinaryKeys.apiSecret
+});
+
+// Log the configuration
+console.log(cloudinary.config());
+
+app.post('/photos', (req, res) => {
+  // Use the uploaded file's name as the asset's public ID and
+  // allow overwriting the asset with new versions
+  const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+  };
+  const { name } = req.body;
+  //console.log(name);
+  // Upload the image
+
+  cloudinary.uploader.upload(name, options)
+    .then((response) => {
+      console.log('SUCCESS SERVER', response);
+      res.status(200).send(response.secure_url);
+    })
+    .catch((error) => {
+      console.error('server cloud post error', error);
+      res.sendStatus(500)
+    });
+  //console.log(result);
+});
+
+
 
 
 app.post('/signup', async (req, res) => {
@@ -49,12 +92,26 @@ app.post('/signup', async (req, res) => {
     storyFocus
   } = req.body;
 
+  console.log(
+    'adds',
+    username,
+    password,
+    email,
+    age,
+    maxTravelDist,
+    sober,
+    canHost,
+    DM,
+    combatHeaviness,
+    strategyHeaviness,
+    roleplayFocus,
+    storyFocus
+  );
 
   try {
     const existingUser = await User.findOne({ where: { username } });
     const hashedPassword = bycrypt.hashSync(password, 10);
-    if(existingUser){
-
+    if (existingUser) {
       await existingUser.update({
         username,
         password: hashedPassword,
@@ -70,20 +127,22 @@ app.post('/signup', async (req, res) => {
         storyFocus,
       });
       await existingUser.save();
-    }else{
-     const newUser = await User.create({username,
-      password,
-      email,
-      age,
-      maxTravelDist,
-      sober,
-      canHost,
-      DM,
-      combatHeaviness,
-      strategyHeaviness,
-      roleplayFocus,
-      storyFocus})
-      await newUser.save()
+    } else {
+      const newUser = await User.create({
+        username,
+        password,
+        email,
+        age,
+        maxTravelDist,
+        sober,
+        canHost,
+        DM,
+        combatHeaviness,
+        strategyHeaviness,
+        roleplayFocus,
+        storyFocus
+      });
+      await newUser.save();
       res.status(201).send(newUser);
     }
   } catch (error) {
@@ -98,7 +157,6 @@ app.post('/signin', (req, res, next) => {
       throw err;
     }
     if (!user) {
-      
       res.send('No user exists');
     }
     if (user) {

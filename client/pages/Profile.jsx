@@ -5,7 +5,7 @@ import { Typography, Grid, Container, Chip, Avatar } from "@mui/material";
 import CharSheet from "./CharSheet.jsx";
 import profilepic from "../assets/profilepic.jpg";
 import { UserContext } from "../components/UserProvider";
-import PhotoUpload from './PhotoUpload.jsx';
+import PhotoUpload from '../components/PhotoUpload.jsx';
 
 const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
