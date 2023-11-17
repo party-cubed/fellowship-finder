@@ -330,8 +330,9 @@ User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Posts, { foreignKey: 'userId' });
 Posts.belongsTo(User, { foreignKey: 'userId' });
-UserEventsPhotos.belongsTo(UserEvents, { foreignKey: 'id' });
-UserEvents.hasMany(UserEventsPhotos, { forgeignKey: 'userEventsId' });
+UserEventsPhotos.belongsTo(UserEvents, { foreignKey: 'userEventsId' });
+UserEvents.hasMany(UserEventsPhotos, { foreignKey: 'userEventsId' });
+
 module.exports = {
   User,
   Message,

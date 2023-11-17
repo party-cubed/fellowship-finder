@@ -5,11 +5,10 @@ const PhotoUpload = (props) => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [uploadEvent, setUploadEvent] = useState(null);
-  const [userEventId, setUserEventId] = useState(null);
+  //const [userEventId, setUserEventId] = useState(null);
   const [events, setEvents] = useState([{ id: 1, title: 'my event1' }, { id: 2, title: 'fellowship friends' }, { id: 3, title: 'another test' }]);
   //const eventsArr = [];
   const [userEvents, setUserEvents] = useState([]);
-  const currUserEvents = useRef(null);
   const onFileChange = (event) => {
     setUploadedFile(event.target.files[0]);
   };
@@ -22,14 +21,14 @@ const PhotoUpload = (props) => {
       .then((response) => {
         const uploadUserEventId = events.filter((event) => event.title === uploadEvent)
           .map((event) => event.id);
-        axios.post('/upload/photoUrl', { photoUrl: response.data.secure_url, userEventId: uploadUserEventId })
+        axios.post('/upload/photoUrl', { photoUrl: response.data.secure_url, userEventsId: uploadUserEventId[0] })
           .then((dbResponse) => console.log('post to db success', dbResponse))
-          .catch((err) => console.log('could not post to db', err));
+          .catch((err) => console.error('could not post to db', err));
         //console.log('cloudinary SUCCESS', response.data);
-        //const userEvent = userEvents.filter((userEvt) => userEvt.eventId === uploadEvent.id);
-        //console.log('user events', userEvents);
-        //console.log('upload event', uploadEvent);
-        //console.log('uploade user event id', uploadUserEventId);
+        // const userEvent = userEvents.filter((userEvt) => userEvt.eventId === uploadEvent.id);
+        // console.log('user events', userEvents);
+        // console.log('upload event', uploadEvent);
+        // console.log('uploade user event id', uploadUserEventId);
       })
       .catch((err) => console.error('could not post to cloud', err));
   };
@@ -62,7 +61,11 @@ const PhotoUpload = (props) => {
           name="uploaded_file"
           onChange={(e) => onFileChange(e)}
         />
-        <select onChange={(event) => setUploadEvent(event.target.value)}>
+        <select
+          required
+          onChange={(event) => setUploadEvent(event.target.value)}
+        >
+          <option>Select an Event for Your Photo</option>
           {events.length > 0 ? events.map((event) => (
             <option key={event.id}>{event.title}</option>
           )) : <option>nothing</option>}
