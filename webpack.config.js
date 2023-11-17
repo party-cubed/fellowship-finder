@@ -17,22 +17,6 @@ module.exports = {
     alias: {
       '@emotion/react': require.resolve('@emotion/react'),
     },
-    fallback: {
-      url: false,
-      querystring: false,
-      crypto: false,
-      stream: false,
-      fs: false,
-      path: false,
-      http: false,
-      https: false,
-      os: false,
-      util: require.resolve('util/')
-    }
-
-  },
-  externals: {
-    'react-native': true,
   },
   module: {
     rules: [
