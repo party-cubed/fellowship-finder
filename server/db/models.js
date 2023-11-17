@@ -309,7 +309,7 @@ Message.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Posts, { foreignKey: 'userId' });
-Posts.belongsTo(User, { foreignKey: 'id' });
+Posts.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = {
   User,

@@ -29,7 +29,7 @@ app.use(cookieSession({
   // define expiration date of cookie (24 hrs)
   maxAge: 24 * 60 * 60 * 1000,
   // use key to encrypt cookie
-  // keys: [keys.session.cookieKey]
+  keys: ['anything']
 }));
 
 // initialize passport

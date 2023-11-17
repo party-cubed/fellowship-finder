@@ -16,11 +16,23 @@ Post.get('/all', async (req, res) => {
     return res.status(500).json({ error: 'An error occurred while retrieving posts' });
   }
 });
+//TODO: implement sorting logic
+// try {
+//     const posts = await Posts.findAll({
+//       order: ['id', 'DESC'],
+//       attributes: {
+//         include: User
+//       }
+//     });
 
 Post.post('/add', (req, res) => {
   const post = req.body;
   console.log('post.post', post);
-  Posts.create(post)
+  Posts.create({
+    userId: post.userId,
+    post: post.post,
+    upVotes: post.upVotes
+  })
     .then((data) => {
       console.log(data);
       res.status(201)

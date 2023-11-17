@@ -155,7 +155,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={ `/user/${activeUser.id}` }
+              to={ `/user/${user.id}` }
             >
               <AccountCircle />
             </IconButton>
