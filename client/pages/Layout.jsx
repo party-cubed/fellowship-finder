@@ -15,7 +15,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SignpostIcon from '@mui/icons-material/Signpost';
-
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import axios from 'axios';
@@ -125,6 +125,17 @@ function Header() {
             >
               <Badge>
                 <MapIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new messages"
+              color="inherit"
+              component={Link}
+              to="/photos"
+            >
+              <Badge>
+                <PhotoLibraryIcon />
               </Badge>
             </IconButton>
             <IconButton

@@ -304,13 +304,34 @@ const Sheets = sequelize.define('Sheets', {
   }
 });
 
+const UserEventsPhotos = sequelize.define('UserEventsPhotos', {
+  userEventsId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: UserEvents,
+      key: 'id'
+    }
+  },
+  id: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  photoUrl: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+});
+
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Posts, { foreignKey: 'userId' });
 Posts.belongsTo(User, { foreignKey: 'userId' });
-
+UserEventsPhotos.belongsTo(UserEvents, { foreignKey: 'id' });
+UserEvents.hasMany(UserEventsPhotos, { forgeignKey: 'userEventsId' });
 module.exports = {
   User,
   Message,
@@ -318,4 +339,5 @@ module.exports = {
   UserEvents,
   Sheets,
   Posts,
+  UserEventsPhotos
 };

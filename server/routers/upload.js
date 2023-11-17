@@ -3,6 +3,7 @@ const { Router } = require('express');
 const multer = require('multer');
 
 const Upload = Router();
+const { UserEventsPhotos } = require('../db/models');
 
 const { uploadToCloudinary } = require('../cloudinary_helpers.js');
 
@@ -37,5 +38,18 @@ Upload.post('/', async (req, res) => {
   }
 });
 
+Upload.post('/photoUrl', (req, res) => {
+  const { userEventsId, photoUrl } = req.body;
+  console.log(userEventsId, photoUrl);
+  UserEventsPhotos.create({ photoUrl, userEventsId })
+    .then((response) => {
+      console.log('post success server', response);
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      console.error('error posting to db server', err);
+      res.sendStatus(500);
+    });
+});
 module.exports = Upload;
 

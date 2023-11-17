@@ -19,7 +19,7 @@ import Search from './components/Search';
 import Login from './pages/Login';
 import PostList from './pages/PostList';
 import Map from './pages/Map';
-
+import PhotoUpload from './pages/PhotoUpload.jsx';
 import CharSheetMaker from './pages/CharSheetMaker';
 
 const darkTheme = createTheme({
@@ -50,15 +50,16 @@ export default function App({ setUser }) {
                 <Layout>
                   <Routes>
 
-                  <Route path="/home" element={activeUser ? <Home /> : <Navigate to="/welcometraveler" replace />} />
+                    <Route path="/home" element={activeUser ? <Home /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/about" element={activeUser ? <About /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/events" element={activeUser ? <Events /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/user/:id" element={activeUser ? <Profile /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/search" element={activeUser ? <Search /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/auth/login" element={activeUser ? <Login /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/chat" element={activeUser ? <Chat /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/map" element={<Map /> } />
-                    <Route path="/addSheet" element={<CharSheetMaker /> } />
+                    <Route path="/map" element={<Map />} />
+                    <Route path="/photos" element={<PhotoUpload />} />
+                    <Route path="/addSheet" element={<CharSheetMaker />} />
                     <Route path="/postList" element={<PostList />} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
