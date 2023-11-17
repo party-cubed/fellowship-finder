@@ -3,13 +3,10 @@ import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
+import { Button } from '@mui/material';
 import { UserContext } from '../components/UserProvider';
 
 import EventTable from '../components/EventTable';
-
-
-
-
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
 
@@ -144,27 +141,37 @@ const Map = () => {
 
   function removeAllMarkers() {
     currentMarkers.forEach((marker) => removeMarkerFromMap(marker));
+    setCurrentMarkers([]);
   }
 
-  const mappedEvents = events.map((event, index) => {
-    const {
-      title, selectedUsers, street, state, zip, long, lat
-    } = event;
-    return (
-      <li key={long + zip}>
-        {index + 1}: {title}: {street}, {state}, {zip}, {long}, {lat}, {selectedUsers}
-      </li>
-    )
-  })
+  function flyToCoordinates(lat, lng) {
+    console.log('flying');
+    map.current.flyTo({ center: [lat, lng] });
+  }
+
+  function sortMarkersByAttendee(username) {
+    // for single user
+    if (username) {
+      const userEvents = events.filter((event) => {
+        return event.selectedUsers.includes(username);
+      });
+      removeAllMarkers();
+
+      userEvents.forEach((event, index) => addEventToMap(event, index));
+    }
+    // for all users
+    else {
+      removeAllMarkers();
+      events.forEach((event, index) => { addEventToMap(event, index); });
+    }
+  }
 
   console.log('STATE', events, currentMarkers, activeUser);
   return (
     <div>
-      <button onClick={removeAllMarkers}>Clear Markers</button>
-      <EventTable events = {events}/>
-      <ul>
-        {mappedEvents}
-      </ul>
+      <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee()}>Pin All Events</Button>
+      <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee(activeUser.username)}>Pin My Events</Button>
+      <EventTable events={events} flyToCoordinates={flyToCoordinates} />
       <div className="map-container" ref={mapContainerRef} style={{ position: 'absolute', top: '400px', bottom: '0', left: '0', right: '0' }} />
     </div>
   );
