@@ -44,4 +44,35 @@ Post.post('/add', (req, res) => {
     });
 });
 
+Post.patch('/:id', (req, res) => {
+  console.log('patch', req.params, req.body);
+  const { id } = req.params;
+  const { edit } = req.body;
+  Posts.findByPk(id)
+    .then((post) => {
+      post.update(edit);
+      console.log('post', post);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error('Failed to edit post', err);
+      res.sendStatus(500);
+    });
+});
+
+Post.delete('/:id', (req, res) => {
+  //console.log(req.params);
+  const { id } = req.params;
+  Posts.findByPk(id)
+    .then((post) => {
+      post.destroy();
+      console.log('post', post);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.error('Failed to delete post', err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = Post;
