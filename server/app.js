@@ -10,7 +10,7 @@ const Upload = require('./routers/upload.js');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
-// const keys = require('../config/keys');
+const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
 const http = require('http')
 

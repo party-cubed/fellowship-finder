@@ -13,7 +13,7 @@ import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Profile from './pages/Profile';
 import Welcome from './pages/Welcome';
-import GoogleOAuth from './components/GoogleOAuth';
+//import GoogleOAuth from './components/GoogleOAuth';
 import Chat from './pages/ChatPageStuff/Chat';
 import Search from './components/Search';
 import Login from './pages/Login';

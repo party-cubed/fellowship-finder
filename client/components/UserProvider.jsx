@@ -20,7 +20,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
+//import Layout from '../pages/Layout.jsx';
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
@@ -34,7 +34,7 @@ export function UserProvider({ children }) {
     })
       .then((response) => {
         const { data } = response;
-        localStorage.setItem('user', JSON.stringify(data))
+        localStorage.setItem('user', JSON.stringify(data));
         setActiveUser(data);
         setLoading(false);
       })
@@ -45,16 +45,14 @@ export function UserProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log('ayy', JSON.parse(localStorage.getItem('user')))
+    console.log('ayy', JSON.parse(localStorage.getItem('user')));
 
-    if(JSON.parse(localStorage.getItem('user'))){
-      setActiveUser(JSON.parse(localStorage.getItem('user')))
-      setLoading(false)
-    }else{
+    if (JSON.parse(localStorage.getItem('user'))) {
+      setActiveUser(JSON.parse(localStorage.getItem('user')));
+      setLoading(false);
+    } else {
       getUser();
     }
-
-    
   }, []);
 
   if (error) {
@@ -63,6 +61,7 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider value={{ activeUser, setActiveUser, loading }}>
+    
       {children}
     </UserContext.Provider>
   );
