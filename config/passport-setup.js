@@ -34,33 +34,31 @@ passport.use(
     // done is a func to call when done w/ cb
     const { id, emails, photos } = profile;
 
-//     // check if user already exists
-//     Users.findOne({ where: { googleId: id } })
-//       .then((currentUser) => {
-//         if (currentUser) {
-//           console.log('User is:', currentUser);
-//           // call serializeUser
-//           done(null, currentUser);
-//         } else {
-//           Users.create({
-//             googleId: id,
-//             email: emails[0].value,
-//             image: photos[0].value,
-//           })
-//             .then((newUser) => {
-//               console.log('New user created:', newUser);
-//               // call serializeUser
-//               done(null, newUser);
-//             })
-//             .catch((err) => {
-//               console.error('Failed to CREATE new user:', err);
-//             });
-//         }
-//       })
-//       .catch((err) => {
-//         console.error('Failed to FIND user by googleId:', err);
-//       });
-//   })
-// );
-
-
+    //     // check if user already exists
+    //     Users.findOne({ where: { googleId: id } })
+    //       .then((currentUser) => {
+    //         if (currentUser) {
+    //           console.log('User is:', currentUser);
+    //           // call serializeUser
+    //           done(null, currentUser);
+    //         } else {
+    //           Users.create({
+    //             googleId: id,
+    //             email: emails[0].value,
+    //             image: photos[0].value,
+    //           })
+    //             .then((newUser) => {
+    //               console.log('New user created:', newUser);
+    //               // call serializeUser
+    //               done(null, newUser);
+    //             })
+    //             .catch((err) => {
+    //               console.error('Failed to CREATE new user:', err);
+    //             });
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         console.error('Failed to FIND user by googleId:', err);
+    //       });
+  })
+);
