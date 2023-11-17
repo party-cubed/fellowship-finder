@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import React, { useEffect, useState } from 'react';
 
-const EventTable = ({events}) => {
+const EventTable = ({events, flyToCoordinates}) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -25,6 +25,7 @@ const EventTable = ({events}) => {
             <TableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              onClick={() => flyToCoordinates(event.lat, event.long)}
             >
               <TableCell component="th" scope="row">
                 {index + 1}
