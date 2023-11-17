@@ -199,6 +199,14 @@ const Events = sequelize.define('Events', {
     type: DataTypes.STRING(255),
     allowNull: true
   },
+  long: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  lat: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
   link: {
     type: DataTypes.STRING(255),
     allowNull: true

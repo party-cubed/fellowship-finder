@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const axios = require('axios');
 const { Events, UserEvents } = require('../db/models');
 
 const Event = Router();
@@ -28,8 +29,24 @@ Event.get('/:id', async (req, res) => {
   }
 });
 
+
 Event.post('/', async (req, res) => {
+  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+
   const event = req.body;
+  let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
+  queryString = queryString.replaceAll(' ', '%20');
+
+  const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
+
+  const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+  const coordinates = coordinateResponse.data.features[0].center;
+
+  const [lat, long] = coordinates;
+  event.lat = lat;
+  event.long = long;
+
   try {
     const newEvent = await Events.create(event);
     return res.json(newEvent);

@@ -9,7 +9,7 @@ const Post = require('./routers/postRouter');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
-const keys = require('../config/keys');
+// const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
 const http = require('http')
 
@@ -29,7 +29,7 @@ app.use(cookieSession({
   // define expiration date of cookie (24 hrs)
   maxAge: 24 * 60 * 60 * 1000,
   // use key to encrypt cookie
-  keys: [keys.session.cookieKey]
+  // keys: [keys.session.cookieKey]
 }));
 
 // initialize passport
