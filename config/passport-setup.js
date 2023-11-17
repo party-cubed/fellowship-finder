@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const keys = require('./keys');
+// const keys = require('./keys');
 const { User: Users } = require('../server/db/models');
 
 // create cookie using user ID auto-created in db (NOT googleId)
@@ -24,8 +24,8 @@ passport.use(
   new GoogleStrategy({
   // options for the google strategy
     callbackURL: '/auth/google/redirect',
-    clientID: keys.google.clientID,
-    clientSecret: keys.google.clientSecret
+    // clientID: keys.google.clientID,
+    // clientSecret: keys.google.clientSecret
     // passport cb function
   }, (accessToken, refreshToken, profile, done) => {
     // accessToken gives access to user info

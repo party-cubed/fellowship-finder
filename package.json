@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build-prod": "webpack --mode=production",
     "build": "webpack --watch",
     "start": "nodemon server/index.js",
     "autorefresh": "concurrently \"npm:start\" webpack serve",
@@ -63,7 +64,8 @@
     "sequelize": "^6.31.1",
     "sequelize-cli": "^6.6.2",
     "socket.io": "^4.7.2",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "webpackbar": "^5.0.2"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0"

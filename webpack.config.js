@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBar = require('webpackbar');
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/index.jsx'),
@@ -63,6 +64,7 @@ module.exports = {
     aggregateTimeout: 1000, // Delay before rebuilding in milliseconds
   },
   plugins: [
+    new WebpackBar(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'client/index.html'),
       filename: 'index.html',
