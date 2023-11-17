@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
+import { Button } from '@mui/material';
 import { UserContext } from '../components/UserProvider';
 
 import EventTable from '../components/EventTable';
@@ -168,8 +169,8 @@ const Map = () => {
   console.log('STATE', events, currentMarkers, activeUser);
   return (
     <div>
-      <button onClick={() => sortMarkersByAttendee()}>Pin All Events</button>
-      <button onClick={() => sortMarkersByAttendee(activeUser.username)}>Pin My Events</button>
+      <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee()}>Pin All Events</Button>
+      <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee(activeUser.username)}>Pin My Events</Button>
       <EventTable events={events} flyToCoordinates={flyToCoordinates} />
       <div className="map-container" ref={mapContainerRef} style={{ position: 'absolute', top: '400px', bottom: '0', left: '0', right: '0' }} />
     </div>
