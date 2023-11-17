@@ -27,7 +27,7 @@ const EventTable = ({events}) => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {index}
+                {index + 1}
               </TableCell>
               <TableCell align="right">
                 {event.title}
