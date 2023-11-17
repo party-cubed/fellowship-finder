@@ -8,33 +8,33 @@ const Post = Router();
 
 Post.get('/all', async (req, res) => {
   try {
-    const posts = await Posts.findAll({ include: User });
-    console.log('PostGet', posts);
+    const posts = await Posts.findAll({
+      order: [
+        ['id', 'DESC']
+      ],
+      include: {
+        model: User
+      }
+    });
+    //console.log('PostGet', posts);
     return res.json(posts);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'An error occurred while retrieving posts' });
   }
 });
-//TODO: implement sorting logic
-// try {
-//     const posts = await Posts.findAll({
-//       order: ['id', 'DESC'],
-//       attributes: {
-//         include: User
-//       }
-//     });
+
 
 Post.post('/add', (req, res) => {
   const post = req.body;
-  console.log('post.post', post);
+  //console.log('post.post', post);
   Posts.create({
     userId: post.userId,
     post: post.post,
     upVotes: post.upVotes
   })
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       res.status(201)
         .send(data);
     })

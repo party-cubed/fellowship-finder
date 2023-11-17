@@ -11,17 +11,24 @@ function PostList() {
   //const [user, setUser] = useState([]);
   const { activeUser, setActiveUser } = useContext(UserContext);
   const [newPost, setNewPost] = useState([]);
+  const [txt, setTxt] = useState([]);
 
-  useEffect(() => {
+  const displayMsg = (event) => {
+    event.preventDefault();
+    setNewPost(txt);
+    setTxt('');
+  };
+
+  const getAllPosts = () => {
     axios.get('/post/all')
       .then((postArray) => {
-        console.log('postArray', postArray);
+        //console.log('postArray', postArray);
         setAllPosts(postArray.data);
       })
       .catch((err) => {
         console.error('Failed to get posts to render', err);
       });
-  }, []);
+  };
 
   const newPosting = () => {
     axios.post('/post/add', {
@@ -30,16 +37,23 @@ function PostList() {
       upVotes: 0
     })
       .then(() => {
-        console.log('Post Success');
+        getAllPosts();
+
+        //console.log('Post Success');
       })
       .catch((err) => {
         console.error('Failed to newPosting', err);
       });
   };
 
-  //TODO: remove state refresh on each keystroke, add enter button functionality
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
+  //TODO: add enter button functionality Clear input field on submit ADD EDIT AND DELETE FEATURES
+
   //const {post} = allPosts[0];
-  console.log('active user', activeUser);
+  //console.log('active user', activeUser);
   console.log('allPosts', allPosts);
   return (
     <div className="postlist-container">
@@ -49,6 +63,7 @@ function PostList() {
           type="text"
           name="username"
           placeholder="What's on your mind?"
+          value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
         />
         <button onClick={newPosting}>Submit</button>
@@ -59,6 +74,7 @@ function PostList() {
               key={post.id}
               user={post.User.username}
               upVotes={post.upVotes}
+              created={post.createdAt}
             />
 
           ))}
