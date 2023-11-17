@@ -1,7 +1,12 @@
 const cloudinary = require('cloudinary').v2;
-//require('./db/cloudinary_config.js');
+
 const { cloudinaryKeys } = require('../config/keys.js');
-//const apiSecret = cloudinary.config().api_secret;
+
+cloudinary.config({
+  cloud_name: 'dx4mrqtne',
+  api_key: cloudinaryKeys.apiKey,
+  api_secret: cloudinaryKeys.apiSecret
+});
 
 const createSignature = () => {
   const timestamp = Math.round((new Date()).getTime() / 1000);
@@ -15,9 +20,16 @@ const createSignature = () => {
     cloudinaryKeys.apiSecret
   );
 
-  return { timestamp, signature };
+  return signature;
+};
+
+const uploadToCloudinary = async (file) => {
+  console.log(cloudinary.config());
+  const res = await cloudinary.uploader.upload(file, { resource_type: 'auto' });
+  return res;
 };
 
 module.exports = {
-  createSignature
+  createSignature,
+  uploadToCloudinary
 };

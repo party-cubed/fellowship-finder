@@ -1,18 +1,20 @@
 
 const { default: axios } = require('axios');
 const express = require('express');
+const multer = require('multer');
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const bycrypt = require('bcrypt');
-//const cloudinary = require('cloudinary');
 const cloudinary = require('cloudinary').v2;
 const db = require('./db/index');
+const { createSignature, uploadToCloudinary } = require('./cloudinary_helpers.js');
 require('dotenv').config();
 
-const {app, io, server} = require('./app');
+const { app, io, server } = require('./app');
 
 const { cloudinaryKeys } = require('../config/keys');
 
@@ -37,44 +39,6 @@ app.use(passport.session());
 require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
-
-// Return "https" URLs by setting secure: true
-cloudinary.config({
-  secure: true,
-  cloud_name: 'dx4mrqtne',
-  api_key: cloudinaryKeys.apiKey,
-  api_secret: cloudinaryKeys.apiSecret
-});
-
-// Log the configuration
-console.log(cloudinary.config());
-
-app.post('/photos', (req, res) => {
-  // Use the uploaded file's name as the asset's public ID and
-  // allow overwriting the asset with new versions
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  };
-  const { name } = req.body;
-  //console.log(name);
-  // Upload the image
-
-  cloudinary.uploader.upload(name, options)
-    .then((response) => {
-      console.log('SUCCESS SERVER', response);
-      res.status(200).send(response.secure_url);
-    })
-    .catch((error) => {
-      console.error('server cloud post error', error);
-      res.sendStatus(500)
-    });
-  //console.log(result);
-});
-
-
-
 
 app.post('/signup', async (req, res) => {
   const {
@@ -211,15 +175,15 @@ app.post('/authenticate', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('hey!')
+  //console.log('hey!')
   socket.on('room', (room) => {
-    console.log("room")
-  })
+    console.log('room');
+  });
 
   socket.on('disconnect', () => {
-    console.log('out')
-  })
-})
+    console.log('out');
+  });
+});
 
 server.listen(PORT, (err) => {
   if (err) {
