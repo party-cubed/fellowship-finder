@@ -29,9 +29,6 @@ function Header() {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('mhm', activeUser)
-  })
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -158,7 +155,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={ `/user/${user.id}` }
+              to={ `/user/${activeUser.id}` }
             >
               <AccountCircle />
             </IconButton>

@@ -36,7 +36,6 @@ export function UserProvider({ children }) {
         const { data } = response;
         localStorage.setItem('user', JSON.stringify(data))
         setActiveUser(data);
-        console.log('spon', response, activeUser)
         setLoading(false);
       })
       .catch((err) => {
