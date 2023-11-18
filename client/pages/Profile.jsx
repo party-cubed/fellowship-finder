@@ -23,7 +23,7 @@ const Profile = () => {
       }
     };
     fetchUser();
-  }, [id]);
+  }, []);
 
   const getSheets = () => {
     axios
