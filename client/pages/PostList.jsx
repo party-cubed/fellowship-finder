@@ -38,11 +38,20 @@ function PostList() {
     })
       .then(() => {
         getAllPosts();
-
-        //console.log('Post Success');
       })
       .catch((err) => {
         console.error('Failed to newPosting', err);
+      });
+  };
+
+  const deletePost = (id) => {
+    axios.delete(`/post/${id}`)
+      .then(() => {
+        console.log('Post Deleted');
+        getAllPosts();
+      })
+      .catch((err) => {
+        console.error('Failed to delete', err);
       });
   };
 
@@ -53,7 +62,7 @@ function PostList() {
   //TODO: add enter button functionality Clear input field on submit ADD EDIT AND DELETE FEATURES
 
   //const {post} = allPosts[0];
-  //console.log('active user', activeUser);
+  console.log('active user', activeUser);
   console.log('allPosts', allPosts);
   return (
     <div className="postlist-container">
@@ -72,9 +81,11 @@ function PostList() {
             <Post
               message={post.post}
               key={post.id}
+              id={post.id}
               user={post.User.username}
               upVotes={post.upVotes}
               created={post.createdAt}
+              deletePost={deletePost}
             />
 
           ))}
