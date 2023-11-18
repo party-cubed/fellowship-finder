@@ -43,7 +43,7 @@ Event.post('/', async (req, res) => {
   const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
   const coordinates = coordinateResponse.data.features[0].center;
 
-  const [lat, long] = coordinates;
+  const [long, lat] = coordinates;
   event.lat = lat;
   event.long = long;
 

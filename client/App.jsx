@@ -18,7 +18,7 @@ import Chat from './pages/ChatPageStuff/Chat';
 import Search from './components/Search';
 import Login from './pages/Login';
 import PostList from './pages/PostList';
-import Map from './pages/Map';
+import MapPage from './pages/Map';
 import PhotoUpload from './pages/PhotoUpload.jsx';
 import CharSheetMaker from './pages/CharSheetMaker';
 
@@ -57,7 +57,7 @@ export default function App({ setUser }) {
                     <Route path="/search" element={activeUser ? <Search /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/auth/login" element={activeUser ? <Login /> : <Navigate to="/welcometraveler" replace />} />
                     <Route path="/chat" element={activeUser ? <Chat /> : <Navigate to="/welcometraveler" replace />} />
-                    <Route path="/map" element={<Map />} />
+                    <Route path="/map" element={<MapPage />} />
                     <Route path="/photos" element={<PhotoUpload />} />
                     <Route path="/addSheet" element={<CharSheetMaker />} />
                     <Route path="/postList" element={<PostList />} />
