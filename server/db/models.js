@@ -32,6 +32,9 @@ const numericRangeValidator = (min, max) => ({
         key: 'id'
       }
     },
+    title: {
+      type: DataTypes.STRING,
+    },
     eventId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -141,7 +144,32 @@ const User = sequelize.define('User', {
   }
 });
 
-const Message = sequelize.define('message', {
+ const Chats = sequelize.define('Chats', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    groupId: {
+      type: DataTypes.INTEGER
+    },
+    eventId: {
+      type: DataTypes.INTEGER
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
+  });
+
+
+
+const Message = sequelize.define('Message', {
   userId: {
     type: DataTypes.INTEGER,
     references: {
@@ -149,7 +177,16 @@ const Message = sequelize.define('message', {
       key: 'id'
     }
   },
-  message: {
+
+  chatId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Chats,
+      key: 'id'
+    }
+  },
+
+  text: {
     type: DataTypes.STRING
   }
 });

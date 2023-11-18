@@ -47,8 +47,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     console.log('ayy', JSON.parse(localStorage.getItem('user')))
-
-    if(JSON.parse(localStorage.getItem('user'))){
+    if(JSON.parse(localStorage.getItem('user')) !== '[object Object]'){
       setActiveUser(JSON.parse(localStorage.getItem('user')))
       setLoading(false)
     }else{

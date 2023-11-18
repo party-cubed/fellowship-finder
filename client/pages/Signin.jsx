@@ -22,6 +22,8 @@ function Signin() {
       withCredentials: true,
       url: 'http://localhost:3001/signin'
     }).then((res) => {
+      console.log('actee', res)
+      localStorage.setItem('user', JSON.stringify(res.data.user))
       setActiveUser(res.data.user)
       navigate(`/home`)
     }).catch((err) => console.error(err));

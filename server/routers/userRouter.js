@@ -14,6 +14,16 @@ User.get('/all', async (req, res) => {
   }
 });
 
+User.get('/name/:name', (req, res) => {
+  const {name} = req.params
+
+  Users.findOne({where: {username: name}})
+  .then((user) => {
+    console.log('uhh', user)
+    res.status(200).send(user)
+  })
+})
+
 User.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
