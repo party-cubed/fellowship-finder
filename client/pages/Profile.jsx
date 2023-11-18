@@ -8,6 +8,7 @@ import { UserContext } from "../components/UserProvider";
 
 const Profile = () => {
   const { activeUser, setActiveUser } = useContext(UserContext);
+  const { file, setFile } = useState('');
   const { id } = useParams();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [sheets, setSheets] = useState([]);

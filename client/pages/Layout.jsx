@@ -15,7 +15,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SignpostIcon from '@mui/icons-material/Signpost';
-
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import axios from 'axios';
@@ -25,10 +25,10 @@ import { UserContext, UserProvider } from '../components/UserProvider';
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const { activeUser, setActiveUser } = useContext(UserContext);
   const navigate = useNavigate();
-
+  console.log('active user', activeUser);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -125,6 +125,17 @@ function Header() {
             >
               <Badge>
                 <MapIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new messages"
+              color="inherit"
+              component={Link}
+              to="/photos"
+            >
+              <Badge>
+                <PhotoLibraryIcon />
               </Badge>
             </IconButton>
             <IconButton

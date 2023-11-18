@@ -6,10 +6,11 @@ const User = require('./routers/userRouter');
 const Sheet = require('./routers/sheetRouter');
 const Event = require('./routers/eventRouter');
 const Post = require('./routers/postRouter');
+const Upload = require('./routers/upload.js');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
-// const keys = require('../config/keys');
+const keys = require('../config/keys');
 const { sequelize } = require('./db/index');
 const http = require('http')
 
@@ -42,6 +43,7 @@ app.use('/auth', authRoutes); //
 app.use('/profile', profileRoutes); //
 app.use('/sheet', Sheet);
 app.use('/post', Post);
+app.use('/upload', Upload);
 
 //ROUTERS
 app.use('/api/user', User);

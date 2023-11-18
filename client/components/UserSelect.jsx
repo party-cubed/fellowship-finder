@@ -15,7 +15,7 @@ const UserSelect = ({ users, selectedUser, setSelectedUser }) => {
       getOptionLabel={(option) => option.username}
       onChange={handleUserSelect}
       value={selectedUser}
-      renderInput={(params) => <TextField {...params} label="user" />}
+      //renderInput={(params) => <TextField {params} label="user" />}
     />
   );
 };

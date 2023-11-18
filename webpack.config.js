@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.resolve(__dirname, 'client/index.jsx'),
@@ -15,12 +16,12 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       '@emotion/react': require.resolve('@emotion/react'),
-    }
+    },
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -43,8 +44,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
-      },
-
+      }
     ]
   },
   devtool: 'inline-source-map',
@@ -69,5 +69,6 @@ module.exports = {
       template: path.resolve(__dirname, 'client/index.html'),
       filename: 'index.html',
     }),
+    new Dotenv()
   ]
 };

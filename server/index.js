@@ -1,15 +1,24 @@
 
 const { default: axios } = require('axios');
 const express = require('express');
+const multer = require('multer');
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const bycrypt = require('bcrypt');
+const cloudinary = require('cloudinary').v2;
 const db = require('./db/index');
+const { createSignature, uploadToCloudinary } = require('./cloudinary_helpers.js');
+require('dotenv').config();
 
-const {app, io, server} = require('./app');
+const { app, io, server } = require('./app');
+
+const { cloudinaryKeys } = require('../config/keys');
+
+//const app = require('./app');
 
 const PORT = 3001;
 
@@ -31,8 +40,6 @@ require('./passportConfig')(passport);
 
 const { User } = require('./db/models'); // Assuming you have a User model defined
 
-
-
 app.post('/signup', async (req, res) => {
   const {
     username,
@@ -49,12 +56,26 @@ app.post('/signup', async (req, res) => {
     storyFocus
   } = req.body;
 
+  console.log(
+    'adds',
+    username,
+    password,
+    email,
+    age,
+    maxTravelDist,
+    sober,
+    canHost,
+    DM,
+    combatHeaviness,
+    strategyHeaviness,
+    roleplayFocus,
+    storyFocus
+  );
 
   try {
     const existingUser = await User.findOne({ where: { username } });
     const hashedPassword = bycrypt.hashSync(password, 10);
-    if(existingUser){
-
+    if (existingUser) {
       await existingUser.update({
         username,
         password: hashedPassword,
@@ -70,20 +91,22 @@ app.post('/signup', async (req, res) => {
         storyFocus,
       });
       await existingUser.save();
-    }else{
-     const newUser = await User.create({username,
-      password,
-      email,
-      age,
-      maxTravelDist,
-      sober,
-      canHost,
-      DM,
-      combatHeaviness,
-      strategyHeaviness,
-      roleplayFocus,
-      storyFocus})
-      await newUser.save()
+    } else {
+      const newUser = await User.create({
+        username,
+        password,
+        email,
+        age,
+        maxTravelDist,
+        sober,
+        canHost,
+        DM,
+        combatHeaviness,
+        strategyHeaviness,
+        roleplayFocus,
+        storyFocus
+      });
+      await newUser.save();
       res.status(201).send(newUser);
     }
   } catch (error) {
@@ -98,7 +121,6 @@ app.post('/signin', (req, res, next) => {
       throw err;
     }
     if (!user) {
-      
       res.send('No user exists');
     }
     if (user) {
@@ -153,15 +175,15 @@ app.post('/authenticate', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('hey!')
+  //console.log('hey!')
   socket.on('room', (room) => {
-    console.log("room")
-  })
+    console.log('room');
+  });
 
   socket.on('disconnect', () => {
-    console.log('out')
-  })
-})
+    console.log('out');
+  });
+});
 
 server.listen(PORT, (err) => {
   if (err) {
