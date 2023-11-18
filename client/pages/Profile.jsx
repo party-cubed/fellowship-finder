@@ -25,14 +25,16 @@ const Profile = () => {
     fetchUser();
   }, [id]);
 
-  useEffect(() => {
+  const getSheets = () => {
     axios
       .get(`/sheet/${id}`)
       .then(({ data }) => {
         setSheets(data);
       })
       .catch((err) => console.error(err));
-  }, [id]);
+  };
+
+  getSheets();
 
   return (
     <Container>
@@ -87,8 +89,9 @@ const Profile = () => {
 
       <Grid container>
         {sheets.map((sheet) => (
-          <Grid>
+          <Grid key={`${sheet.id}-${sheet.charName}`}>
             <CharSheet
+              getSheets={getSheets}
               sheet={sheet}
               key={sheet.id}
             />

@@ -19,7 +19,7 @@ Sheet.get('/:userId', (req, res) => {
 
 Sheet.post('/', (req, res) => {
   const { sheet } = req.body;
-  console.log(sheet);
+
   Sheets.create(sheet)
     .then((charSheet) => {
       res.status(201)
@@ -27,6 +27,19 @@ Sheet.post('/', (req, res) => {
     })
     .catch((err) => {
       console.error('Failed to CREATE character sheet:', err);
+      res.sendStatus(500);
+    });
+});
+
+Sheet.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Sheets.destroy({ where: { id } })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error('Failed to DELETE character sheet:', err);
       res.sendStatus(500);
     });
 });
