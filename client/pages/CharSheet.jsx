@@ -101,21 +101,23 @@ export default function CharSheet({ sheet, getSheets }) {
           >
             {`Description: ${sheet.charDesc}`}
           </Typography>
-          {activeUser.id === id ? (
-            <CardActions style={{ justifyContent: 'center' }}>
-              <IconButton
-                size="large"
-                color="error"
-                onClick={handleOpen}
-              >
-                <Badge>
-                  <DeleteIcon />
-                </Badge>
-              </IconButton>
-            </CardActions>
-          ) : (
-            ''
-          )}
+          <CardActions style={{ justifyContent: 'center' }}>
+            {
+              activeUser.id === parseFloat(id)
+                ? (
+                  <IconButton
+                    size="large"
+                    color="error"
+                    onClick={handleOpen}
+                  >
+                    <Badge>
+                      <DeleteIcon />
+                    </Badge>
+                  </IconButton>
+                )
+                : ''
+            }
+          </CardActions>
         </CardContent>
       </Card>
 
