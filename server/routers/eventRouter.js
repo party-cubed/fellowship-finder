@@ -14,6 +14,25 @@ Event.get('/all', async (req, res) => {
   }
 });
 
+Event.get('/coordinates/:address', async (req, res) => {
+  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+
+  
+  console.log('here', req.params);
+  const { address } = req.params;
+  console.log(address);
+  // let queryString = `${address.street} ${address.city} ${address.state} ${address.zip}`;
+  // queryString = queryString.replaceAll(' ', '%20');
+
+  const apiUrl = apiUrlBeginning + address + apiUrlEnd;
+
+  const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+  const coordinates = coordinateResponse.data.features[0].center;
+  res.status(200).send(coordinates);
+  // res.sendStatus(200);
+})
+
 Event.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -40,14 +59,14 @@ Event.post('/', async (req, res) => {
 
   const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
 
-  const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
-  const coordinates = coordinateResponse.data.features[0].center;
-
-  const [long, lat] = coordinates;
-  event.lat = lat;
-  event.long = long;
-
   try {
+    const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+    const coordinates = coordinateResponse.data.features[0].center;
+
+    const [long, lat] = coordinates;
+    event.lat = lat;
+    event.long = long;
+
     const newEvent = await Events.create(event);
     return res.json(newEvent);
   } catch (error) {
@@ -89,26 +108,24 @@ Event.delete('/:id', async (req, res) => {
 });
 
 Event.post('/user', (req, res) => {
-  const { id, createdAt, updatedAt } = req.body.data;
-  const { userId } = req.body;
+  const { id, createdAt, updatedAt } = req.body.data
+  const { userId } = req.body
 
   console.log('bod', req.body);
 
-  UserEvents.create({
-    userId, eventId: id, createdAt, updatedAt
-  })
+  UserEvents.create({ userId, eventId: id, createdAt, updatedAt })
     .then((event) => {
-      console.log('pop', event.dataValues);
-      res.status(201).send(event.dataValues);
-    });
-});
+      console.log('pop', event.dataValues)
+      res.status(201).send(event.dataValues)
+    })
+})
 
 Event.get('/user/:userId', (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params
   UserEvents.findAll({ where: { userId } })
     .then((events) => {
-      res.status(200).send(events);
-    });
-});
+      res.status(200).send(events)
+    })
+})
 
 module.exports = Event;

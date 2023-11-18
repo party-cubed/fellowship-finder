@@ -5,51 +5,37 @@ import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import { Button } from '@mui/material';
 import PlaceIcon from '@mui/icons-material/Place';
-import IconButton from '@mui/material';
-import { Map, useMap, Marker, NavigationControl } from 'react-map-gl';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Map, useMap, Marker, NavigationControl, Layer, Source } from 'react-map-gl';
 import { UserContext } from '../components/UserProvider';
 import EventTable from '../components/EventTable';
 
-// mapboxgl.accessToken = 'pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
-
-// const Marker = ({ onClick, children, event, index }) => {
-//   const _onClick = () => {
-//     onClick(event.title);
-//   };
-//   console.log('Marker', event, index);
-//   return (
-//     <button onClick={_onClick} className="marker" style={{
-//       backgroundColor: 'black',
-//       border: '1px solid gold',
-//       color: 'white',
-//       padding: '3px',
-//       textAlign: 'center',
-//       display: 'inline-block',
-//       fontSize: '20px',
-//       margin: '1px',
-//       borderRadius: '50%',
-//     }}
-//     >
-//       {/* {children} */}
-//       {index + 1}
-//     </button>
-//   );
-// };
-
 const MapPage = () => {
   // what happens when map marker is clicked
-  const markerClicked = (string) => {
-    window.alert(string);
+  const markerClicked = (event) => {
+    window.alert(event.title);
   };
-
 
   const [events, setEvents] = useState([]);
   const [currentMarkers, setCurrentMarkers] = useState([]);
- 
+
+  // const [userStreet, setUserStreet] = useState('');
+  // const [userCity, setUserCity] = useState('');
+  // const [userState, setUserState] = useState('');
+  // const [userZip, setUserZip] = useState('');
+
+  const [userAddress, setUserAddress] = useState({
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  });
+
+  const [userCoordinates, setUserCoordinates] = useState([]);
 
   const mapRef = useRef(null);
 
-  const [viewState, setViewState] = React.useState({
+  const [viewState, setViewState] = useState({
     latitude: 0,
     longitude: 0,
     zoom: 6,
@@ -74,19 +60,6 @@ const MapPage = () => {
   }
 
   useEffect(() => {
-    // check if map exists; only init once
-    // if (map.current) return;
-    console.log('activeUser', activeUser)
-
-    // initialize map
-    // map.current = new mapboxgl.Map({
-    //   container: mapContainerRef.current,
-    //   style: 'mapbox://styles/mapbox/streets-v11',
-    //   center: [longitude, latitude],
-    //   zoom,
-    // });
-
-
     // get all events
     async function getEvents() {
       const eventsResponse = await axios.get('/api/event/all');
@@ -102,97 +75,72 @@ const MapPage = () => {
         // Calculate and set longitude and latitude state
         setCurrentMarkers(eventsArray);
         centerMap(eventsArray);
-
-        // Add marker to map for each event in events table
-        // eventsArray.forEach((event, index) => {
-        //   addEventToMap(event, index);
-        // });
       });
-
-
-    // Add navigation control
-    // map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-    // Add user geolocation control
-    // map.addControl(new mapboxgl.GeolocateControl({
-    // positionOptions: {
-    //   enableHighAccuracy: true
-    // },
-    // trackUserLocation: true,
-    // showUserHeading: true,
-    // showUserLocation: true,
-    // }));
-
-    // Clean up on unmount
-    // return () => map.remove();
   }, []);
-
-
-  // function addEventToMap(event, index) {
-  //   if (event.lat !== 0 && event.long !== 0 && event.isInPerson === true) {
-  //     const ref = React.createRef();
-  //     ref.current = document.createElement('div');
-  //     // Render a Marker on new DOM node
-  //     createRoot(ref.current).render(
-  //       <Marker onClick={markerClicked} event={event} index={index} />
-  //     );
-  //     // Create a Mapbox Marker at our new DOM node
-  //     const marker = new mapboxgl.Marker(ref.current)
-  //       .setLngLat([event.lat, event.long])
-  //       .addTo(map);
-
-  //     setCurrentMarkers((prevMarkers) => [...prevMarkers, marker])
-  //   }
-  // }
-
-  // function removeMarkerFromMap(marker) {
-  //   marker.remove();
-  // }
-
-  // function removeAllMarkers() {
-  //   currentMarkers.forEach((marker) => removeMarkerFromMap(marker));
-  //   setCurrentMarkers([]);
-  // }
-
-  // function flyToCoordinates(lat, lng) {
-  //   console.log('flying');
-  //   map.current.flyTo({ center: [lat, lng] });
-  // }
 
   function flyToCoordinates(long, lat) {
     console.log('flying!');
     mapRef.current?.flyTo({ center: [long, lat] });
   }
 
-  // function sortMarkersByAttendee(username) {
-  //   // for single user
-  //   if (username) {
-  //     const userEvents = events.filter((event) => {
-  //       return event.selectedUsers.includes(username);
-  //     });
-  //     removeAllMarkers();
+  function sortMarkersByAttendee(username) {
+    // for single user
+    if (username) {
+      const userEvents = events.filter((event) => {
+        return event.selectedUsers.includes(username);
+      });
 
-  //     userEvents.forEach((event, index) => addEventToMap(event, index));
-  //   }
-  //   // for all users
-  //   else {
-  //     removeAllMarkers();
-  //     events.forEach((event, index) => { addEventToMap(event, index); });
-  //   }
-  // }
+      setCurrentMarkers(userEvents);
+    } else { // for all users
+      setCurrentMarkers(events);
+    }
+  }
 
-  // const eventMarkers = currentMarkers.map((event) => <Marker key={`${event.long}-${event.lat}`} longitude={event.long} latitude={event.lat} anchor="bottom" />)
+  function handleAddressChange(e) {
+    console.log(e.target);
+    setUserAddress((prevAddress) => {
+      return {
+        ...prevAddress,
+        [e.target.name]: e.target.value
+      };
+    });
+  }
 
-  // const renderEventMarkers = () => {
-  //   return currentMarkers.map((event, index) => <Marker key={`${event.long}-${event.lat}`} longitude={event.long} latitude={event.lat} anchor="bottom" />);
-  // }
+  async function handleAddressSubmission() {
+    console.log('USER ADDRESS', userAddress);
+    const { street, city, state, zip } = userAddress;
+    let addressString = `${street} ${city} ${state} ${zip}`;
+    addressString = addressString.replaceAll(' ', '%20');
 
+    const coordinatesResponse = await axios.get(`/api/event/coordinates/${addressString}`)
+      .catch((err) => console.error('CLIENT ERROR: could not GET user coordinates', err));
 
-  // console.log('STATE. events: ', events, 'currentMarkers', currentMarkers, activeUser, viewState,);
+    const coordinates = coordinatesResponse.data;
+    setUserCoordinates(coordinates);
+  }
+
+  const layerStyle = {
+    id: 'point',
+    type: 'circle',
+    source: 'mapbox',
+    paint: {
+      'circle-radius': activeUser ? activeUser.maxTravelDist : 10,
+      'circle-color': '#007cbf'
+    }
+  };
+
+  console.log('STATE. events: ', events, 'currentMarkers', currentMarkers, 'activeUser', activeUser, 'viewState', viewState, 'userAddress', userAddress);
   return (
     <div>
+      <input name="street" placeholder="street" onChange={handleAddressChange} value={userAddress.street} />
+      <input name="city" placeholder="city" onChange={handleAddressChange} value={userAddress.city} />
+      <input name="state" placeholder="state" onChange={handleAddressChange} value={userAddress.state} />
+      <input name="zip" placeholder="zip" onChange={handleAddressChange} value={userAddress.zip} />
+      <Button onClick={handleAddressSubmission}>Find My Location</Button>
+
       <EventTable events={events} flyToCoordinates={flyToCoordinates} />
       <div style={{ top: '250px', width: '45%', margin: '20px', height: '1000px', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-         <div style={{ display: 'flex', flexDirection: 'row', margin: '5px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', margin: '5px' }}>
           <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee()}>Pin All Events</Button>
           <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee(activeUser.username)}>Pin My Events</Button>
         </div>
@@ -205,13 +153,29 @@ const MapPage = () => {
         style={{ position: 'absolute', bottom: '0px', width: 600, height: 400 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-       
-        {/* <Marker key={12345} longitude={-85} latitude={45} anchor="bottom" />
-        <Marker key={12345} longitude={-95} latitude={45} anchor="bottom" /> */}
 
-        { currentMarkers && currentMarkers.map((event) => {
-          return (<Marker key={`${event.long}-${event.lat}`} longitude={event.long} latitude={event.lat} anchor="bottom" />);
-        }) }
+        {currentMarkers && currentMarkers.map((event, index) => {
+          return (<Marker key={`${event.long}-${event.lat}`} onClick={() => markerClicked(event)} longitude={event.long} latitude={event.lat} anchor="bottom"></Marker>);
+        })}
+
+        {
+          userCoordinates[1]
+          && (
+            <Marker
+              longitude={userCoordinates[0]}
+              latitude={userCoordinates[1]}
+              anchor="bottom"
+            >
+              <AccountCircleIcon
+                sx={{ color: 'black' }}
+                fontSize="large"
+              />
+
+              <Layer {...layerStyle} />
+
+            </Marker>
+          )
+        }
 
         <NavigationControl />
 
