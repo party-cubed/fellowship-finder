@@ -26,7 +26,7 @@ Upload.post('/', async (req, res) => {
   try {
     await runMiddleware(req, res, myUploadMiddleware);
     const b64 = Buffer.from(req.file.buffer).toString('base64');
-    console.log(b64);
+    //console.log(b64);
     const dataUri = `data:${req.file.mimetype};base64,${b64}`;
     const cldRes = await uploadToCloudinary(dataUri);
     res.json(cldRes);
@@ -40,10 +40,10 @@ Upload.post('/', async (req, res) => {
 
 Upload.post('/photoUrl', (req, res) => {
   const { userEventsId, photoUrl } = req.body;
-  console.log(userEventsId, photoUrl);
+  //console.log(userEventsId, photoUrl);
   UserEventsPhotos.create({ photoUrl, userEventsId })
     .then((response) => {
-      console.log('post success server', response);
+      //console.log('post success server', response);
       res.status(200).send(response);
     })
     .catch((err) => {

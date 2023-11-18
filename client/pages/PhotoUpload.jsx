@@ -6,13 +6,34 @@ const PhotoUpload = (props) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [uploadEvent, setUploadEvent] = useState(null);
   //const [userEventId, setUserEventId] = useState(null);
-  const [events, setEvents] = useState([{ id: 1, title: 'my event1' }, { id: 2, title: 'fellowship friends' }, { id: 3, title: 'another test' }]);
-  //const eventsArr = [];
-  const [userEvents, setUserEvents] = useState([]);
+  const [events, setEvents] = useState([]);
+  //{ id: 1, title: 'my event1' }, { id: 2, title: 'fellowship friends' }, { id: 3, title: 'another test' }
+  const eventsArr = [];
+  let userEventsArr;
+  const index = 0;
+  //const [userEvents, setUserEvents] = useState([]);
+  const [success, setSuccess] = useState(false);
   const onFileChange = (event) => {
     setUploadedFile(event.target.files[0]);
   };
 
+  const getEvents = (array) => {
+    //return new Promise((reject, resolve) => {
+    //console.log(array[0]);
+    return axios.get(`/api/event/${array[0].eventId}`)
+      .then((eventObj) => {
+        eventsArr.push(eventObj.data);
+        return eventsArr;
+      })
+      .then((arr) => {
+        if (array.length > 1) {
+          getEvents(array.slice(1));
+        }
+        return arr;
+      })
+      .catch((err) => console.error('could not get eventObj', err));
+    //æ});
+  };
   const onFileUpload = () => {
     const data = new FormData();
     data.append('uploaded_file', uploadedFile);
@@ -22,7 +43,8 @@ const PhotoUpload = (props) => {
         const uploadUserEventId = events.filter((event) => event.title === uploadEvent)
           .map((event) => event.id);
         axios.post('/upload/photoUrl', { photoUrl: response.data.secure_url, userEventsId: uploadUserEventId[0] })
-          .then((dbResponse) => console.log('post to db success', dbResponse))
+          .then(() => setSuccess(true))
+          .then(() => setTimeout(() => setSuccess(false), 5000))
           .catch((err) => console.error('could not post to db', err));
         //console.log('cloudinary SUCCESS', response.data);
         // const userEvent = userEvents.filter((userEvt) => userEvt.eventId === uploadEvent.id);
@@ -34,13 +56,29 @@ const PhotoUpload = (props) => {
   };
 
   const getUserEvents = () => {
-    return axios.get(`/api/event/user/${user.id}`)
+    console.log(user);
+    axios.get(`/api/event/user/${user.id}`)
       .then(({ data }) => {
-        setUserEvents(data);
+        userEventsArr = data;
+        return userEventsArr;
+        // const eventIds = data.map((evt) => evt.eventId);
+        // console.log(eventIds);
+        // return eventIds;
       })
-      //.then(() => setUserEvents(eventsArr))
+      .then((usEvtArr) => {
+        console.log(usEvtArr);
+        getEvents(usEvtArr)
+          .then((evtArr) => {
+            console.log('eventsObj array', evtArr);
+            setEvents(evtArr);
+          })
+          .catch((err) => console.log('getevent', err));
+        //   .then((eventsArray) => console.log(eventsArray));
+      })
       .catch((err) => console.log('could not get events', err));
   };
+
+
   //getUserEvents();
   useEffect(() => {
     //if (userEvents !== currUserEvents.current) {
@@ -56,26 +94,29 @@ const PhotoUpload = (props) => {
       <form
         encType="multipart/form-data"
       >
-        <input
-          type="file"
-          name="uploaded_file"
-          onChange={(e) => onFileChange(e)}
-        />
         <select
           required
           onChange={(event) => setUploadEvent(event.target.value)}
         >
           <option>Select an Event for Your Photo</option>
+          {console.log(events)}
           {events.length > 0 ? events.map((event) => (
             <option key={event.id}>{event.title}</option>
           )) : <option>nothing</option>}
         </select>
+        <input
+          type="file"
+          name="uploaded_file"
+          onChange={(e) => onFileChange(e)}
+        />
         <button
           type="button"
           onClick={() => onFileUpload()}
         >Upload Photo
         </button>
       </form>
+      {success ? <h4>Your photo has been uploaded</h4> : <h4> </h4> }
+
       <h2>See all photos from your attended fellowship events!</h2>
     </div>
   );
