@@ -48,10 +48,11 @@ Post.patch('/:id', (req, res) => {
   console.log('patch', req.params, req.body);
   const { id } = req.params;
   const { edit } = req.body;
+  console.log('edit', edit)
   Posts.findByPk(id)
     .then((post) => {
       post.update(edit);
-      console.log('post edit', post);
+      console.log('post edit', post, edit);
       res.sendStatus(200);
     })
     .catch((err) => {

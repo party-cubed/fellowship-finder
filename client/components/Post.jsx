@@ -1,11 +1,19 @@
 //CHILD OF POSTLIST
 import React, { useState, useEffect, useContext } from 'react';
+import NorthIcon from '@mui/icons-material/North';
+import SouthIcon from '@mui/icons-material/South';
 
 function Post({
-  message, user, upVotes, created, deletePost, id, editPost
+  message, user, upVotes, created, deletePost, id, editPost, inc, dec
 }) {
   const [formInput, setFormInput] = useState('');
+  const [huzzah, setHuzzah] = useState(upVotes);
   //console.log('post props', id)
+
+  // const inc = () => {
+
+  // };
+
   return (
     <div className="post">
       <h4 className="post-message">{message}</h4>
@@ -18,7 +26,23 @@ function Post({
         onChange={(e) => setFormInput(e.target.value)}
       />
       <div className="delete-button" onClick={() => deletePost(id)}>Delete</div>
-      {/* <div className="post-upvotes">Upvotes:{ upVotes}</div> */}
+      <div className="huzzah-container">
+        <NorthIcon onClick={() => {
+          setHuzzah(huzzah + 1);
+          setFormInput(upVotes);
+          inc(id, huzzah);
+          console.log('formInput', upVotes);
+        }}
+        />
+        <div className="post-upvotes">Huzzahs: {huzzah}</div>
+        <SouthIcon onClick={() => {
+          setHuzzah(huzzah - 1);
+          setFormInput(upVotes);
+          dec(id, huzzah);
+          console.log('formInput', upVotes);
+        }}
+        />
+      </div>
     </div>
   );
 }

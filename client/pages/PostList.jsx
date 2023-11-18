@@ -12,6 +12,7 @@ function PostList() {
   const { activeUser, setActiveUser } = useContext(UserContext);
   const [newPost, setNewPost] = useState([]);
   const [txt, setTxt] = useState([]);
+  const [huzzah, setHuzzah] = useState([]);
 
   const displayMsg = (event) => {
     event.preventDefault();
@@ -51,7 +52,6 @@ function PostList() {
       }
     })
       .then(() => {
-        console.log('Post Edited');
         getAllPosts();
       })
       .catch((err) => {
@@ -70,11 +70,39 @@ function PostList() {
       });
   };
 
+  const inc = (id, edit) => {
+    axios.patch(`/post/${id}`, {
+      edit: {
+        upVotes: edit
+      }
+    })
+      .then((data) => {
+        console.log('AAAAAAAAA upvote data', data)
+        getAllPosts();
+      })
+      .catch((err) => {
+        console.error('Failed to up vote', err);
+      });
+  };
+
+  const dec = (id, edit) => {
+    axios.patch(`/post/${id}`, {
+      edit: {
+        upVotes: edit
+      }
+    })
+      .then(() => {
+        getAllPosts();
+      })
+      .catch((err) => {
+        console.error('Failed to down vote', err);
+      });
+  };
   useEffect(() => {
     getAllPosts();
   }, []);
 
-  //TODO: add enter button functionality Clear input field on submit ADD EDIT AND DELETE FEATURES
+  //TODO: add enter button functionality Clear input field on submit
 
   //const {post} = allPosts[0];
   console.log('active user', activeUser);
@@ -102,6 +130,8 @@ function PostList() {
               created={post.createdAt}
               deletePost={deletePost}
               editPost={editPost}
+              inc={inc}
+              dec={dec}
             />
 
           ))}
