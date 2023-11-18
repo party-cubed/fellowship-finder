@@ -1,22 +1,34 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
-import MapIcon from '@mui/icons-material/Map';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import SignpostIcon from '@mui/icons-material/Signpost';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+// import AppBar from '@mui/material/AppBar';
+// import Box from '@mui/material/Box';
+// import Toolbar from '@mui/material/Toolbar';
+// import IconButton from '@mui/material/IconButton';
+// import Typography from '@mui/material/Typography';
+// import Badge from '@mui/material/Badge';
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+import { AppBar, Box, Toolbar, IconButton, Typography, Badge, Menu, MenuItem } from '@mui/material';
+// import SearchIcon from '@mui/icons-material/Search';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
+// import MailIcon from '@mui/icons-material/Mail';
+// import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
+// import MapIcon from '@mui/icons-material/Map';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import SignpostIcon from '@mui/icons-material/Signpost';
+// import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+// import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { 
+  AddCircleOutline,
+  PhotoLibrary,
+  Signpost,
+  MoreVert,
+  Map,
+  TodayTwoTone,
+  Mail,
+  AccountCircle,
+  Search,
+} from '@mui/icons-material';
 
 import axios from 'axios';
 import { UserContext, UserProvider } from '../components/UserProvider';
@@ -91,7 +103,7 @@ function Header() {
               component={Link}
               to="/search"
             >
-              <SearchIcon />
+              <Search />
             </IconButton>
             <IconButton
               size="large"
@@ -101,7 +113,7 @@ function Header() {
               to="/chat"
             >
               <Badge>
-                <MailIcon />
+                <Mail />
               </Badge>
             </IconButton>
             <IconButton
@@ -113,7 +125,7 @@ function Header() {
               to="/postList"
             >
               <Badge>
-                <SignpostIcon />
+                <Signpost />
               </Badge>
             </IconButton>
             <IconButton
@@ -124,7 +136,7 @@ function Header() {
               to="/map"
             >
               <Badge>
-                <MapIcon />
+                <Map />
               </Badge>
             </IconButton>
             <IconButton
@@ -135,7 +147,7 @@ function Header() {
               to="/photos"
             >
               <Badge>
-                <PhotoLibraryIcon />
+                <PhotoLibrary />
               </Badge>
             </IconButton>
             <IconButton
@@ -146,7 +158,7 @@ function Header() {
               to="/events"
             >
               <Badge>
-                <TodayTwoToneIcon />
+                <TodayTwoTone />
               </Badge>
             </IconButton>
             <IconButton
@@ -157,7 +169,7 @@ function Header() {
               component={Link}
               to="/addSheet"
             >
-              <AddCircleOutlineIcon />
+              <AddCircleOutline />
             </IconButton>
             <IconButton
               size="large"
@@ -178,7 +190,7 @@ function Header() {
               aria-haspopup="true"
               onClick={handleClick}
             >
-              <MoreVertIcon />
+              <MoreVert />
             </IconButton>
             <Menu
               id="long-menu"
