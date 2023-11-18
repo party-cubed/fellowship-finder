@@ -7,7 +7,7 @@ function Post({
   message, user, upVotes, created, deletePost, id, editPost, inc, dec
 }) {
   const [formInput, setFormInput] = useState('');
-  const [huzzah, setHuzzah] = useState(upVotes);
+  let [huzzah, setHuzzah] = useState(upVotes);
   //console.log('post props', id)
 
   // const inc = () => {
@@ -28,16 +28,14 @@ function Post({
       <div className="delete-button" onClick={() => deletePost(id)}>Delete</div>
       <div className="huzzah-container">
         <NorthIcon onClick={() => {
-          setHuzzah(huzzah + 1);
-          setFormInput(upVotes);
+          setHuzzah(huzzah += 1);
           inc(id, huzzah);
           console.log('formInput', upVotes);
         }}
         />
         <div className="post-upvotes">Huzzahs: {huzzah}</div>
         <SouthIcon onClick={() => {
-          setHuzzah(huzzah - 1);
-          setFormInput(upVotes);
+          setHuzzah(huzzah -= 1);
           dec(id, huzzah);
           console.log('formInput', upVotes);
         }}
