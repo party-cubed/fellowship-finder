@@ -34,6 +34,7 @@ function Events() {
   const [event, setEvent] = useState(initialEventState);
 
   const setEventValue = (key, value) => {
+    console.log('keyv', key, value, event)
     setEvent((prevEvent) => ({ ...prevEvent, [key]: value }));
   };
 
@@ -51,12 +52,12 @@ function Events() {
     try {
       const { data } = await axios.get('api/event/all');
       // eslint-disable-next-line no-shadow
-      console.log('last', data[-1])
+      console.log('last', data)
       const dates = data.map((event) => ({
         ...event,
         start: new Date(event.start),
         end: new Date(event.end),
-        selectedUsers: event.selectedUsers ? event.selectedUsers.split(',$, ') : ''
+        selectedUsers: event.selectedUsers.includes('$') ?  event.selectedUsers.split(',$, ') : [event.selectedUsers]
       }));
       setEvents(dates);
       console.log('retrieved dates from server', dates);
@@ -73,12 +74,13 @@ function Events() {
   const handleSubmit = async () => {
     const newEvent = {
       ...event,
-      title: event.title || 'Session',
+      title: event.title,
       //CHANGE IF THERES TIME TO BE BASED ON LOGGED IN USER
-      hostId: 1,
+      hostId: activeUser.id,
       selectedUsers: [...event.selectedUsers].join(',$, ')
     };
     try {
+      console.log('evuse', newEvent)
       await axios.post('api/event', newEvent);
       console.log('posted event to server', newEvent);
       setEvent(initialEventState);
@@ -89,7 +91,28 @@ function Events() {
 
       nwEv['userId'] = activeUser.id
 
+      console.log('newvee', nwEv)
+
+      
+        const selected = nwEv.data.selectedUsers.includes('$') ? nwEv.data.selectedUsers.split(',$, ') : [nwEv.data.selectedUsers]
+      
+
+
+      console.log('selected', selected)
+      
       const add = await axios.post('api/event/user', nwEv)
+
+      for(let i in selected){
+        axios.get(`/api/user/name/${selected[i]}`)
+        .then((user) => {
+          nwEv['userId'] = user.data.id
+          axios.post('/api/event/user', nwEv)
+          .then((data) => {
+            console.log('added!', data)
+          })
+        })
+      }
+
       // eslint-disable-next-line no-shadow
       const dates = data.map((event) => ({
         ...event,

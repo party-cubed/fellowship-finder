@@ -17,58 +17,61 @@ const numericRangeValidator = (min, max) => ({
   }
 });
 
-const UserEvents = sequelize.define('UserEvents', {
-  id: {
-    autoIncrement: true,
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id'
+  const UserEvents =  sequelize.define('UserEvents', {
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    title: {
+      type: DataTypes.STRING,
+    },
+    eventId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Events',
+        key: 'id'
+      }
     }
-  },
-  eventId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Events',
-      key: 'id'
-    }
-  }
-}, {
-  sequelize,
-  tableName: 'UserEvents',
-  timestamps: true,
-  indexes: [
-    {
-      name: 'PRIMARY',
-      unique: true,
-      using: 'BTREE',
-      fields: [
-        { name: 'id' },
-      ]
-    },
-    {
-      name: 'userId',
-      using: 'BTREE',
-      fields: [
-        { name: 'userId' },
-      ]
-    },
-    {
-      name: 'eventId',
-      using: 'BTREE',
-      fields: [
-        { name: 'eventId' },
-      ]
-    },
-  ]
-});
+  }, {
+    sequelize,
+    tableName: 'UserEvents',
+    timestamps: true,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "userId",
+        using: "BTREE",
+        fields: [
+          { name: "userId" },
+        ]
+      },
+      {
+        name: "eventId",
+        using: "BTREE",
+        fields: [
+          { name: "eventId" },
+        ]
+      },
+    ]
+  });
 
 
 const User = sequelize.define('User', {
@@ -140,7 +143,32 @@ const User = sequelize.define('User', {
   }
 });
 
-const Message = sequelize.define('message', {
+ const Chats = sequelize.define('Chats', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    groupId: {
+      type: DataTypes.INTEGER
+    },
+    eventId: {
+      type: DataTypes.INTEGER
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
+  });
+
+
+
+const Message = sequelize.define('Message', {
   userId: {
     type: DataTypes.INTEGER,
     references: {
@@ -148,7 +176,16 @@ const Message = sequelize.define('message', {
       key: 'id'
     }
   },
-  message: {
+
+  chatId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Chats,
+      key: 'id'
+    }
+  },
+
+  text: {
     type: DataTypes.STRING
   }
 });

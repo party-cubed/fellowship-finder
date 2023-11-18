@@ -85,6 +85,7 @@ function Signup() {
 
       // console.log('User created on ChatEngine:', chatEngineResponse.data);
       setActiveUser(serverResponse.data)
+      localStorage.setItem('user', JSON.stringify(serverResponse.data))
       navigate('/home');
     } catch (error) {
       console.error('Error creating account:', error);

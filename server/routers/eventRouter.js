@@ -111,16 +111,16 @@ Event.delete('/:id', async (req, res) => {
 });
 
 Event.post('/user', (req, res) => {
-  const { id, createdAt, updatedAt } = req.body.data
-  const { userId } = req.body
+  const {id, createdAt, updatedAt, title} = req.body.data
+  const {userId} = req.body
 
-  console.log('bod', req.body);
+  console.log('bod', req.body.data)
 
-  UserEvents.create({ userId, eventId: id, createdAt, updatedAt })
-    .then((event) => {
-      console.log('pop', event.dataValues)
-      res.status(201).send(event.dataValues)
-    })
+  UserEvents.create({userId, eventId: id, createdAt, updatedAt, title})
+  .then((event) => {
+    console.log('pop', event.dataValues)
+    res.status(201).send(event.dataValues)
+  })
 })
 
 Event.get('/user/:userId', (req, res) => {

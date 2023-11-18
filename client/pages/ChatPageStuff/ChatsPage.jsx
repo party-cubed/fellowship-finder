@@ -27,16 +27,36 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import { PrettyChatWindow } from 'react-chat-engine-pretty';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios'
 
+const ChatsPage = ({message, user}) => {
 
-const ChatsPage = (props) => {
+  const [name, setName] = useState('')
+  // const scrollRef = useRef(null)
+  const newDate = new Date(message.createdAt).toLocaleDateString()
+  const newTime = new Date(message.createdAt).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+
+  useEffect(() => {
+    axios.get(`/api/user/${message.userId}`)
+    .then((user) => {
+      setName(user.data.username)
+    })
+    console.log('newdate', newDate)
+    // scroll()
+  }) 
+
+  // const scroll = () => {
+  //   if(scrollRef.current){
+  //     scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+  //   }
+  // }
 
   return (
-    <div>
-      <h1>Chat</h1>
-
-      <span>{}</span>
-
+    <div style={{padding: '8px', margin: '10px 0', fontSize: '20px', borderRadius: '8px', backgroundColor: '#333333', width: `${Math.min((newTime.length + name.length) * 20, 500)}px` }}>
+      
+      {message.text} 
+      <div style={{fontSize: '10px'}}>{name} {newTime}</div>
 
     </div>
 

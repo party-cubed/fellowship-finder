@@ -34,11 +34,13 @@ app.use(cors({
 
 app.use(cookieParser('mySecretKey'));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 require('./passportConfig')(passport);
 
-const { User } = require('./db/models'); // Assuming you have a User model defined
+const { User, Message } = require('./db/models'); // Assuming you have a User model defined
+
+
 
 app.post('/signup', async (req, res) => {
   const {
@@ -175,10 +177,14 @@ app.post('/authenticate', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  //console.log('hey!')
-  socket.on('room', (room) => {
-    console.log('room');
-  });
+  console.log('Socket connection successful!')
+  socket.on('message', (message) => {
+    console.log('mimi', message)
+    Message.create(message)
+    .then((data) => {
+      io.emit('return message', data.dataValues)
+    })
+  })
 
   socket.on('disconnect', () => {
     console.log('out');
