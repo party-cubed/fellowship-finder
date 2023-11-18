@@ -7,10 +7,10 @@ const PhotoUpload = (props) => {
   const [uploadEvent, setUploadEvent] = useState(null);
   //const [userEventId, setUserEventId] = useState(null);
   const [events, setEvents] = useState([]);
-  //{ id: 1, title: 'my event1' }, { id: 2, title: 'fellowship friends' }, { id: 3, title: 'another test' }
+  //{ id: 1, title: 'my event1' },
+  //{ id: 2, title: 'fellowship friends' }, { id: 3, title: 'another test' }
   const eventsArr = [];
   let userEventsArr;
-  const index = 0;
   //const [userEvents, setUserEvents] = useState([]);
   const [success, setSuccess] = useState(false);
   const onFileChange = (event) => {
@@ -61,9 +61,6 @@ const PhotoUpload = (props) => {
       .then(({ data }) => {
         userEventsArr = data;
         return userEventsArr;
-        // const eventIds = data.map((evt) => evt.eventId);
-        // console.log(eventIds);
-        // return eventIds;
       })
       .then((usEvtArr) => {
         console.log(usEvtArr);
@@ -91,30 +88,34 @@ const PhotoUpload = (props) => {
       {/* {console.log('state', userEvents)} */}
       <h2>Fellowship Photos</h2>
       <h4>Upload photos from your last fellowship meet up!</h4>
-      <form
-        encType="multipart/form-data"
-      >
-        <select
-          required
-          onChange={(event) => setUploadEvent(event.target.value)}
+      { events ? (
+        <form
+          encType="multipart/form-data"
         >
-          <option>Select an Event for Your Photo</option>
-          {console.log(events)}
-          {events.length > 0 ? events.map((event) => (
-            <option key={event.id}>{event.title}</option>
-          )) : <option>nothing</option>}
-        </select>
-        <input
-          type="file"
-          name="uploaded_file"
-          onChange={(e) => onFileChange(e)}
-        />
-        <button
-          type="button"
-          onClick={() => onFileUpload()}
-        >Upload Photo
-        </button>
-      </form>
+          <select
+            required
+            onChange={(event) => setUploadEvent(event.target.value)}
+          >
+            <option>Select an Event for Your Photo</option>
+            {console.log(events)}
+            {events.map((event) => {
+              console.log(event);
+              return <option key={event.id}>{event.title}</option>;
+            }) }
+          </select>
+          <input
+            type="file"
+            name="uploaded_file"
+            onChange={(e) => onFileChange(e)}
+          />
+          <button
+            type="button"
+            onClick={() => onFileUpload()}
+          >Upload Photo
+          </button>
+        </form>
+      ) : <div />}
+
       {success ? <h4>Your photo has been uploaded</h4> : <h4> </h4> }
 
       <h2>See all photos from your attended fellowship events!</h2>
