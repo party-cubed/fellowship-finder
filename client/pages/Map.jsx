@@ -3,26 +3,20 @@ import { createRoot } from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Map, useMap, Marker, NavigationControl, Layer, Source } from 'react-map-gl';
+import { Map, Marker, NavigationControl, Layer, Source } from 'react-map-gl';
 import { UserContext } from '../components/UserProvider';
 import EventTable from '../components/EventTable';
 
 const MapPage = () => {
-  // what happens when map marker is clicked
   const markerClicked = (event) => {
     window.alert(event.title);
   };
 
   const [events, setEvents] = useState([]);
   const [currentMarkers, setCurrentMarkers] = useState([]);
-
-  // const [userStreet, setUserStreet] = useState('');
-  // const [userCity, setUserCity] = useState('');
-  // const [userState, setUserState] = useState('');
-  // const [userZip, setUserZip] = useState('');
 
   const [userAddress, setUserAddress] = useState({
     street: '',
@@ -117,6 +111,7 @@ const MapPage = () => {
 
     const coordinates = coordinatesResponse.data;
     setUserCoordinates(coordinates);
+    flyToCoordinates(coordinates[0], coordinates[1]);
   }
 
   const layerStyle = {
@@ -155,7 +150,10 @@ const MapPage = () => {
       >
 
         {currentMarkers && currentMarkers.map((event, index) => {
-          return (<Marker key={`${event.long}-${event.lat}`} onClick={() => markerClicked(event)} longitude={event.long} latitude={event.lat} anchor="bottom"></Marker>);
+          return (<Marker key={`${event.long}-${event.lat}`} onClick={() => markerClicked(event)} longitude={event.long} latitude={event.lat} anchor="bottom"> <PlaceIcon
+            sx={{ color: 'black' }}
+            fontSize="large"
+          /></Marker>);
         })}
 
         {

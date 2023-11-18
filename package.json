@@ -76,8 +76,8 @@
     "sequelize-cli": "^6.6.2",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
-    "webpackbar": "^5.0.2",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "webpackbar": "^5.0.2"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0"

@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const EventTable = ({events, flyToCoordinates}) => {
   return (
