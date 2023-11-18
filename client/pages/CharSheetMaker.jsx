@@ -1,16 +1,14 @@
 import React, { useState, useContext } from 'react';
-import {
-  TextField,
-  FormControl,
-  FormGroup,
-  InputLabel,
-  Button,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { UserContext } from '../components/UserProvider';
-
 
 export default function CharSheetMaker() {
   const { activeUser, setActiveUser } = useContext(UserContext);
@@ -24,7 +22,7 @@ export default function CharSheetMaker() {
   const [wis, setWis] = useState(1);
   const [cha, setCha] = useState(1);
   const [charDesc, setDesc] = useState('');
-
+  const navigate = useNavigate();
 
   const numArr = [];
 
@@ -33,22 +31,23 @@ export default function CharSheetMaker() {
   }
 
   function handleClick() {
-    axios.post('/sheet/', {
-      sheet: {
-        charName,
-        charClass,
-        charRace,
-        charDesc,
-        str,
-        dex,
-        con,
-        int,
-        wis,
-        cha,
-        userId: activeUser.id
-      },
-    })
-      .then(({ data }) => console.log(data))
+    axios
+      .post('/sheet/', {
+        sheet: {
+          charName,
+          charClass,
+          charRace,
+          charDesc,
+          str,
+          dex,
+          con,
+          int,
+          wis,
+          cha,
+          userId: activeUser.id,
+        },
+      })
+      .then(() => navigate(`/user/${activeUser.id}`))
       .catch((err) => console.error(err));
   }
 

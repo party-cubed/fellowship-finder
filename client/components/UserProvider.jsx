@@ -20,7 +20,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
+//import Layout from '../pages/Layout.jsx';
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
@@ -34,9 +34,8 @@ export function UserProvider({ children }) {
     })
       .then((response) => {
         const { data } = response;
-        localStorage.setItem('user', JSON.stringify(data))
+        localStorage.setItem('user', JSON.stringify(data));
         setActiveUser(data);
-        console.log('spon', response, activeUser)
         setLoading(false);
       })
       .catch((err) => {
@@ -46,15 +45,14 @@ export function UserProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log('ayy', JSON.parse(localStorage.getItem('user')))
-    if(JSON.parse(localStorage.getItem('user')) !== '[object Object]'){
-      setActiveUser(JSON.parse(localStorage.getItem('user')))
-      setLoading(false)
-    }else{
+    console.log('ayy', JSON.parse(localStorage.getItem('user')));
+
+    if (JSON.parse(localStorage.getItem('user'))) {
+      setActiveUser(JSON.parse(localStorage.getItem('user')));
+      setLoading(false);
+    } else {
       getUser();
     }
-
-    
   }, []);
 
   if (error) {

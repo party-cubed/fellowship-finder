@@ -7,6 +7,7 @@ const Sheet = require('./routers/sheetRouter');
 const Event = require('./routers/eventRouter');
 const Post = require('./routers/postRouter');
 const message = require('./routers/messageRouter')
+const Upload = require('./routers/upload.js');
 const authRoutes = require('./routers/authRouter'); //
 const profileRoutes = require('./routers/profileRouter'); //
 const passportSetup = require('../config/passport-setup'); //
@@ -30,7 +31,7 @@ app.use(cookieSession({
   // define expiration date of cookie (24 hrs)
   maxAge: 24 * 60 * 60 * 1000,
   // use key to encrypt cookie
-  keys: [keys.session.cookieKey]
+  keys: ['anything']
 }));
 
 // initialize passport
@@ -43,6 +44,7 @@ app.use('/auth', authRoutes); //
 app.use('/profile', profileRoutes); //
 app.use('/sheet', Sheet);
 app.use('/post', Post);
+app.use('/upload', Upload);
 app.use('/message', message);
 
 //ROUTERS

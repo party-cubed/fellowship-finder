@@ -8,6 +8,7 @@ const UsersSelect = ({ users, selectedUsers, setSelectedUsers }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const addUser = ({ target }) => {
+    console.log(target);
     const user = target.selectedOptions[0].value;
     const updatedSelectedUsers = new Set(selectedUsers);
     updatedSelectedUsers.add(user);

@@ -90,7 +90,7 @@ function Header() {
               aria-haspopup="true"
               color="inherit"
               component={Link}
-              to={activeUser ? `/user/${5}` : '/auth/login'}
+              to={activeUser ? `/user/${activeUser.id}` : '/auth/login'}
             >
               <AccountCircle />
             </IconButton>

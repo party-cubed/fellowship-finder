@@ -76,7 +76,7 @@ function Events() {
       ...event,
       title: event.title,
       //CHANGE IF THERES TIME TO BE BASED ON LOGGED IN USER
-      hostId: 1,
+      hostId: activeUser.id,
       selectedUsers: [...event.selectedUsers].join(',$, ')
     };
     try {

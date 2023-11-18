@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const axios = require('axios');
 const { Events, UserEvents } = require('../db/models');
 
 const Event = Router();
@@ -12,6 +13,25 @@ Event.get('/all', async (req, res) => {
     return res.status(500).json({ error: 'An error occurred while retrieving events' });
   }
 });
+
+Event.get('/coordinates/:address', async (req, res) => {
+  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+
+
+  console.log('here', req.params);
+  const { address } = req.params;
+  console.log(address);
+  // let queryString = `${address.street} ${address.city} ${address.state} ${address.zip}`;
+  // queryString = queryString.replaceAll(' ', '%20');
+
+  const apiUrl = apiUrlBeginning + address + apiUrlEnd;
+
+  const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+  const coordinates = coordinateResponse.data.features[0].center;
+  res.status(200).send(coordinates);
+  // res.sendStatus(200);
+})
 
 Event.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -28,9 +48,28 @@ Event.get('/:id', async (req, res) => {
   }
 });
 
+
 Event.post('/', async (req, res) => {
   const event = req.body;
+  
   try {
+    if (event.isInPerson) {
+      const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+      const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+    
+      let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
+      queryString = queryString.replaceAll(' ', '%20');
+    
+      const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
+
+      const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+      const coordinates = coordinateResponse.data.features[0].center;
+
+      const [long, lat] = coordinates;
+      event.lat = lat;
+      event.long = long;
+    }
+
     const newEvent = await Events.create(event);
     return res.json(newEvent);
   } catch (error) {
@@ -69,7 +108,7 @@ Event.delete('/:id', async (req, res) => {
     console.log('An error occurred while deleting event', error);
     return res.status(500).json({ error: 'An error occurred while deleting event' });
   }
-})
+});
 
 Event.post('/user', (req, res) => {
   const {id, createdAt, updatedAt, title} = req.body.data
@@ -85,11 +124,11 @@ Event.post('/user', (req, res) => {
 })
 
 Event.get('/user/:userId', (req, res) => {
-  const {userId} = req.params
-  UserEvents.findAll({where: {userId}})
-  .then((events) => {
-    res.status(200).send(events)
-  })
+  const { userId } = req.params
+  UserEvents.findAll({ where: { userId } })
+    .then((events) => {
+      res.status(200).send(events)
+    })
 })
 
 module.exports = Event;

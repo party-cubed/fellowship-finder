@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 const { PodcastsSharp } = require('@mui/icons-material');
-const { default: PostList } = require('../../client/pages/PostList.jsx');
+const { sequelize } = require('./index');
+//import PostList from '../../client/pages/PostList.jsx';
 
 const numericRangeValidator = (min, max) => ({
   isNumeric: {
@@ -72,7 +72,6 @@ const numericRangeValidator = (min, max) => ({
       },
     ]
   });
-
 
 
 const User = sequelize.define('User', {
@@ -237,6 +236,14 @@ const Events = sequelize.define('Events', {
     type: DataTypes.STRING(255),
     allowNull: true
   },
+  long: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
+  lat: {
+    type: DataTypes.FLOAT,
+    allowNull: true
+  },
   link: {
     type: DataTypes.STRING(255),
     allowNull: true
@@ -273,7 +280,8 @@ const Posts = sequelize.define('post', {
     type: DataTypes.STRING(255)
   },
   upVotes: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
 });
 
@@ -333,12 +341,34 @@ const Sheets = sequelize.define('Sheets', {
   }
 });
 
+const UserEventsPhotos = sequelize.define('UserEventsPhotos', {
+  userEventsId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: UserEvents,
+      key: 'id'
+    }
+  },
+  id: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  photoUrl: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+});
+
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Posts, { foreignKey: 'userId' });
 User.hasMany(Sheets, { foreignKey: 'userId' });
 Sheets.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Posts, { foreignKey: 'userId' });
 Posts.belongsTo(User, { foreignKey: 'userId' });
+UserEventsPhotos.belongsTo(UserEvents, { foreignKey: 'userEventsId' });
+UserEvents.hasMany(UserEventsPhotos, { foreignKey: 'userEventsId' });
 
 module.exports = {
   User,
@@ -347,4 +377,5 @@ module.exports = {
   UserEvents,
   Sheets,
   Posts,
+  UserEventsPhotos
 };
