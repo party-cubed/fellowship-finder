@@ -18,7 +18,7 @@ Event.get('/coordinates/:address', async (req, res) => {
   const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
   const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
 
-  
+
   console.log('here', req.params);
   const { address } = req.params;
   console.log(address);
@@ -50,22 +50,25 @@ Event.get('/:id', async (req, res) => {
 
 
 Event.post('/', async (req, res) => {
-  const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-  const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
-
   const event = req.body;
-  let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
-  queryString = queryString.replaceAll(' ', '%20');
-
-  const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
-
+  
   try {
-    const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
-    const coordinates = coordinateResponse.data.features[0].center;
+    if (event.isInPerson) {
+      const apiUrlBeginning = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+      const apiUrlEnd = '.json?proximity=ip&access_token=pk.eyJ1IjoiZXZtYXBlcnJ5IiwiYSI6ImNsb3hkaDFmZTBjeHgycXBpNTkzdWdzOXkifQ.BawBATEi0mOBIdI6TknOIw';
+    
+      let queryString = `${event.street} ${event.city} ${event.state} ${event.zip}`;
+      queryString = queryString.replaceAll(' ', '%20');
+    
+      const apiUrl = apiUrlBeginning + queryString + apiUrlEnd;
 
-    const [long, lat] = coordinates;
-    event.lat = lat;
-    event.long = long;
+      const coordinateResponse = await axios.get(apiUrl).catch((error) => console.error(error));
+      const coordinates = coordinateResponse.data.features[0].center;
+
+      const [long, lat] = coordinates;
+      event.lat = lat;
+      event.long = long;
+    }
 
     const newEvent = await Events.create(event);
     return res.json(newEvent);

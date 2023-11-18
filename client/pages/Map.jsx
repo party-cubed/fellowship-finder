@@ -16,6 +16,7 @@ const MapPage = () => {
   };
 
   const [events, setEvents] = useState([]);
+  const [inPersonEvents, setInPersonEvents] = useState([]);
   const [currentMarkers, setCurrentMarkers] = useState([]);
 
   const [userAddress, setUserAddress] = useState({
@@ -65,9 +66,12 @@ const MapPage = () => {
     getEvents()
       .then((eventsArray) => {
         // console.log('eventsArray', eventsArray);
-
+        const filteredEvents = eventsArray.filter((event) => {
+          return event.isInPerson === true;
+        })
         // Calculate and set longitude and latitude state
-        setCurrentMarkers(eventsArray);
+        setInPersonEvents(filteredEvents);
+        setCurrentMarkers(filteredEvents);
         centerMap(eventsArray);
       });
   }, []);
@@ -80,13 +84,13 @@ const MapPage = () => {
   function sortMarkersByAttendee(username) {
     // for single user
     if (username) {
-      const userEvents = events.filter((event) => {
+      const userEvents = inPersonEvents.filter((event) => {
         return event.selectedUsers.includes(username);
       });
 
       setCurrentMarkers(userEvents);
     } else { // for all users
-      setCurrentMarkers(events);
+      setCurrentMarkers(inPersonEvents);
     }
   }
 
