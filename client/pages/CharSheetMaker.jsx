@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  TextField,
-  FormControl,
-  FormGroup,
-  InputLabel,
-  Button,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { UserContext } from '../components/UserProvider';
 
