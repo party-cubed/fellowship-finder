@@ -44,6 +44,21 @@ function PostList() {
       });
   };
 
+  const editPost = (id, edit) => {
+    axios.patch(`/post/${id}`, {
+      edit: {
+        post: edit
+      }
+    })
+      .then(() => {
+        console.log('Post Edited');
+        getAllPosts();
+      })
+      .catch((err) => {
+        console.error('Failed to edit', err);
+      });
+  };
+
   const deletePost = (id) => {
     axios.delete(`/post/${id}`)
       .then(() => {
@@ -86,6 +101,7 @@ function PostList() {
               upVotes={post.upVotes}
               created={post.createdAt}
               deletePost={deletePost}
+              editPost={editPost}
             />
 
           ))}

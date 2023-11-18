@@ -51,7 +51,7 @@ Post.patch('/:id', (req, res) => {
   Posts.findByPk(id)
     .then((post) => {
       post.update(edit);
-      console.log('post', post);
+      console.log('post edit', post);
       res.sendStatus(200);
     })
     .catch((err) => {
@@ -66,7 +66,7 @@ Post.delete('/:id', (req, res) => {
   Posts.findByPk(id)
     .then((post) => {
       post.destroy();
-      console.log('post', post);
+      //console.log('post', post);
       res.sendStatus(201);
     })
     .catch((err) => {
