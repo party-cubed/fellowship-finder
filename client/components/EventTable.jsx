@@ -25,7 +25,7 @@ const EventTable = ({events, flyToCoordinates}) => {
             <TableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              onClick={() => flyToCoordinates(event.lat, event.long)}
+              onClick={() => flyToCoordinates(event.long, event.lat)}
             >
               <TableCell component="th" scope="row">
                 {index + 1}

@@ -42,20 +42,17 @@ const MapPage = () => {
     window.alert(string);
   };
 
-  // const mapContainerRef = useRef(null);
-  // const map = useRef(null);
+
   const [events, setEvents] = useState([]);
   const [currentMarkers, setCurrentMarkers] = useState([]);
-  // const [longitude, setLongitude] = useState(0);
-  // const [latitude, setLatitude] = useState(0);
-  // const [zoom, setZoom] = useState(9);
+ 
 
   const mapRef = useRef(null);
 
   const [viewState, setViewState] = React.useState({
     latitude: 0,
     longitude: 0,
-    zoom: 3,
+    zoom: 6,
   });
 
   const { activeUser, setActiveUser } = useContext(UserContext);
@@ -161,9 +158,9 @@ const MapPage = () => {
   //   map.current.flyTo({ center: [lat, lng] });
   // }
 
-  function flyToCoordinates2(lat, lng) {
+  function flyToCoordinates(long, lat) {
     console.log('flying!');
-    mapRef.current?.flyTo({ center: [lat, lng] });
+    mapRef.current?.flyTo({ center: [long, lat] });
   }
 
   // function sortMarkersByAttendee(username) {
@@ -190,19 +187,16 @@ const MapPage = () => {
   // }
 
 
-  console.log('STATE. events: ', events, 'currentMarkers', currentMarkers, activeUser, viewState,);
+  // console.log('STATE. events: ', events, 'currentMarkers', currentMarkers, activeUser, viewState,);
   return (
     <div>
-      {/* <EventTable events={events} flyToCoordinates={flyToCoordinates} /> */}
-      {/* <div style={{ position: 'absolute', top: '250px', width: '45%', margin: '20px', height: '1000px', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+      <EventTable events={events} flyToCoordinates={flyToCoordinates} />
+      <div style={{ top: '250px', width: '45%', margin: '20px', height: '1000px', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
          <div style={{ display: 'flex', flexDirection: 'row', margin: '5px' }}>
           <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee()}>Pin All Events</Button>
           <Button style={{ margin: '5px' }} variant="contained" onClick={() => sortMarkersByAttendee(activeUser.username)}>Pin My Events</Button>
         </div>
-      </div>*/}
-      {/* <div>
-        <div className="map-container" ref={mapContainerRef} style={{ position: 'absolute', top: '250px', right: '20px', width: '45%', height: '500px' }} />
-      </div> */}
+      </div>
       <Map
         ref={mapRef}
         {...viewState}
@@ -215,15 +209,14 @@ const MapPage = () => {
         {/* <Marker key={12345} longitude={-85} latitude={45} anchor="bottom" />
         <Marker key={12345} longitude={-95} latitude={45} anchor="bottom" /> */}
 
-        { currentMarkers && currentMarkers.map((event, index) => {
-          console.log('EvEnT', event.long, event.lat)
+        { currentMarkers && currentMarkers.map((event) => {
           return (<Marker key={`${event.long}-${event.lat}`} longitude={event.long} latitude={event.lat} anchor="bottom" />);
         }) }
 
         <NavigationControl />
 
       </Map>
-      <Button variant="contained" onClick={() => flyToCoordinates2(45, 45)}>map2 fly</Button>
+      <Button variant="contained" onClick={() => flyToCoordinates(-45, 45)}>map2 fly</Button>
     </div>
   );
 };
